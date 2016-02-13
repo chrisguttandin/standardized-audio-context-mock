@@ -1,7 +1,7 @@
 import { AudioBufferMock } from '../../src/audio-buffer-mock';
 import { AudioBufferSourceNodeMock } from '../../src/audio-buffer-source-node-mock';
-import { AudioParamMock } from '../../src/audio-param-mock';
 import { AudioEventScheduler } from '../../src/helper/audio-event-scheduler';
+import { AudioParamMock } from '../../src/audio-param-mock';
 import { spy } from 'sinon';
 
 describe('AudioBufferSourceNodeMock', () => {

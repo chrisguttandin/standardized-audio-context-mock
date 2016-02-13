@@ -1,7 +1,7 @@
+import { spy, stub } from 'sinon';
 import { AudioParamEvent } from './helper/audio-param-event';
 import { AudioParamEventList } from './helper/audio-param-event-list';
 import { AudioParamEventType } from './helper/audio-param-event-type';
-import { spy, stub } from 'sinon';
 
 export class AudioParamMock {
 

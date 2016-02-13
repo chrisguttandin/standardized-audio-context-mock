@@ -1,7 +1,5 @@
 'use strict';
 
-var browserify = require('../../package.json').browserify;
-
 module.exports = function (config) {
 
     /* eslint-disable indent */
