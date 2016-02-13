@@ -52,6 +52,7 @@
     "testing",
     "Web Audio API"
   ],
+  "homepage": "https://github.com/chrisguttandin/standardized-audio-context-mock",
   "license": "MIT",
   "main": "src/module.js",
   "name": "standardized-audio-context-mock",
