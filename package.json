@@ -54,6 +54,10 @@
   "license": "MIT",
   "main": "src/module.js",
   "name": "standardized-audio-context-mock",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chrisguttandin/standardized-audio-context-mock.git"
+  },
   "scripts": {
     "test": "grunt test"
   },
