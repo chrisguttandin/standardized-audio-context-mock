@@ -1,0 +1,61 @@
+{
+  "author": "Christoph Guttandin",
+  "browserify": {
+    "transform": [
+      [
+        "babelify",
+        {
+          "plugins": [
+            "transform-es2015-arrow-functions",
+            "transform-es2015-block-scoping",
+            "transform-es2015-classes",
+            "transform-es2015-modules-commonjs"
+          ]
+        }
+      ]
+    ]
+  },
+  "dependencies": {
+    "babel-plugin-transform-es2015-arrow-functions": "^6.5.2",
+    "babel-plugin-transform-es2015-block-scoping": "^6.5.0",
+    "babel-plugin-transform-es2015-classes": "^6.5.2",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.5.2",
+    "babelify": "^7.2.0",
+    "browserify": "^13.0.0",
+    "sinon": "^1.15.4"
+  },
+  "description": "A mocked version of the standardized-audio-context module.",
+  "devDependencies": {
+    "babel-eslint": "^4.1.8",
+    "eslint-config-holy-grail": "^2.0.0",
+    "grunt": "^0.4.5",
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-jshint": "^0.12.0",
+    "grunt-githooks": "^0.5.0",
+    "grunt-karma": "^0.12.0",
+    "gruntify-eslint": "^1.3.0",
+    "karma": "^0.13.20",
+    "karma-browserify": "^5.0.1",
+    "karma-chrome-launcher": "^0.2.0",
+    "karma-firefox-launcher": "^0.1.6",
+    "karma-mocha": "^0.2.0",
+    "karma-opera-launcher": "^0.3.0",
+    "karma-safari-launcher": "^0.1.1",
+    "karma-sinon-chai": "^1.0.0",
+    "load-grunt-config": "^0.19.1",
+    "mocha": "^2.4.5",
+    "sinon": "^1.17.3",
+    "watchify": "^3.7.0"
+  },
+  "keywords": [
+    "testing",
+    "Web Audio API"
+  ],
+  "license": "MIT",
+  "main": "src/module.js",
+  "name": "standardized-audio-context-mock",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "version": "0.0.0"
+}
