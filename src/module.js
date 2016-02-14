@@ -1,5 +1,5 @@
 import { AudioContextMock } from './audio-context-mock';
-import { registrar } from 'registrar';
+import { registrar } from './registrar';
 
 module.exports = {
 
