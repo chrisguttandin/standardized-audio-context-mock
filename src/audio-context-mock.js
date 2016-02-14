@@ -2,11 +2,11 @@ import { AudioBufferMock } from './audio-buffer-mock';
 import { AudioBufferSourceNodeMock } from './audio-buffer-source-node-mock';
 import { AudioEventScheduler } from './helper/audio-event-scheduler';
 import { GainNodeMock } from './gain-node-mock';
+import { registrar } from './registrar';
 
 export class AudioContextMock {
 
     constructor () {
-        this.audioBufferSourceNodes = [];
         this._scheduler = new AudioEventScheduler();
     }
 
@@ -63,15 +63,21 @@ export class AudioContextMock {
             });
         /* eslint-enable indent */
 
-        this.audioBufferSourceNodes.push(audioBufferSourceNode);
+        registrar.add(this, 'AudioBufferSourceNode', audioBufferSourceNode);
 
         return audioBufferSourceNode;
     }
 
     createGain () {
-        return new GainNodeMock({
-            scheduler: this._scheduler
-        });
+        /* eslint-disable indent */
+        var gainNode = new GainNodeMock({
+                scheduler: this._scheduler
+            });
+        /* eslint-enable indent */
+
+        registrar.add(this, 'GainNode', gainNode);
+
+        return gainNode;
     }
 
     // decodeAudioData
@@ -81,7 +87,7 @@ export class AudioContextMock {
     }
 
     reset () {
-        this.audioBufferSourceNodes = [];
+        registrar.reset(this);
         this._scheduler.reset();
     }
 

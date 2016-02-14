@@ -1,4 +1,5 @@
 import { AudioContextMock } from '../../src/audio-context-mock';
+import { registrar } from '../../src/registrar';
 
 describe('AudioContextMock', () => {
 
@@ -58,6 +59,12 @@ describe('AudioContextMock', () => {
             expect(audioBufferSourceNodeMock.stop).to.be.a('function');
         });
 
+        it('should register the returned instance', () => {
+            var audioBufferSourceNodeMock = audioContextMock.createBufferSource();
+
+            expect(registrar.get(audioContextMock, 'AudioBufferSourceNode')).to.deep.equal([ audioBufferSourceNodeMock ]);
+        });
+
     });
 
     describe('createGain()', () => {
@@ -78,6 +85,12 @@ describe('AudioContextMock', () => {
 
             expect(gainNodeMock.numberOfInputs).to.equal(1);
             expect(gainNodeMock.numberOfOutputs).to.equal(1);
+        });
+
+        it('should register the returned instance', () => {
+            var gainNodeMock = audioContextMock.createGain();
+
+            expect(registrar.get(audioContextMock, 'GainNode')).to.deep.equal([ gainNodeMock ]);
         });
 
     });
