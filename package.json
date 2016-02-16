@@ -26,7 +26,7 @@
   },
   "description": "A mocked version of the standardized-audio-context module.",
   "devDependencies": {
-    "babel-eslint": "^4.1.8",
+    "babel-eslint": "^5.0.0",
     "eslint-config-holy-grail": "^2.2.0",
     "grunt": "^0.4.5",
     "grunt-cli": "^0.1.13",
