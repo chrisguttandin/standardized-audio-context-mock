@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "babel-plugin-transform-es2015-arrow-functions": "^6.5.2",
-    "babel-plugin-transform-es2015-block-scoping": "^6.5.0",
+    "babel-plugin-transform-es2015-block-scoping": "^6.6.0",
     "babel-plugin-transform-es2015-classes": "^6.6.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.6.0",
     "babelify": "^7.2.0",
@@ -66,5 +66,5 @@
   "scripts": {
     "test": "grunt test"
   },
-  "version": "0.1.2"
+  "version": "0.1.3"
 }
