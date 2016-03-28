@@ -14,6 +14,8 @@ export class AudioBufferMock {
 
     copyToChannel () {}
 
-    getChannelData () {}
+    getChannelData () {
+      return [];
+    }
 
 }
