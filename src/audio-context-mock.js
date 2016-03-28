@@ -2,6 +2,8 @@ import { AudioBufferMock } from './audio-buffer-mock';
 import { AudioBufferSourceNodeMock } from './audio-buffer-source-node-mock';
 import { AudioEventScheduler } from './helper/audio-event-scheduler';
 import { GainNodeMock } from './gain-node-mock';
+import { DynamicsCompressorNodeMock } from './dynamics-compressor-node-mock';
+import { OscillatorNodeMock } from './oscillator-node-mock';
 import { registrar } from './registrar';
 
 export class AudioContextMock {
@@ -77,6 +79,18 @@ export class AudioContextMock {
         registrar.add(this, 'GainNode', gainNode);
 
         return gainNode;
+    }
+
+    createDynamicsCompressor () {
+        /* eslint-disable indent */
+        var dynamicsCompressorNode = new DynamicsCompressorNodeMock({
+                scheduler: this._scheduler
+            });
+        /* eslint-enable indent */
+
+        registrar.add(this, 'DynamicsCompressorNode', dynamicsCompressorNode);
+
+        return dynamicsCompressorNode;
     }
 
     // decodeAudioData
