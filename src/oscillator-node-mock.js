@@ -1,6 +1,6 @@
-import { spy } from 'sinon';
 import { AudioNodeMock } from './audio-node-mock';
 import { AudioParamMock } from './audio-param-mock';
+import { spy } from 'sinon';
 
 export class OscillatorNodeMock extends AudioNodeMock {
 
