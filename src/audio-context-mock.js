@@ -93,6 +93,18 @@ export class AudioContextMock {
         return dynamicsCompressorNode;
     }
 
+    createOscillator () {
+        /* eslint-disable indent */
+        var oscillatorNode = new OscillatorNodeMock({
+                scheduler: this._scheduler
+            });
+        /* eslint-enable indent */
+
+        registrar.add(this, 'OscillatorNode', oscillatorNode);
+
+        return oscillatorNode;
+    }
+
     // decodeAudioData
 
     flush (elapsedTime) {
