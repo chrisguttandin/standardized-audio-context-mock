@@ -65,7 +65,7 @@ module.exports = function (config) {
                 version: '9.0'
             }
         };
-
+        configuration.startConnect = false;
         configuration.tunnelIdentifier = process.env.TRAVIS_JOB_NUMBER;
     } else {
         configuration.browsers = [
