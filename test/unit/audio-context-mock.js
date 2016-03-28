@@ -67,6 +67,69 @@ describe('AudioContextMock', () => {
 
     });
 
+    describe('createDynamicsCompressorNode()', function () {
+
+        it('should return an instance of the DynamicsCompressorNode interface', function () {
+            var dynamicsCompressorNode = audioContextMock.createDynamicsCompressor();
+
+            expect(dynamicsCompressorNode.channelCount).to.equal(2);
+            expect(dynamicsCompressorNode.channelCountMode).to.equal('explicit');
+            expect(dynamicsCompressorNode.channelInterpretation).to.equal('speakers');
+
+            expect(dynamicsCompressorNode.attack.cancelScheduledValues).to.be.a('function');
+            expect(dynamicsCompressorNode.attack.defaultValue).to.equal(0.003);
+            expect(dynamicsCompressorNode.attack.exponentialRampToValueAtTime).to.be.a('function');
+            expect(dynamicsCompressorNode.attack.linearRampToValueAtTime).to.be.a('function');
+            expect(dynamicsCompressorNode.attack.setTargetAtTime).to.be.a('function');
+            expect(dynamicsCompressorNode.attack.setValueCurveAtTime).to.be.a('function');
+            expect(dynamicsCompressorNode.attack.value).to.equal(0.003);
+
+            expect(dynamicsCompressorNode.knee.cancelScheduledValues).to.be.a('function');
+            expect(dynamicsCompressorNode.knee.defaultValue).to.equal(30);
+            expect(dynamicsCompressorNode.knee.exponentialRampToValueAtTime).to.be.a('function');
+            expect(dynamicsCompressorNode.knee.linearRampToValueAtTime).to.be.a('function');
+            expect(dynamicsCompressorNode.knee.setTargetAtTime).to.be.a('function');
+            expect(dynamicsCompressorNode.knee.setValueCurveAtTime).to.be.a('function');
+            expect(dynamicsCompressorNode.knee.value).to.equal(30);
+
+            expect(dynamicsCompressorNode.numberOfInputs).to.equal(1);
+            expect(dynamicsCompressorNode.numberOfOutputs).to.equal(1);
+
+            expect(dynamicsCompressorNode.ratio.cancelScheduledValues).to.be.a('function');
+            expect(dynamicsCompressorNode.ratio.defaultValue).to.equal(12);
+            expect(dynamicsCompressorNode.ratio.exponentialRampToValueAtTime).to.be.a('function');
+            expect(dynamicsCompressorNode.ratio.linearRampToValueAtTime).to.be.a('function');
+            expect(dynamicsCompressorNode.ratio.setTargetAtTime).to.be.a('function');
+            expect(dynamicsCompressorNode.ratio.setValueCurveAtTime).to.be.a('function');
+            expect(dynamicsCompressorNode.ratio.value).to.equal(12);
+
+            expect(dynamicsCompressorNode.reduction).to.equal(0);
+
+            expect(dynamicsCompressorNode.release.cancelScheduledValues).to.be.a('function');
+            expect(dynamicsCompressorNode.release.defaultValue).to.equal(0.25);
+            expect(dynamicsCompressorNode.release.exponentialRampToValueAtTime).to.be.a('function');
+            expect(dynamicsCompressorNode.release.linearRampToValueAtTime).to.be.a('function');
+            expect(dynamicsCompressorNode.release.setTargetAtTime).to.be.a('function');
+            expect(dynamicsCompressorNode.release.setValueCurveAtTime).to.be.a('function');
+            expect(dynamicsCompressorNode.release.value).to.equal(0.25);
+
+            expect(dynamicsCompressorNode.threshold.cancelScheduledValues).to.be.a('function');
+            expect(dynamicsCompressorNode.threshold.defaultValue).to.equal(-24);
+            expect(dynamicsCompressorNode.threshold.exponentialRampToValueAtTime).to.be.a('function');
+            expect(dynamicsCompressorNode.threshold.linearRampToValueAtTime).to.be.a('function');
+            expect(dynamicsCompressorNode.threshold.setTargetAtTime).to.be.a('function');
+            expect(dynamicsCompressorNode.threshold.setValueCurveAtTime).to.be.a('function');
+            expect(dynamicsCompressorNode.threshold.value).to.equal(-24);
+        });
+
+        it('should register the returned instance', () => {
+            var dynamicsCompressorNode = audioContextMock.createDynamicsCompressor();
+
+            expect(registrar.get(audioContextMock, 'DynamicsCompressorNode')).to.deep.equal([ dynamicsCompressorNode ]);
+        });
+
+    });
+
     describe('createGain()', () => {
 
         it('should return an instance of the GainNode interface', () => {

@@ -5,41 +5,75 @@ export class DynamicsCompressorNodeMock extends AudioNodeMock {
 
     constructor (options) {
         super({
+            channelCount: 2,
             channelCountMode: 'explicit',
             channelInterpretation: 'speakers',
             numberOfInputs: 1,
             numberOfOutputs: 1
         });
 
-        this.threshold = new AudioParamMock({
+        this._attack = new AudioParamMock({
             onEventListUpdatedHandler: () => {},
             scheduler: options.scheduler,
-            value: 1
+            value: 0.003
         });
-        this.knee = new AudioParamMock({
+        this._knee = new AudioParamMock({
             onEventListUpdatedHandler: () => {},
             scheduler: options.scheduler,
-            value: 1
+            value: 30
         });
-        this.ratio = new AudioParamMock({
+        this._ratio = new AudioParamMock({
             onEventListUpdatedHandler: () => {},
             scheduler: options.scheduler,
-            value: 1
+            value: 12
         });
-        this.reduction = new AudioParamMock({
+        this._reduction = 0;
+        this._release = new AudioParamMock({
             onEventListUpdatedHandler: () => {},
             scheduler: options.scheduler,
-            value: 1
+            value: 0.25
         });
-        this.attack = new AudioParamMock({
+        this._threshold = new AudioParamMock({
             onEventListUpdatedHandler: () => {},
             scheduler: options.scheduler,
-            value: 1
-        });
-        this.release = new AudioParamMock({
-            onEventListUpdatedHandler: () => {},
-            scheduler: options.scheduler,
-            value: 1
+            value: -24
         });
     }
+
+    get attack () {
+        return this._attack;
+    }
+
+    set attack (value) {} // eslint-disable-line no-unused-vars
+
+    get knee () {
+        return this._knee;
+    }
+
+    set knee (value) {} // eslint-disable-line no-unused-vars
+
+    get ratio () {
+        return this._ratio;
+    }
+
+    set ratio (value) {} // eslint-disable-line no-unused-vars
+
+    get reduction () {
+        return this._reduction;
+    }
+
+    set reduction (value) {} // eslint-disable-line no-unused-vars
+
+    get release () {
+        return this._release;
+    }
+
+    set release (value) {} // eslint-disable-line no-unused-vars
+
+    get threshold () {
+        return this._threshold;
+    }
+
+    set threshold (value) {} // eslint-disable-line no-unused-vars
+
 }
