@@ -12,20 +12,32 @@ export class OscillatorNodeMock extends AudioNodeMock {
             numberOfOutputs: 1
         });
 
-        this.frequency = new AudioParamMock({
+        this._detune = new AudioParamMock({
             onEventListUpdatedHandler: () => {},
             scheduler: options.scheduler,
-            value: 1
+            value: 0
         });
-        this.detune = new AudioParamMock({
+        this._frequency = new AudioParamMock({
             onEventListUpdatedHandler: () => {},
             scheduler: options.scheduler,
-            value: 1
+            value: 440
         });
-        this.type = 'aoeu';
+        this.setPeriodicWave = spy();
         this.start = spy();
         this.stop = spy();
-        this.setPeriodicWave = spy();
+        this.type = 'sine';
     }
+
+    get detune () {
+        return this._detune;
+    }
+
+    set detune (value) {} // eslint-disable-line no-unused-vars
+
+    get frequency () {
+        return this._frequency;
+    }
+
+    set frequency (value) {} // eslint-disable-line no-unused-vars
 
 }

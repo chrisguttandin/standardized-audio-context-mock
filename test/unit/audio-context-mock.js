@@ -95,4 +95,45 @@ describe('AudioContextMock', () => {
 
     });
 
+    describe('createOscillator()', function () {
+
+        it('should return an instance of the OscillatorNode interface', function () {
+            var oscillatorNode = audioContextMock.createOscillator();
+
+            // channelCount is not specified
+            // channelCountMode is not specified
+            // channelInterpretation is not specified
+
+            expect(oscillatorNode.detune.cancelScheduledValues).to.be.a('function');
+            expect(oscillatorNode.detune.defaultValue).to.equal(0);
+            expect(oscillatorNode.detune.exponentialRampToValueAtTime).to.be.a('function');
+            expect(oscillatorNode.detune.linearRampToValueAtTime).to.be.a('function');
+            expect(oscillatorNode.detune.setTargetAtTime).to.be.a('function');
+            expect(oscillatorNode.detune.setValueCurveAtTime).to.be.a('function');
+            expect(oscillatorNode.detune.value).to.equal(0);
+
+            expect(oscillatorNode.frequency.cancelScheduledValues).to.be.a('function');
+            expect(oscillatorNode.frequency.defaultValue).to.equal(440);
+            expect(oscillatorNode.frequency.exponentialRampToValueAtTime).to.be.a('function');
+            expect(oscillatorNode.frequency.linearRampToValueAtTime).to.be.a('function');
+            expect(oscillatorNode.frequency.setTargetAtTime).to.be.a('function');
+            expect(oscillatorNode.frequency.setValueCurveAtTime).to.be.a('function');
+            expect(oscillatorNode.frequency.value).to.equal(440);
+
+            expect(oscillatorNode.numberOfInputs).to.equal(0);
+            expect(oscillatorNode.numberOfOutputs).to.equal(1);
+            expect(oscillatorNode.type).to.equal('sine');
+            expect(oscillatorNode.setPeriodicWave).to.be.a('function');
+            expect(oscillatorNode.start).to.be.a('function');
+            expect(oscillatorNode.stop).to.be.a('function');
+        });
+
+        it('should register the returned instance', () => {
+            var oscillatorNode = audioContextMock.createOscillator();
+
+            expect(registrar.get(audioContextMock, 'OscillatorNode')).to.deep.equal([ oscillatorNode ]);
+        });
+
+    });
+
 });
