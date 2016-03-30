@@ -8,9 +8,13 @@ import { registrar } from './registrar';
 module.exports = {
 
     AudioBufferSourceNode: AudioBufferSourceNodeMock,
+
     AudioContext: AudioContextMock,
+
     AudioNode: AudioNodeMock,
+
     DynamicsCompressorNode: DynamicsCompressorNodeMock,
+
     OscillatorNode: OscillatorNodeMock,
 
     isSupported: true,
