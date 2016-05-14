@@ -11,7 +11,7 @@ describe('DynamicsCompressorNodeMock', () => {
         scheduler = new AudioEventScheduler();
 
         dynamicsCompressorNodeMock = new DynamicsCompressorNodeMock({
-            scheduler: scheduler
+            scheduler
         });
     });
 

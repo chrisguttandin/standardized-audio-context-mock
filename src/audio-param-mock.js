@@ -67,17 +67,17 @@ export class AudioParamMock {
 
     linearRampToValueAtTime (value, endTime) {
         this._eventList.add(new AudioParamEvent({
-            endTime: endTime,
+            endTime,
             type: AudioParamEventType.LINEAR_RAMP_TO_VALUE,
-            value: value
+            value
         }));
     }
 
     setValueAtTime (value, startTime) {
         this._eventList.add(new AudioParamEvent({
-            startTime: startTime,
+            startTime,
             type: AudioParamEventType.SET_VALUE,
-            value: value
+            value
         }));
     }
 

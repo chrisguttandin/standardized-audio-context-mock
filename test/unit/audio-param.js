@@ -11,7 +11,7 @@ describe('AudioParamMock', () => {
 
         audioParamMock = new AudioParamMock({
             onEventListUpdatedHandler: () => {},
-            scheduler: scheduler,
+            scheduler,
             value: 1
         });
     });

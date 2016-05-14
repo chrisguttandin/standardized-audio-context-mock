@@ -51,9 +51,9 @@ export class AudioContextMock {
 
     createBuffer (numberOfChannels, length, sampleRate) {
         return new AudioBufferMock({
-            length: length,
-            numberOfChannels: numberOfChannels,
-            sampleRate: sampleRate
+            length,
+            numberOfChannels,
+            sampleRate
         });
     }
 

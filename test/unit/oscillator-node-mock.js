@@ -11,7 +11,7 @@ describe('OscillatorNodeMock', () => {
         scheduler = new AudioEventScheduler();
 
         oscillatorNodeMock = new OscillatorNodeMock({
-            scheduler: scheduler
+            scheduler
         });
     });
 

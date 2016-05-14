@@ -29,7 +29,7 @@ describe('AudioEventScheduler', () => {
             var func = spy();
 
             audioEventScheduler.schedule({
-                func: func,
+                func,
                 when: 10
             });
 
@@ -48,7 +48,7 @@ describe('AudioEventScheduler', () => {
 
             func = spy();
             definition = {
-                func: func,
+                func,
                 when: 10
             };
 

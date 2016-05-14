@@ -130,7 +130,7 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
 
             this._onEndedDefinition = {
                 func: this._callOnEndedHandler.bind(this),
-                when: when
+                when
             };
 
             this._scheduler.schedule(this._onEndedDefinition);
@@ -155,8 +155,8 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
         }
 
         this._started = {
-            duration: duration,
-            when: when
+            duration,
+            when
         };
 
         this._scheduleOnEndedHandler();
@@ -172,7 +172,7 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
         }
 
         this._stopped = {
-            when: when
+            when
         };
 
         this._scheduleOnEndedHandler();

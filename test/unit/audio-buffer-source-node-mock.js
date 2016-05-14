@@ -13,7 +13,7 @@ describe('AudioBufferSourceNodeMock', () => {
         scheduler = new AudioEventScheduler();
 
         audioBufferSourceNodeMock = new AudioBufferSourceNodeMock({
-            scheduler: scheduler
+            scheduler
         });
         audioBufferSourceNodeMock.buffer = new AudioBufferMock({
             length: 441000,
