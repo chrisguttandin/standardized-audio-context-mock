@@ -90,7 +90,7 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
                     when = 0;
                 }
 
-                when += this._scheduler.currentTime + (this._started.duration - playbackRateOffset) / this._playbackRate.value;
+                when += this._scheduler.currentTime + ((this._started.duration - playbackRateOffset) / this._playbackRate.value);
                 this._playbackRateValue = this._playbackRate.value;
             } else {
                 actualDuration = 0;
