@@ -43,7 +43,7 @@ export class AudioParamMock {
         this._eventList.some((event) => {
             if (this._scheduler.currentTime >= event.startTime && this._scheduler.currentTime <= event.endTime) {
                 if (event.type === AudioParamEventType.LINEAR_RAMP_TO_VALUE) {
-                    computedValue = event.previous.value + (event.value - event.previous.value) * (1 - ((event.endTime - this._scheduler.currentTime) / (event.endTime - event.startTime)));
+                    computedValue = event.previous.value + ((event.value - event.previous.value) * (1 - ((event.endTime - this._scheduler.currentTime) / (event.endTime - event.startTime))));
                 } else if (event.type === AudioParamEventType.SET_VALUE) {
                     computedValue = event.value;
                 }
