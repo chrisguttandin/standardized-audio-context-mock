@@ -20,7 +20,7 @@
     "babel-plugin-transform-es2015-arrow-functions": "^6.5.2",
     "babel-plugin-transform-es2015-block-scoping": "^6.6.0",
     "babel-plugin-transform-es2015-classes": "^6.6.0",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.6.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.10.3",
     "babel-plugin-transform-es2015-spread": "^6.6.5",
     "babelify": "^7.2.0",
     "browserify": "^13.0.0",
