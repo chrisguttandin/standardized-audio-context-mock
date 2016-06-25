@@ -16,6 +16,9 @@
       ]
     ]
   },
+  "bugs": {
+    "url": "https://github.com/chrisguttandin/standardized-audio-context-mock/issues"
+  },
   "dependencies": {
     "babel-plugin-transform-es2015-arrow-functions": "^6.5.2",
     "babel-plugin-transform-es2015-block-scoping": "^6.6.0",
