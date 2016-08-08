@@ -5,7 +5,7 @@ import { DynamicsCompressorNodeMock } from './dynamics-compressor-node-mock';
 import { OscillatorNodeMock } from './oscillator-node-mock';
 import { registrar } from './registrar';
 
-module.exports = {
+export default {
 
     AudioBufferSourceNode: AudioBufferSourceNodeMock,
 
