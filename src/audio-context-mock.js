@@ -36,14 +36,14 @@ export class AudioContextMock {
     createBiquadFilter () {
         // @todo
         return {
-            connect: () => {},
-            gain: {
+            Q: {
                 value: 0
             },
+            connect: () => {},
             frequency: {
                 value: 0
             },
-            Q: {
+            gain: {
                 value: 0
             }
         };
