@@ -18,7 +18,7 @@ export class AudioContextMock {
 
     // destination
 
-    close () {}
+    close () {} // eslint-disable-line class-methods-use-this
 
     // @todo This is a lazy hack.
     createAnalyser () {
@@ -33,7 +33,7 @@ export class AudioContextMock {
         return analyserNode;
     }
 
-    createBiquadFilter () {
+    createBiquadFilter () { // eslint-disable-line class-methods-use-this
         // @todo
         return {
             Q: {
@@ -49,7 +49,7 @@ export class AudioContextMock {
         };
     }
 
-    createBuffer (numberOfChannels, length, sampleRate) {
+    createBuffer (numberOfChannels, length, sampleRate) { // eslint-disable-line class-methods-use-this
         return new AudioBufferMock({
             length,
             numberOfChannels,

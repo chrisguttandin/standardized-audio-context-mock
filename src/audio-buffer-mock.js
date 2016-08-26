@@ -10,11 +10,11 @@ export class AudioBufferMock {
         return this.length / this.sampleRate;
     }
 
-    copyFromChannel () {}
+    copyFromChannel () {} // eslint-disable-line class-methods-use-this
 
-    copyToChannel () {}
+    copyToChannel () {} // eslint-disable-line class-methods-use-this
 
-    getChannelData () {
+    getChannelData () { // eslint-disable-line class-methods-use-this
         return [];
     }
 

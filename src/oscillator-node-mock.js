@@ -32,12 +32,12 @@ export class OscillatorNodeMock extends AudioNodeMock {
         return this._detune;
     }
 
-    set detune (value) {} // eslint-disable-line no-unused-vars
+    set detune (value) {} // eslint-disable-line class-methods-use-this, no-unused-vars
 
     get frequency () {
         return this._frequency;
     }
 
-    set frequency (value) {} // eslint-disable-line no-unused-vars
+    set frequency (value) {} // eslint-disable-line class-methods-use-this, no-unused-vars
 
 }

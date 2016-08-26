@@ -44,36 +44,36 @@ export class DynamicsCompressorNodeMock extends AudioNodeMock {
         return this._attack;
     }
 
-    set attack (value) {} // eslint-disable-line no-unused-vars
+    set attack (value) {} // eslint-disable-line class-methods-use-this, no-unused-vars
 
     get knee () {
         return this._knee;
     }
 
-    set knee (value) {} // eslint-disable-line no-unused-vars
+    set knee (value) {} // eslint-disable-line class-methods-use-this, no-unused-vars
 
     get ratio () {
         return this._ratio;
     }
 
-    set ratio (value) {} // eslint-disable-line no-unused-vars
+    set ratio (value) {} // eslint-disable-line class-methods-use-this, no-unused-vars
 
     get reduction () {
         return this._reduction;
     }
 
-    set reduction (value) {} // eslint-disable-line no-unused-vars
+    set reduction (value) {} // eslint-disable-line class-methods-use-this, no-unused-vars
 
     get release () {
         return this._release;
     }
 
-    set release (value) {} // eslint-disable-line no-unused-vars
+    set release (value) {} // eslint-disable-line class-methods-use-this, no-unused-vars
 
     get threshold () {
         return this._threshold;
     }
 
-    set threshold (value) {} // eslint-disable-line no-unused-vars
+    set threshold (value) {} // eslint-disable-line class-methods-use-this, no-unused-vars
 
 }

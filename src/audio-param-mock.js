@@ -26,7 +26,7 @@ export class AudioParamMock {
         return this._defaultValue;
     }
 
-    set defaultValue (value) {} // eslint-disable-line no-unused-vars
+    set defaultValue (value) {} // eslint-disable-line class-methods-use-this, no-unused-vars
 
     get value () {
         return this._computeValue();

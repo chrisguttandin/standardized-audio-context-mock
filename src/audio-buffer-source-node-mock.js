@@ -60,7 +60,7 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
         return this._playbackRate;
     }
 
-    set playbackRate (value) {} // eslint-disable-line no-unused-vars
+    set playbackRate (value) {} // eslint-disable-line class-methods-use-this, no-unused-vars
 
     _callOnEndedHandler () {
         if (typeof this.onended === 'function') {

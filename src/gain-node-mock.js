@@ -22,6 +22,6 @@ export class GainNodeMock extends AudioNodeMock {
         return this._gain;
     }
 
-    set gain (value) {} // eslint-disable-line no-unused-vars
+    set gain (value) {} // eslint-disable-line class-methods-use-this, no-unused-vars
 
 }
