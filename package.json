@@ -69,7 +69,7 @@
     "url": "https://github.com/chrisguttandin/standardized-audio-context-mock.git"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt lint && grunt test"
   },
   "version": "0.2.2"
 }
