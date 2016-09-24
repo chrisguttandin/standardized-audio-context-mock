@@ -23,6 +23,6 @@ export default {
 
 };
 
-export { AudioContext };
+export { AudioContextMock as AudioContext };
 
 export { registrar };
