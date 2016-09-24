@@ -22,3 +22,7 @@ export default {
     registrar
 
 };
+
+export { AudioContext };
+
+export { registrar };
