@@ -91,17 +91,32 @@ describe('AudioBufferSourceNodeMock', () => {
             expect(onEnded).to.have.been.calledOnce;
         });
 
+        it('should reschedule the onEnded event when calling playbackRate\'s setValueAtTime() method multiple times before playing', () => {
+            audioBufferSourceNodeMock.onended = onEnded;
+            audioBufferSourceNodeMock.start(0, 0, 10);
+            audioBufferSourceNodeMock.playbackRate.setValueAtTime(2, 2);
+            audioBufferSourceNodeMock.playbackRate.setValueAtTime(1, 4);
+
+            scheduler.flush(7.5);
+
+            expect(onEnded).to.have.not.been.called;
+
+            scheduler.flush(0.5);
+
+            expect(onEnded).to.have.been.calledOnce;
+        });
+
         it('should reschedule the onEnded event when calling playbackRate\'s linearRampToValueAtTime() method before playing', () => {
             audioBufferSourceNodeMock.onended = onEnded;
             audioBufferSourceNodeMock.start(0, 0, 10);
             audioBufferSourceNodeMock.playbackRate.setValueAtTime(1, 0);
             audioBufferSourceNodeMock.playbackRate.linearRampToValueAtTime(1.5, 1);
 
-            scheduler.flush(7.08);
+            scheduler.flush(6.8);
 
             expect(onEnded).to.have.not.been.called;
 
-            scheduler.flush(0.004);
+            scheduler.flush(0.04);
 
             expect(onEnded).to.have.been.calledOnce;
         });

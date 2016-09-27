@@ -102,26 +102,21 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
                         actualDuration += (event.endTime - event.startTime);
                     } else if (event.type === AudioParamEventType.SET_VALUE) {
                         if (event.previous) {
-                            // @todo
+                            effectiveDuration += (event.startTime - event.previous.endTime) * event.previous.value;
+                            actualDuration += (event.startTime - event.previous.endTime);
                         } else {
-                            effectiveDuration = (event.startTime - this._started.when) / this._playbackRate.value;
+                            effectiveDuration = (event.startTime - this._started.when) * this._playbackRate.value;
                             actualDuration = (event.startTime - this._started.when);
                         }
                     }
+                });
 
-
-                    if (effectiveDuration >= /*this.buffer.duration*/ 8) {
-                        // @todo schedule ended handler now
-                    }
-
-                }, this);
-
-                if (actualDuration < this._started.duration) {
-                    actualDuration = this._started.duration;
-                    effectiveDuration += (this._started.duration - effectiveDuration) / this._playbackRate._eventList.last().value;
+                if (effectiveDuration < this._started.maxEffectiveDuration) {
+                    actualDuration += (this._started.maxEffectiveDuration - effectiveDuration) / this._playbackRate._eventList.last().value;
+                    effectiveDuration = this._started.maxEffectiveDuration;
                 }
 
-                when = this._started.when + effectiveDuration;
+                when = this._started.when + actualDuration;
             }
 
             if (this._stopped !== null && this._stopped.when < when) {
@@ -154,8 +149,11 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
             duration = this.buffer.duration - offset;
         }
 
+        const maxEffectiveDuration = Math.max(duration, (this._buffer.length / this._buffer.sampleRate) - offset);
+
         this._started = {
             duration,
+            maxEffectiveDuration,
             when
         };
 
