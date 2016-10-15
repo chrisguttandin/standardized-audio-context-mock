@@ -18,7 +18,7 @@ describe('AudioBufferSourceNodeMock', () => {
         audioBufferSourceNodeMock.buffer = new AudioBufferMock({
             length: 441000,
             numberOfChannels: 2,
-            sampleRate: 44100,
+            sampleRate: 44100
         });
     });
 
