@@ -37,9 +37,9 @@
     "grunt": "^1.0.1",
     "grunt-cli": "^1.0.0",
     "grunt-contrib-jshint": "^1.0.0",
-    "grunt-githooks": "^0.6.0",
     "grunt-karma": "^2.0.0",
     "gruntify-eslint": "^3.0.0",
+    "husky": "^0.11.9",
     "karma": "^1.3.0",
     "karma-browserify": "^5.0.2",
     "karma-chrome-launcher": "^2.0.0",
@@ -69,6 +69,7 @@
     "url": "https://github.com/chrisguttandin/standardized-audio-context-mock.git"
   },
   "scripts": {
+    "precommit": "grunt lint",
     "test": "grunt lint && grunt test"
   },
   "version": "0.3.2"
