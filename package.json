@@ -27,7 +27,7 @@
     "babel-plugin-transform-es2015-spread": "^6.6.5",
     "babelify": "^7.2.0",
     "browserify": "^13.0.0",
-    "sinon": "^1.15.4"
+    "sinon": "^2.0.0-pre.4"
   },
   "description": "A mocked version of the standardized-audio-context module.",
   "devDependencies": {
@@ -52,7 +52,6 @@
     "load-grunt-config": "^0.19.1",
     "lolex": "^1.4.0",
     "mocha": "^3.0.0",
-    "sinon": "^1.17.3",
     "sinon-chai": "^2.8.0",
     "watchify": "^3.7.0"
   },
