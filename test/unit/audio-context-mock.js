@@ -3,7 +3,7 @@ import { registrar } from '../../src/registrar';
 
 describe('AudioContextMock', () => {
 
-    var audioContextMock;
+    let audioContextMock;
 
     beforeEach(() => {
         audioContextMock = new AudioContextMock();
@@ -12,7 +12,7 @@ describe('AudioContextMock', () => {
     describe('createBuffer()', () => {
 
         it('should return an instance of the AudioBuffer interface', () => {
-            var audioBufferMock = audioContextMock.createBuffer(2, 10, 44100);
+            const audioBufferMock = audioContextMock.createBuffer(2, 10, 44100);
 
             expect(audioBufferMock.duration).to.be.closeTo(10 / 44100, 0.001);
             expect(audioBufferMock.length).to.equal(10);
@@ -28,7 +28,7 @@ describe('AudioContextMock', () => {
     describe('createBufferSource()', () => {
 
         it('should return an instance of the AudioBufferSourceNode interface', () => {
-            var audioBufferSourceNodeMock = audioContextMock.createBufferSource();
+            const audioBufferSourceNodeMock = audioContextMock.createBufferSource();
 
             expect(audioBufferSourceNodeMock.buffer).to.be.null;
 
@@ -60,7 +60,7 @@ describe('AudioContextMock', () => {
         });
 
         it('should register the returned instance', () => {
-            var audioBufferSourceNodeMock = audioContextMock.createBufferSource();
+            const audioBufferSourceNodeMock = audioContextMock.createBufferSource();
 
             expect(registrar.get(audioContextMock, 'AudioBufferSourceNode')).to.deep.equal([ audioBufferSourceNodeMock ]);
         });
@@ -70,7 +70,7 @@ describe('AudioContextMock', () => {
     describe('createDynamicsCompressorNode()', function () {
 
         it('should return an instance of the DynamicsCompressorNode interface', function () {
-            var dynamicsCompressorNode = audioContextMock.createDynamicsCompressor();
+            const dynamicsCompressorNode = audioContextMock.createDynamicsCompressor();
 
             expect(dynamicsCompressorNode.channelCount).to.equal(2);
             expect(dynamicsCompressorNode.channelCountMode).to.equal('explicit');
@@ -123,7 +123,7 @@ describe('AudioContextMock', () => {
         });
 
         it('should register the returned instance', () => {
-            var dynamicsCompressorNode = audioContextMock.createDynamicsCompressor();
+            const dynamicsCompressorNode = audioContextMock.createDynamicsCompressor();
 
             expect(registrar.get(audioContextMock, 'DynamicsCompressorNode')).to.deep.equal([ dynamicsCompressorNode ]);
         });
@@ -133,7 +133,7 @@ describe('AudioContextMock', () => {
     describe('createGain()', () => {
 
         it('should return an instance of the GainNode interface', () => {
-            var gainNodeMock = audioContextMock.createGain();
+            const gainNodeMock = audioContextMock.createGain();
 
             expect(gainNodeMock.channelCountMode).to.equal('max');
             expect(gainNodeMock.channelInterpretation).to.equal('speakers');
@@ -151,7 +151,7 @@ describe('AudioContextMock', () => {
         });
 
         it('should register the returned instance', () => {
-            var gainNodeMock = audioContextMock.createGain();
+            const gainNodeMock = audioContextMock.createGain();
 
             expect(registrar.get(audioContextMock, 'GainNode')).to.deep.equal([ gainNodeMock ]);
         });
@@ -161,7 +161,7 @@ describe('AudioContextMock', () => {
     describe('createOscillator()', function () {
 
         it('should return an instance of the OscillatorNode interface', function () {
-            var oscillatorNode = audioContextMock.createOscillator();
+            const oscillatorNode = audioContextMock.createOscillator();
 
             // channelCount is not specified
             // channelCountMode is not specified
@@ -192,7 +192,7 @@ describe('AudioContextMock', () => {
         });
 
         it('should register the returned instance', () => {
-            var oscillatorNode = audioContextMock.createOscillator();
+            const oscillatorNode = audioContextMock.createOscillator();
 
             expect(registrar.get(audioContextMock, 'OscillatorNode')).to.deep.equal([ oscillatorNode ]);
         });

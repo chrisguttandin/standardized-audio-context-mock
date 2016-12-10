@@ -69,19 +69,17 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
     }
 
     _scheduleOnEndedHandler () {
-        var actualDuration,
-            effectiveDuration,
-            playbackRateOffset,
-            when;
-
         if (this._onEndedDefinition !== null) {
             this._scheduler.cancel(this._onEndedDefinition);
             this._onEndedDefinition = null;
         }
 
         if (this._started !== null) {
+            let when;
 
             if (this._playbackRate._eventList.length === 0) {
+                let playbackRateOffset;
+
                 if (this._started.when > this._scheduler.currentTime) {
                     playbackRateOffset = 0;
                     when = (this._started.when - this._scheduler.currentTime);
@@ -93,8 +91,8 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
                 when += this._scheduler.currentTime + ((this._started.duration - playbackRateOffset) / this._playbackRate.value);
                 this._playbackRateValue = this._playbackRate.value;
             } else {
-                actualDuration = 0;
-                effectiveDuration = 0;
+                let actualDuration = 0;
+                let effectiveDuration = 0;
 
                 this._playbackRate._eventList.forEach((event) => {
                     if (event.type === AudioParamEventType.LINEAR_RAMP_TO_VALUE) {

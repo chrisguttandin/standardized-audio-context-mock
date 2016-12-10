@@ -38,7 +38,7 @@ export class AudioParamMock {
     }
 
     _computeValue () {
-        var computedValue = null;
+        let computedValue = null;
 
         this._eventList.some((event) => {
             if (this._scheduler.currentTime >= event.startTime && this._scheduler.currentTime <= event.endTime) {
@@ -55,7 +55,7 @@ export class AudioParamMock {
         });
 
         if (computedValue === null && this._eventList.length > 0)  {
-            let lastEvent = this._eventList.last();
+            const lastEvent = this._eventList.last();
 
             if (this._scheduler.currentTime >= lastEvent.endTime) {
                 computedValue = lastEvent.value;

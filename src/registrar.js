@@ -5,8 +5,8 @@ class Registrar {
     }
 
     add (context, type, node) {
-        var nodesOfContext,
-            nodesOfType;
+        let nodesOfContext;
+        let nodesOfType;
 
         if (this._nodes.has(context)) {
             nodesOfContext = this._nodes.get(context);
@@ -27,7 +27,7 @@ class Registrar {
 
     get (context, type) {
         if (this._nodes.has(context)) {
-            let nodesOfContext = this._nodes.get(context);
+            const nodesOfContext = this._nodes.get(context);
 
             if (nodesOfContext.has(type)) {
                 return [ ...nodesOfContext.get(type) ];

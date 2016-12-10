@@ -3,8 +3,8 @@ import { AudioParamMock } from '../../src/audio-param-mock';
 
 describe('AudioParamMock', () => {
 
-    var audioParamMock,
-        scheduler;
+    let audioParamMock;
+    let scheduler;
 
     beforeEach(() => {
         scheduler = new AudioEventScheduler();
