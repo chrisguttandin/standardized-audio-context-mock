@@ -3,7 +3,7 @@ import { spy } from 'sinon';
 
 describe('AudioEventScheduler', () => {
 
-    var audioEventScheduler;
+    let audioEventScheduler;
 
     beforeEach(() => {
         audioEventScheduler = new AudioEventScheduler();
@@ -26,7 +26,7 @@ describe('AudioEventScheduler', () => {
         });
 
         it('shoud execute a scheduled function', () => {
-            var func = spy();
+            const func = spy();
 
             audioEventScheduler.schedule({
                 func,
@@ -43,11 +43,8 @@ describe('AudioEventScheduler', () => {
         });
 
         it('shoud not execute a canceled function', () => {
-            var definition,
-                func;
-
-            func = spy();
-            definition = {
+            const func = spy();
+            const definition = {
                 func,
                 when: 10
             };

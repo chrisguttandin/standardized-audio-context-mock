@@ -13,7 +13,7 @@ export class AudioParamEventList extends EventEmitter {
     }
 
     add (event) {
-        var index = this._events.length;
+        let index = this._events.length;
 
         this._events.some((value, i) => {
             if (value.endTime > event.endTime) {

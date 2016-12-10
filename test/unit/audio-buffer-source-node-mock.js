@@ -6,8 +6,8 @@ import { spy } from 'sinon';
 
 describe('AudioBufferSourceNodeMock', () => {
 
-    var audioBufferSourceNodeMock,
-        scheduler;
+    let audioBufferSourceNodeMock;
+    let scheduler;
 
     beforeEach(() => {
         scheduler = new AudioEventScheduler();
@@ -24,7 +24,7 @@ describe('AudioBufferSourceNodeMock', () => {
 
     describe('onended', () => {
 
-        var onEnded;
+        let onEnded;
 
         beforeEach(() => {
             onEnded = spy();
@@ -147,7 +147,7 @@ describe('AudioBufferSourceNodeMock', () => {
 
     describe('start()', () => {
 
-        var onEnded;
+        let onEnded;
 
         beforeEach(() => {
             onEnded = spy();
@@ -183,7 +183,7 @@ describe('AudioBufferSourceNodeMock', () => {
 
     describe('stop()', () => {
 
-        var onEnded;
+        let onEnded;
 
         beforeEach(() => {
             onEnded = spy();

@@ -4,8 +4,8 @@ import { OscillatorNodeMock } from '../../src/oscillator-node-mock';
 
 describe('OscillatorNodeMock', () => {
 
-    var oscillatorNodeMock,
-        scheduler;
+    let oscillatorNodeMock;
+    let scheduler;
 
     beforeEach(() => {
         scheduler = new AudioEventScheduler();

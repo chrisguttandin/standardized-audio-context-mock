@@ -22,11 +22,9 @@ export class AudioContextMock {
 
     // @todo This is a lazy hack.
     createAnalyser () {
-        /* eslint-disable indent */
-        var analyserNode = new GainNodeMock({
-                scheduler: this._scheduler
-            });
-        /* eslint-enable indent */
+        const analyserNode = new GainNodeMock({
+            scheduler: this._scheduler
+        });
 
         analyserNode.fftSize = 2048;
 
@@ -58,11 +56,9 @@ export class AudioContextMock {
     }
 
     createBufferSource () {
-        /* eslint-disable indent */
-        var audioBufferSourceNode = new AudioBufferSourceNodeMock({
-                scheduler: this._scheduler
-            });
-        /* eslint-enable indent */
+        const audioBufferSourceNode = new AudioBufferSourceNodeMock({
+            scheduler: this._scheduler
+        });
 
         registrar.add(this, 'AudioBufferSourceNode', audioBufferSourceNode);
 
@@ -70,11 +66,9 @@ export class AudioContextMock {
     }
 
     createGain () {
-        /* eslint-disable indent */
-        var gainNode = new GainNodeMock({
-                scheduler: this._scheduler
-            });
-        /* eslint-enable indent */
+        const gainNode = new GainNodeMock({
+            scheduler: this._scheduler
+        });
 
         registrar.add(this, 'GainNode', gainNode);
 
@@ -82,11 +76,9 @@ export class AudioContextMock {
     }
 
     createDynamicsCompressor () {
-        /* eslint-disable indent */
-        var dynamicsCompressorNode = new DynamicsCompressorNodeMock({
-                scheduler: this._scheduler
-            });
-        /* eslint-enable indent */
+        const dynamicsCompressorNode = new DynamicsCompressorNodeMock({
+            scheduler: this._scheduler
+        });
 
         registrar.add(this, 'DynamicsCompressorNode', dynamicsCompressorNode);
 
@@ -94,11 +86,9 @@ export class AudioContextMock {
     }
 
     createOscillator () {
-        /* eslint-disable indent */
-        var oscillatorNode = new OscillatorNodeMock({
-                scheduler: this._scheduler
-            });
-        /* eslint-enable indent */
+        const oscillatorNode = new OscillatorNodeMock({
+            scheduler: this._scheduler
+        });
 
         registrar.add(this, 'OscillatorNode', oscillatorNode);
 

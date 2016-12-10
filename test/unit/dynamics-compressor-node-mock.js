@@ -4,8 +4,8 @@ import { DynamicsCompressorNodeMock } from '../../src/dynamics-compressor-node
 
 describe('DynamicsCompressorNodeMock', () => {
 
-    var dynamicsCompressorNodeMock,
-        scheduler;
+    let dynamicsCompressorNodeMock;
+    let scheduler;
 
     beforeEach(() => {
         scheduler = new AudioEventScheduler();
