@@ -18,7 +18,7 @@ export class AudioEventScheduler {
     }
 
     flush (elapsedTime) {
-        const currentTimeAfterwards = this.currentTime += elapsedTime;
+        const currentTimeAfterwards = this.currentTime += elapsedTime; // eslint-disable-line no-multi-assign
 
         while (this._definitions.length && this._definitions[0].when <= currentTimeAfterwards) {
             const definition = this._definitions.shift();
