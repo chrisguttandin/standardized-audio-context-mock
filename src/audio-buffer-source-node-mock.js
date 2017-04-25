@@ -28,8 +28,8 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
         });
         this._playbackRateValue = 1;
 
-        stub(this, 'start', this.start);
-        stub(this, 'stop', this.stop);
+        stub(this, 'start').callThrough();
+        stub(this, 'stop').callThrough();
     }
 
     get buffer () {

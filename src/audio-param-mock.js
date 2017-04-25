@@ -18,8 +18,8 @@ export class AudioParamMock {
 
         this._eventList.on('updated', () => options.onEventListUpdatedHandler());
 
-        stub(this, 'linearRampToValueAtTime', this.linearRampToValueAtTime);
-        stub(this, 'setValueAtTime', this.setValueAtTime);
+        stub(this, 'linearRampToValueAtTime').callThrough();
+        stub(this, 'setValueAtTime').callThrough();
     }
 
     get defaultValue () {
