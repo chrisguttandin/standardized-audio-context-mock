@@ -1,51 +1,69 @@
 import { AudioContextMock } from './audio-context-mock';
 import { AudioNodeMock } from './audio-node-mock';
+import { AudioEventScheduler } from './helper/audio-event-scheduler';
 
 export class Registrar {
 
-    private _nodes: WeakMap<AudioContextMock, Map<string, Set<AudioNodeMock>>>;
+    private _audioNodes: WeakMap<AudioContextMock, Map<string, Set<AudioNodeMock>>>;
+
+    private _schedulers: WeakMap<AudioContextMock, AudioEventScheduler>;
 
     constructor () {
-        this._nodes = new WeakMap();
+        this._audioNodes = new WeakMap();
+        this._schedulers = new WeakMap();
     }
 
-    add (context: AudioContextMock, type: string, node: AudioNodeMock) {
-        let nodesOfContext: Map<string, Set<AudioNodeMock>>;
-        let nodesOfType: Set<AudioNodeMock>;
+    addAudioNode (context: AudioContextMock, type: string, node: AudioNodeMock) {
+        let audioNodesOfContext: Map<string, Set<AudioNodeMock>>;
+        let audioNodesOfType: Set<AudioNodeMock>;
 
-        if (this._nodes.has(context)) {
-            nodesOfContext = <Map<string, Set<AudioNodeMock>>> this._nodes.get(context);
+        if (this._audioNodes.has(context)) {
+            audioNodesOfContext = <Map<string, Set<AudioNodeMock>>> this._audioNodes.get(context);
         } else {
-            nodesOfContext = new Map();
-            this._nodes.set(context, nodesOfContext);
+            audioNodesOfContext = new Map();
+            this._audioNodes.set(context, audioNodesOfContext);
         }
 
-        if (nodesOfContext.has(type)) {
-            nodesOfType = <Set<AudioNodeMock>> nodesOfContext.get(type);
+        if (audioNodesOfContext.has(type)) {
+            audioNodesOfType = <Set<AudioNodeMock>> audioNodesOfContext.get(type);
         } else {
-            nodesOfType = new Set();
-            nodesOfContext.set(type, nodesOfType);
+            audioNodesOfType = new Set();
+            audioNodesOfContext.set(type, audioNodesOfType);
         }
 
-        nodesOfType.add(node);
+        audioNodesOfType.add(node);
     }
 
-    get (context: AudioContextMock, type: string) {
-        if (this._nodes.has(context)) {
-            const nodesOfContext = <Map<string, Set<AudioNodeMock>>> this._nodes.get(context);
+    getAudioNodes (context: AudioContextMock, type: string) {
+        if (this._audioNodes.has(context)) {
+            const audioNodesOfContext = <Map<string, Set<AudioNodeMock>>> this._audioNodes.get(context);
 
-            if (nodesOfContext.has(type)) {
-                return Array.from(<Set<AudioNodeMock>> nodesOfContext.get(type));
+            if (audioNodesOfContext.has(type)) {
+                return Array.from(<Set<AudioNodeMock>> audioNodesOfContext.get(type));
             }
         }
 
         return [];
     }
 
+    getScheduler (context: AudioContextMock): undefined | AudioEventScheduler {
+        return this._schedulers.get(context);
+    }
+
     reset (context: AudioContextMock) {
-        if (this._nodes.has(context)) {
-            this._nodes.delete(context);
+        if (this._audioNodes.has(context)) {
+            this._audioNodes.delete(context);
         }
+
+        if (this._schedulers.has(context)) {
+            (<AudioEventScheduler> this._schedulers.get(context)).reset();
+
+            this._schedulers.delete(context);
+        }
+    }
+
+    setScheduler (context: AudioContextMock, scheduler: AudioEventScheduler) {
+        this._schedulers.set(context, scheduler);
     }
 
 }

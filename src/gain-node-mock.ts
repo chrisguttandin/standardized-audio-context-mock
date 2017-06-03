@@ -1,12 +1,15 @@
 import { AudioNodeMock } from './audio-node-mock';
 import { AudioParamMock } from './audio-param-mock';
-import { AudioEventScheduler } from './helper/audio-event-scheduler';
+import { registrar } from './registrar';
+import { AudioContextMock } from './audio-context-mock';
 
 export class GainNodeMock extends AudioNodeMock {
 
     private _gain: AudioParamMock;
 
-    constructor (options: { scheduler: AudioEventScheduler }) {
+    constructor (context: AudioContextMock) {
+        const scheduler = registrar.getScheduler(context);
+
         super({
             channelCountMode: 'max',
             channelInterpretation: 'speakers',
@@ -16,7 +19,7 @@ export class GainNodeMock extends AudioNodeMock {
 
         this._gain = new AudioParamMock({
             onEventListUpdatedHandler: () => {},
-            scheduler: options.scheduler,
+            scheduler,
             value: 1
         });
     }

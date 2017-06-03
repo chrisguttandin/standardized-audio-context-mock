@@ -12,6 +12,8 @@ export class AudioContextMock {
 
     constructor () {
         this._scheduler = new AudioEventScheduler();
+
+        registrar.setScheduler(this, this._scheduler);
     }
 
     get currentTime () {
@@ -24,9 +26,7 @@ export class AudioContextMock {
 
     // @todo This is a lazy hack.
     createAnalyser () {
-        const analyserNode = new GainNodeMock({
-            scheduler: this._scheduler
-        });
+        const analyserNode = new GainNodeMock(this);
 
         (<any> analyserNode).fftSize = 2048;
 
@@ -58,41 +58,33 @@ export class AudioContextMock {
     }
 
     createBufferSource () {
-        const audioBufferSourceNode = new AudioBufferSourceNodeMock({
-            scheduler: this._scheduler
-        });
+        const audioBufferSourceNode = new AudioBufferSourceNodeMock(this);
 
-        registrar.add(this, 'AudioBufferSourceNode', audioBufferSourceNode);
+        registrar.addAudioNode(this, 'AudioBufferSourceNode', audioBufferSourceNode);
 
         return audioBufferSourceNode;
     }
 
     createGain () {
-        const gainNode = new GainNodeMock({
-            scheduler: this._scheduler
-        });
+        const gainNode = new GainNodeMock(this);
 
-        registrar.add(this, 'GainNode', gainNode);
+        registrar.addAudioNode(this, 'GainNode', gainNode);
 
         return gainNode;
     }
 
     createDynamicsCompressor () {
-        const dynamicsCompressorNode = new DynamicsCompressorNodeMock({
-            scheduler: this._scheduler
-        });
+        const dynamicsCompressorNode = new DynamicsCompressorNodeMock(this);
 
-        registrar.add(this, 'DynamicsCompressorNode', dynamicsCompressorNode);
+        registrar.addAudioNode(this, 'DynamicsCompressorNode', dynamicsCompressorNode);
 
         return dynamicsCompressorNode;
     }
 
     createOscillator () {
-        const oscillatorNode = new OscillatorNodeMock({
-            scheduler: this._scheduler
-        });
+        const oscillatorNode = new OscillatorNodeMock(this);
 
-        registrar.add(this, 'OscillatorNode', oscillatorNode);
+        registrar.addAudioNode(this, 'OscillatorNode', oscillatorNode);
 
         return oscillatorNode;
     }

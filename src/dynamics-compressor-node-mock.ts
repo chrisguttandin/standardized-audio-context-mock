@@ -1,6 +1,7 @@
 import { AudioNodeMock } from './audio-node-mock';
 import { AudioParamMock } from './audio-param-mock';
-import { AudioEventScheduler } from './helper/audio-event-scheduler';
+import { registrar } from './registrar';
+import { AudioContextMock } from './audio-context-mock';
 
 export class DynamicsCompressorNodeMock extends AudioNodeMock {
 
@@ -16,7 +17,9 @@ export class DynamicsCompressorNodeMock extends AudioNodeMock {
 
     private _threshold: AudioParamMock;
 
-    constructor (options: { scheduler: AudioEventScheduler }) {
+    constructor (context: AudioContextMock) {
+        const scheduler = registrar.getScheduler(context);
+
         super({
             channelCount: 2,
             channelCountMode: 'explicit',
@@ -27,28 +30,28 @@ export class DynamicsCompressorNodeMock extends AudioNodeMock {
 
         this._attack = new AudioParamMock({
             onEventListUpdatedHandler: () => {},
-            scheduler: options.scheduler,
+            scheduler,
             value: 0.003
         });
         this._knee = new AudioParamMock({
             onEventListUpdatedHandler: () => {},
-            scheduler: options.scheduler,
+            scheduler,
             value: 30
         });
         this._ratio = new AudioParamMock({
             onEventListUpdatedHandler: () => {},
-            scheduler: options.scheduler,
+            scheduler,
             value: 12
         });
         this._reduction = 0;
         this._release = new AudioParamMock({
             onEventListUpdatedHandler: () => {},
-            scheduler: options.scheduler,
+            scheduler,
             value: 0.25
         });
         this._threshold = new AudioParamMock({
             onEventListUpdatedHandler: () => {},
-            scheduler: options.scheduler,
+            scheduler,
             value: -24
         });
     }

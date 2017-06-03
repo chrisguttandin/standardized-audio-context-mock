@@ -21,11 +21,11 @@ export class AudioParamMock {
 
     private _onEventListUpdatedHandler: Function;
 
-    private _scheduler: AudioEventScheduler;
+    private _scheduler: undefined | AudioEventScheduler;
 
     private _value: number;
 
-    constructor (options: { onEventListUpdatedHandler: Function, scheduler: AudioEventScheduler, value: number }) {
+    constructor (options: { onEventListUpdatedHandler: Function, scheduler?: AudioEventScheduler, value: number }) {
         this.cancelScheduledValues = spy();
         this._defaultValue = options.value;
         this._eventList = new AudioParamEventList();
@@ -62,7 +62,15 @@ export class AudioParamMock {
     _computeValue () {
         let computedValue = null;
 
+        if (this._scheduler === undefined) {
+            return this._defaultValue;
+        }
+
         this._eventList.some((event: AudioParamEvent) => {
+            if (this._scheduler === undefined) {
+                return false;
+            }
+
             if ((event.startTime !== undefined && this._scheduler.currentTime >= event.startTime) &&
                     (event.endTime !== undefined && this._scheduler.currentTime <= event.endTime)) {
                 if (event.previous !== undefined && event.type === AudioParamEventType.LINEAR_RAMP_TO_VALUE) {
