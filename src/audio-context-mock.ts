@@ -91,13 +91,4 @@ export class AudioContextMock {
 
     // decodeAudioData
 
-    flush (elapsedTime: number) {
-        this._scheduler.flush(elapsedTime);
-    }
-
-    reset () {
-        registrar.reset(this);
-        this._scheduler.reset();
-    }
-
 }
