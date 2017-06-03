@@ -36,7 +36,7 @@ export class AudioParamMock {
         this.setValueCurveAtTime = spy();
         this._value = options.value;
 
-        this._eventList.on('updated', () => options.onEventListUpdatedHandler());
+        this._eventList.onUpdated = () => options.onEventListUpdatedHandler();
 
         stub(this, 'linearRampToValueAtTime').callThrough();
         stub(this, 'setValueAtTime').callThrough();
