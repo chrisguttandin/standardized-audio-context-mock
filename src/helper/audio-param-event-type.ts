@@ -1,3 +1,4 @@
+// tslint:disable-next-line:comment-format
 // http://webaudio.github.io/web-audio-api/#the-audioparam-interface
 
 export class AudioParamEventType {

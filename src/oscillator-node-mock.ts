@@ -1,10 +1,23 @@
 import { AudioNodeMock } from './audio-node-mock';
 import { AudioParamMock } from './audio-param-mock';
-import { spy } from 'sinon';
+import { SinonSpy, spy } from 'sinon';
+import { AudioEventScheduler } from './helper/audio-event-scheduler';
 
 export class OscillatorNodeMock extends AudioNodeMock {
 
-    constructor (options) {
+    public setPeriodicWave: SinonSpy;
+
+    public start: SinonSpy;
+
+    public stop: SinonSpy;
+
+    public type: string;
+
+    private _detune: AudioParamMock;
+
+    private _frequency: AudioParamMock;
+
+    constructor (options: { scheduler: AudioEventScheduler }) {
         super({
             channelCountMode: 'max',
             channelInterpretation: 'speakers',
@@ -32,12 +45,16 @@ export class OscillatorNodeMock extends AudioNodeMock {
         return this._detune;
     }
 
-    set detune (value) {} // eslint-disable-line class-methods-use-this, no-unused-vars
+    set detune (value: AudioParamMock) {
+        value;
+    }
 
     get frequency () {
         return this._frequency;
     }
 
-    set frequency (value) {} // eslint-disable-line class-methods-use-this, no-unused-vars
+    set frequency (value: AudioParamMock) {
+        value;
+    }
 
 }

@@ -3,7 +3,7 @@ import { AudioContextMock } from './audio-context-mock';
 import { AudioNodeMock } from './audio-node-mock';
 import { DynamicsCompressorNodeMock } from './dynamics-compressor-node-mock';
 import { OscillatorNodeMock } from './oscillator-node-mock';
-import { registrar } from './registrar';
+import { Registrar, registrar } from './registrar';
 
 export default {
 
@@ -19,7 +19,7 @@ export default {
 
     isSupported: true,
 
-    registrar
+    registrar: Registrar
 
 };
 

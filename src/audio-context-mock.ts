@@ -8,6 +8,8 @@ import { registrar } from './registrar';
 
 export class AudioContextMock {
 
+    private _scheduler: AudioEventScheduler;
+
     constructor () {
         this._scheduler = new AudioEventScheduler();
     }
@@ -18,7 +20,7 @@ export class AudioContextMock {
 
     // destination
 
-    close () {} // eslint-disable-line class-methods-use-this
+    close () {}
 
     // @todo This is a lazy hack.
     createAnalyser () {
@@ -26,12 +28,12 @@ export class AudioContextMock {
             scheduler: this._scheduler
         });
 
-        analyserNode.fftSize = 2048;
+        (<any> analyserNode).fftSize = 2048;
 
         return analyserNode;
     }
 
-    createBiquadFilter () { // eslint-disable-line class-methods-use-this
+    createBiquadFilter () {
         // @todo
         return {
             Q: {
@@ -47,7 +49,7 @@ export class AudioContextMock {
         };
     }
 
-    createBuffer (numberOfChannels, length, sampleRate) { // eslint-disable-line class-methods-use-this
+    createBuffer (numberOfChannels: number, length: number, sampleRate: number) {
         return new AudioBufferMock({
             length,
             numberOfChannels,
@@ -97,7 +99,7 @@ export class AudioContextMock {
 
     // decodeAudioData
 
-    flush (elapsedTime) {
+    flush (elapsedTime: number) {
         this._scheduler.flush(elapsedTime);
     }
 

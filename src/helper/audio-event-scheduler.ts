@@ -1,11 +1,17 @@
+import { IDefinition } from '../interfaces';
+
 export class AudioEventScheduler {
+
+    public currentTime: number;
+
+    private _definitions: IDefinition[] = [];
 
     constructor () {
         this.currentTime = 0;
         this._definitions = [];
     }
 
-    cancel (definition) {
+    public cancel (definition: IDefinition) {
         this._definitions.some((d) => {
             const found = (definition === d);
 
@@ -17,11 +23,12 @@ export class AudioEventScheduler {
         });
     }
 
-    flush (elapsedTime) {
-        const currentTimeAfterwards = this.currentTime += elapsedTime; // eslint-disable-line no-multi-assign
+    public flush (elapsedTime: number) {
+        const currentTimeAfterwards = this.currentTime += elapsedTime;
 
         while (this._definitions.length && this._definitions[0].when <= currentTimeAfterwards) {
-            const definition = this._definitions.shift();
+            // TypeScript needs to be convinced that definition is not undefined.
+            const definition = <IDefinition> this._definitions.shift();
 
             this.currentTime = definition.when;
             definition.func();
@@ -30,12 +37,12 @@ export class AudioEventScheduler {
         this.currentTime = currentTimeAfterwards;
     }
 
-    reset () {
+    public reset () {
         this.currentTime = 0;
         this._definitions = [];
     }
 
-    schedule (definition) {
+    public schedule (definition: IDefinition) {
         this._definitions.push(definition);
 
         this._definitions.sort((a, b) => a.when - b.when);

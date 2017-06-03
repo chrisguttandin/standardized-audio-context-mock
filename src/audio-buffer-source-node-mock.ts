@@ -1,12 +1,36 @@
-import { AudioBufferMock } from './audio-buffer-mock.js';
-import { AudioNodeMock } from './audio-node-mock.js';
-import { AudioParamEventType } from './helper/audio-param-event-type.js';
-import { AudioParamMock } from './audio-param-mock.js';
+import { AudioBufferMock } from './audio-buffer-mock';
+import { AudioNodeMock } from './audio-node-mock';
+import { AudioParamEventType } from './helper/audio-param-event-type';
+import { IDefinition } from './interfaces';
+import { AudioParamMock } from './audio-param-mock';
+import { AudioEventScheduler } from './helper/audio-event-scheduler';
 import { stub } from 'sinon';
 
 export class AudioBufferSourceNodeMock extends AudioNodeMock {
 
-    constructor (options) {
+    public loop: boolean;
+
+    public loopEnd: number;
+
+    public loopStart: number;
+
+    private _buffer: null | AudioBufferMock;
+
+    private _onended: null | Function;
+
+    private _onEndedDefinition: null | IDefinition;
+
+    private _playbackRate: AudioParamMock;
+
+    private _playbackRateValue: number;
+
+    private _started: null | { duration: number, maxEffectiveDuration: number, when: number };
+
+    private _stopped: null | { when: number };
+
+    private _scheduler: AudioEventScheduler;
+
+    constructor (options: { scheduler: AudioEventScheduler }) {
         super({
             numberOfInputs: 0,
             numberOfOutputs: 1
@@ -36,7 +60,7 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
         return this._buffer;
     }
 
-    set buffer (value) {
+    set buffer (value: null | AudioBufferMock) {
         if (!(value instanceof AudioBufferMock)) {
             throw new TypeError('Failed to set the \'buffer\' property on \'AudioBufferSourceNode\': The provided value is not of type \'AudioBufferMock\'.');
         }
@@ -50,7 +74,7 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
         return this._onended;
     }
 
-    set onended (value) {
+    set onended (value: null | Function) {
         if (typeof value === 'function' || value === null) {
             this._onended = value;
         }
@@ -60,7 +84,9 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
         return this._playbackRate;
     }
 
-    set playbackRate (value) {} // eslint-disable-line class-methods-use-this, no-unused-vars
+    set playbackRate (value) {
+        value;
+    }
 
     _callOnEndedHandler () {
         if (typeof this.onended === 'function') {
@@ -95,14 +121,18 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
                 let effectiveDuration = 0;
 
                 this._playbackRate._eventList.forEach((event) => {
-                    if (event.type === AudioParamEventType.LINEAR_RAMP_TO_VALUE) {
+                    if (event.endTime !== undefined &&
+                            event.startTime !== undefined &&
+                            event.previous !== undefined &&
+                            event.type === AudioParamEventType.LINEAR_RAMP_TO_VALUE) {
                         effectiveDuration += (event.endTime - event.startTime) * ((event.value + event.previous.value) / 2);
                         actualDuration += (event.endTime - event.startTime);
-                    } else if (event.type === AudioParamEventType.SET_VALUE) {
-                        if (event.previous) {
+                    } else if (event.startTime !== undefined &&
+                            event.type === AudioParamEventType.SET_VALUE) {
+                        if (event.previous !== undefined && event.previous.endTime !== undefined) {
                             effectiveDuration += (event.startTime - event.previous.endTime) * event.previous.value;
                             actualDuration += (event.startTime - event.previous.endTime);
-                        } else {
+                        } else if (this._started !== null) {
                             effectiveDuration = (event.startTime - this._started.when) * this._playbackRate.value;
                             actualDuration = (event.startTime - this._started.when);
                         }
@@ -130,7 +160,7 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
         }
     }
 
-    start (when, offset, duration) {
+    start (when: number, offset: number, duration: number) {
         if (arguments.length === 0) {
             when = 0;
         }
@@ -144,10 +174,10 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
         }
 
         if (arguments.length < 3) {
-            duration = this.buffer.duration - offset;
+            duration = (this.buffer === null) ? 0 : this.buffer.duration - offset;
         }
 
-        const maxEffectiveDuration = Math.max(duration, (this._buffer.length / this._buffer.sampleRate) - offset);
+        const maxEffectiveDuration = Math.max(duration, (this.buffer === null) ? 0 : this.buffer.duration - offset);
 
         this._started = {
             duration,
@@ -158,7 +188,7 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
         this._scheduleOnEndedHandler();
     }
 
-    stop (when) {
+    stop (when: number) {
         if (arguments.length === 0) {
             when = 0;
         }

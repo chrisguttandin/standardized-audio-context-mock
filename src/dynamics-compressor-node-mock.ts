@@ -1,9 +1,22 @@
 import { AudioNodeMock } from './audio-node-mock';
 import { AudioParamMock } from './audio-param-mock';
+import { AudioEventScheduler } from './helper/audio-event-scheduler';
 
 export class DynamicsCompressorNodeMock extends AudioNodeMock {
 
-    constructor (options) {
+    private _attack: AudioParamMock;
+
+    private _knee: AudioParamMock;
+
+    private _ratio: AudioParamMock;
+
+    private _reduction: number;
+
+    private _release: AudioParamMock;
+
+    private _threshold: AudioParamMock;
+
+    constructor (options: { scheduler: AudioEventScheduler }) {
         super({
             channelCount: 2,
             channelCountMode: 'explicit',
@@ -44,36 +57,48 @@ export class DynamicsCompressorNodeMock extends AudioNodeMock {
         return this._attack;
     }
 
-    set attack (value) {} // eslint-disable-line class-methods-use-this, no-unused-vars
+    set attack (value) {
+        value;
+    }
 
     get knee () {
         return this._knee;
     }
 
-    set knee (value) {} // eslint-disable-line class-methods-use-this, no-unused-vars
+    set knee (value) {
+        value;
+    }
 
     get ratio () {
         return this._ratio;
     }
 
-    set ratio (value) {} // eslint-disable-line class-methods-use-this, no-unused-vars
+    set ratio (value) {
+        value;
+    }
 
     get reduction () {
         return this._reduction;
     }
 
-    set reduction (value) {} // eslint-disable-line class-methods-use-this, no-unused-vars
+    set reduction (value) {
+        value;
+    }
 
     get release () {
         return this._release;
     }
 
-    set release (value) {} // eslint-disable-line class-methods-use-this, no-unused-vars
+    set release (value) {
+        value;
+    }
 
     get threshold () {
         return this._threshold;
     }
 
-    set threshold (value) {} // eslint-disable-line class-methods-use-this, no-unused-vars
+    set threshold (value) {
+        value;
+    }
 
 }

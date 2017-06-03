@@ -1,6 +1,9 @@
 import { EventEmitter } from 'events';
+import { AudioParamEvent } from './audio-param-event';
 
 export class AudioParamEventList extends EventEmitter {
+
+    private _events: AudioParamEvent[] = [];
 
     constructor () {
         super();
@@ -12,11 +15,11 @@ export class AudioParamEventList extends EventEmitter {
         return this._events.length;
     }
 
-    add (event) {
+    public add (event: AudioParamEvent) {
         let index = this._events.length;
 
         this._events.some((value, i) => {
-            if (value.endTime > event.endTime) {
+            if (value.endTime !== undefined && event.endTime !== undefined && value.endTime > event.endTime) {
                 index = i;
 
                 return true;
@@ -37,16 +40,16 @@ export class AudioParamEventList extends EventEmitter {
         this.emit('updated');
     }
 
-    forEach () {
-        return this._events.forEach.apply(this._events, arguments);
+    public forEach (callback: (event: AudioParamEvent) => void) {
+        return this._events.forEach.call(this._events, callback);
     }
 
-    last () {
+    public last () {
         return this._events[this._events.length - 1];
     }
 
-    some () {
-        return this._events.some.apply(this._events, arguments);
+    public some (callback: (event: AudioParamEvent) => boolean) {
+        return this._events.some.call(this._events, callback);
     }
 
 }

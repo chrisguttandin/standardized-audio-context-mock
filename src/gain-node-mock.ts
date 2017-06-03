@@ -1,9 +1,12 @@
 import { AudioNodeMock } from './audio-node-mock';
 import { AudioParamMock } from './audio-param-mock';
+import { AudioEventScheduler } from './helper/audio-event-scheduler';
 
 export class GainNodeMock extends AudioNodeMock {
 
-    constructor (options) {
+    private _gain: AudioParamMock;
+
+    constructor (options: { scheduler: AudioEventScheduler }) {
         super({
             channelCountMode: 'max',
             channelInterpretation: 'speakers',
@@ -22,6 +25,8 @@ export class GainNodeMock extends AudioNodeMock {
         return this._gain;
     }
 
-    set gain (value) {} // eslint-disable-line class-methods-use-this, no-unused-vars
+    set gain (value: AudioParamMock) {
+        value;
+    }
 
 }

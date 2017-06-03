@@ -2,7 +2,17 @@ import { AudioParamEventType } from './audio-param-event-type';
 
 export class AudioParamEvent {
 
-    constructor (options) {
+    public endTime: number | undefined;
+
+    public startTime: number | undefined;
+
+    public type: string;
+
+    public value: number;
+
+    private _previous: undefined | AudioParamEvent;
+
+    constructor (options: { endTime?: number, previous?: AudioParamEvent, startTime?: number, type: string, value: number }) {
         this._previous = options.previous;
         this.type = options.type;
         this.value = options.value;

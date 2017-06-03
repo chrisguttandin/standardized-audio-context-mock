@@ -1,6 +1,12 @@
 export class AudioBufferMock {
 
-    constructor (options) {
+    public length: number;
+
+    public numberOfChannels: number;
+
+    public sampleRate: number;
+
+    constructor (options: { length: number, numberOfChannels: number, sampleRate: number }) {
         this.length = options.length;
         this.numberOfChannels = options.numberOfChannels;
         this.sampleRate = options.sampleRate;
@@ -10,11 +16,11 @@ export class AudioBufferMock {
         return this.length / this.sampleRate;
     }
 
-    copyFromChannel () {} // eslint-disable-line class-methods-use-this
+    copyFromChannel () {}
 
-    copyToChannel () {} // eslint-disable-line class-methods-use-this
+    copyToChannel () {}
 
-    getChannelData () { // eslint-disable-line class-methods-use-this
+    getChannelData () {
         return [];
     }
 
