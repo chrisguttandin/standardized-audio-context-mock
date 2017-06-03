@@ -11,6 +11,10 @@ export class AudioEventScheduler {
         this._definitions = [];
     }
 
+    get nextTime () {
+        return (this._definitions.length > 0) ? this._definitions[0].when : Number.POSITIVE_INFINITY;
+    }
+
     public cancel (definition: IDefinition) {
         const index = this._definitions.indexOf(definition);
 
