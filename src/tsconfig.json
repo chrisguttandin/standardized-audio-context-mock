@@ -1,3 +1,3 @@
 {
-  "extends": "../node_modules/tsconfig-holy-grail/src/tsconfig-node"
+  "extends": "../node_modules/tsconfig-holy-grail/src/tsconfig-universal"
 }
