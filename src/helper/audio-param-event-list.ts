@@ -1,14 +1,14 @@
-import { EventEmitter } from 'events';
 import { AudioParamEvent } from './audio-param-event';
 
-export class AudioParamEventList extends EventEmitter {
+export class AudioParamEventList {
+
+    public onUpdated: null | Function;
 
     private _events: AudioParamEvent[] = [];
 
     constructor () {
-        super();
-
         this._events = [];
+        this.onUpdated = null;
     }
 
     get length () {
@@ -37,7 +37,9 @@ export class AudioParamEventList extends EventEmitter {
             this._events[this._events.length - 1].previous = event;
         }
 
-        this.emit('updated');
+        if (this.onUpdated !== null) {
+            this.onUpdated();
+        }
     }
 
     public forEach (callback: (event: AudioParamEvent) => void) {

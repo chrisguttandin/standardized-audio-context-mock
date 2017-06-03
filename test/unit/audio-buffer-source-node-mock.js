@@ -1,7 +1,8 @@
 import { AudioBufferMock } from '../../src/audio-buffer-mock';
 import { AudioBufferSourceNodeMock } from '../../src/audio-buffer-source-node-mock';
-import { AudioEventScheduler } from '../../src/helper/audio-event-scheduler';
+import { AudioContextMock } from '../../src/audio-context-mock';
 import { AudioParamMock } from '../../src/audio-param-mock';
+import { registrar } from '../../src/registrar';
 import { spy } from 'sinon';
 
 describe('AudioBufferSourceNodeMock', () => {
@@ -10,16 +11,16 @@ describe('AudioBufferSourceNodeMock', () => {
     let scheduler;
 
     beforeEach(() => {
-        scheduler = new AudioEventScheduler();
+        const context = new AudioContextMock();
 
-        audioBufferSourceNodeMock = new AudioBufferSourceNodeMock({
-            scheduler
-        });
+        audioBufferSourceNodeMock = new AudioBufferSourceNodeMock(context);
         audioBufferSourceNodeMock.buffer = new AudioBufferMock({
             length: 441000,
             numberOfChannels: 2,
             sampleRate: 44100
         });
+
+        scheduler = registrar.getScheduler(context);
     });
 
     describe('onended', () => {

@@ -1,7 +1,8 @@
 import { AudioNodeMock } from './audio-node-mock';
 import { AudioParamMock } from './audio-param-mock';
 import { SinonSpy, spy } from 'sinon';
-import { AudioEventScheduler } from './helper/audio-event-scheduler';
+import { registrar } from './registrar';
+import { AudioContextMock } from './audio-context-mock';
 
 export class OscillatorNodeMock extends AudioNodeMock {
 
@@ -17,7 +18,9 @@ export class OscillatorNodeMock extends AudioNodeMock {
 
     private _frequency: AudioParamMock;
 
-    constructor (options: { scheduler: AudioEventScheduler }) {
+    constructor (context: AudioContextMock) {
+        const scheduler = registrar.getScheduler(context);
+
         super({
             channelCountMode: 'max',
             channelInterpretation: 'speakers',
@@ -27,12 +30,12 @@ export class OscillatorNodeMock extends AudioNodeMock {
 
         this._detune = new AudioParamMock({
             onEventListUpdatedHandler: () => {},
-            scheduler: options.scheduler,
+            scheduler,
             value: 0
         });
         this._frequency = new AudioParamMock({
             onEventListUpdatedHandler: () => {},
-            scheduler: options.scheduler,
+            scheduler,
             value: 440
         });
         this.setPeriodicWave = spy();

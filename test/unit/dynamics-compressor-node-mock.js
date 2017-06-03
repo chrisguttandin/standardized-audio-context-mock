@@ -1,18 +1,15 @@
-import { AudioEventScheduler } from '../../src/helper/audio-event-scheduler';
+import { AudioContextMock } from '../../src/audio-context-mock';
 import { AudioParamMock } from '../../src/audio-param-mock';
 import { DynamicsCompressorNodeMock } from '../../src/dynamics-compressor-node-mock';
 
 describe('DynamicsCompressorNodeMock', () => {
 
     let dynamicsCompressorNodeMock;
-    let scheduler;
 
     beforeEach(() => {
-        scheduler = new AudioEventScheduler();
+        const context = new AudioContextMock();
 
-        dynamicsCompressorNodeMock = new DynamicsCompressorNodeMock({
-            scheduler
-        });
+        dynamicsCompressorNodeMock = new DynamicsCompressorNodeMock(context);
     });
 
     describe('attack', () => {

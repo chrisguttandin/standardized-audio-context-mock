@@ -1,9 +1,11 @@
 import { AudioBufferMock } from './audio-buffer-mock';
+import { AudioContextMock } from './audio-context-mock';
 import { AudioNodeMock } from './audio-node-mock';
-import { AudioParamEventType } from './helper/audio-param-event-type';
-import { IDefinition } from './interfaces';
 import { AudioParamMock } from './audio-param-mock';
 import { AudioEventScheduler } from './helper/audio-event-scheduler';
+import { AudioParamEventType } from './helper/audio-param-event-type';
+import { IDefinition } from './interfaces';
+import { registrar } from './registrar';
 import { stub } from 'sinon';
 
 export class AudioBufferSourceNodeMock extends AudioNodeMock {
@@ -28,9 +30,9 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
 
     private _stopped: null | { when: number };
 
-    private _scheduler: AudioEventScheduler;
+    private _scheduler: undefined | AudioEventScheduler;
 
-    constructor (options: { scheduler: AudioEventScheduler }) {
+    constructor (context: AudioContextMock) {
         super({
             numberOfInputs: 0,
             numberOfOutputs: 1
@@ -44,10 +46,10 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
         this._onEndedDefinition = null;
         this._started = null;
         this._stopped = null;
-        this._scheduler = options.scheduler;
+        this._scheduler = registrar.getScheduler(context);
         this._playbackRate = new AudioParamMock({
             onEventListUpdatedHandler: this._scheduleOnEndedHandler.bind(this),
-            scheduler: options.scheduler,
+            scheduler: this._scheduler,
             value: 1
         });
         this._playbackRateValue = 1;
@@ -95,6 +97,10 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
     }
 
     _scheduleOnEndedHandler () {
+        if (this._scheduler === undefined) {
+            return;
+        }
+
         if (this._onEndedDefinition !== null) {
             this._scheduler.cancel(this._onEndedDefinition);
             this._onEndedDefinition = null;
@@ -161,6 +167,10 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
     }
 
     start (when: number, offset: number, duration: number) {
+        if (this._scheduler === undefined) {
+            return;
+        }
+
         if (arguments.length === 0) {
             when = 0;
         }
@@ -189,6 +199,10 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
     }
 
     stop (when: number) {
+        if (this._scheduler === undefined) {
+            return;
+        }
+
         if (arguments.length === 0) {
             when = 0;
         }

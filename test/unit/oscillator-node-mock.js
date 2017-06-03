@@ -1,18 +1,15 @@
-import { AudioEventScheduler } from '../../src/helper/audio-event-scheduler';
+import { AudioContextMock } from '../../src/audio-context-mock';
 import { AudioParamMock } from '../../src/audio-param-mock';
 import { OscillatorNodeMock } from '../../src/oscillator-node-mock';
 
 describe('OscillatorNodeMock', () => {
 
     let oscillatorNodeMock;
-    let scheduler;
 
     beforeEach(() => {
-        scheduler = new AudioEventScheduler();
+        const context = new AudioContextMock();
 
-        oscillatorNodeMock = new OscillatorNodeMock({
-            scheduler
-        });
+        oscillatorNodeMock = new OscillatorNodeMock(context);
     });
 
     describe('detune', () => {
