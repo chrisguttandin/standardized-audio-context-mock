@@ -9,6 +9,67 @@ describe('AudioEventScheduler', () => {
         audioEventScheduler = new AudioEventScheduler();
     });
 
+    describe('nextTime', () => {
+
+        describe('without any scheduled function', () => {
+
+            it('shoud default to infinity', () => {
+                expect(audioEventScheduler.nextTime).to.equal(Number.POSITIVE_INFINITY);
+            });
+
+        });
+
+        describe('with a scheduled function', () => {
+
+            let when;
+
+            beforeEach(() => {
+                when = 10;
+
+                audioEventScheduler.schedule({ func () { }, when });
+            });
+
+            it('shoud equal to the time of the next event', () => {
+                expect(audioEventScheduler.nextTime).to.equal(when);
+            });
+
+        });
+
+        describe('with a canceled function', () => {
+
+            beforeEach(() => {
+                const definition = {
+                    func () { },
+                    when: 10
+                };
+
+                audioEventScheduler.schedule(definition);
+                audioEventScheduler.cancel(definition);
+            });
+
+            it('shoud equal to infinity', () => {
+                expect(audioEventScheduler.nextTime).to.equal(Number.POSITIVE_INFINITY);
+            });
+
+        });
+
+        describe('with an executed function', () => {
+
+            beforeEach(() => {
+                const when = 10;
+
+                audioEventScheduler.schedule({ func () { }, when });
+                audioEventScheduler.flush(when);
+            });
+
+            it('shoud equal to infinity', () => {
+                expect(audioEventScheduler.nextTime).to.equal(Number.POSITIVE_INFINITY);
+            });
+
+        });
+
+    });
+
     describe('cancel()', () => {
 
         // tested below
