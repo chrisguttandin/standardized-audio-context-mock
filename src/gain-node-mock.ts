@@ -8,7 +8,7 @@ export class GainNodeMock extends AudioNodeMock {
     private _gain: AudioParamMock;
 
     constructor (context: AudioContextMock) {
-        const scheduler = registrar.getScheduler(context);
+        const deLorean = registrar.getDeLorean(context);
 
         super({
             channelCountMode: 'max',
@@ -18,8 +18,8 @@ export class GainNodeMock extends AudioNodeMock {
         });
 
         this._gain = new AudioParamMock({
+            deLorean,
             onEventListUpdatedHandler: () => {},
-            scheduler,
             value: 1
         });
     }

@@ -1,6 +1,6 @@
 import { AudioBufferMock } from './audio-buffer-mock';
 import { AudioBufferSourceNodeMock } from './audio-buffer-source-node-mock';
-import { AudioEventScheduler } from './helper/audio-event-scheduler';
+import { DeLorean } from 'vehicles';
 import { DynamicsCompressorNodeMock } from './dynamics-compressor-node-mock';
 import { GainNodeMock } from './gain-node-mock';
 import { OscillatorNodeMock } from './oscillator-node-mock';
@@ -8,16 +8,16 @@ import { registrar } from './registrar';
 
 export class AudioContextMock {
 
-    private _scheduler: AudioEventScheduler;
+    private _deLorean: DeLorean;
 
     constructor () {
-        this._scheduler = new AudioEventScheduler();
+        this._deLorean = new DeLorean();
 
-        registrar.setScheduler(this, this._scheduler);
+        registrar.setDeLorean(this, this._deLorean);
     }
 
     get currentTime () {
-        return this._scheduler.currentTime;
+        return this._deLorean.position;
     }
 
     // destination

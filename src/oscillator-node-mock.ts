@@ -19,7 +19,7 @@ export class OscillatorNodeMock extends AudioNodeMock {
     private _frequency: AudioParamMock;
 
     constructor (context: AudioContextMock) {
-        const scheduler = registrar.getScheduler(context);
+        const deLorean = registrar.getDeLorean(context);
 
         super({
             channelCountMode: 'max',
@@ -29,13 +29,13 @@ export class OscillatorNodeMock extends AudioNodeMock {
         });
 
         this._detune = new AudioParamMock({
+            deLorean,
             onEventListUpdatedHandler: () => {},
-            scheduler,
             value: 0
         });
         this._frequency = new AudioParamMock({
+            deLorean,
             onEventListUpdatedHandler: () => {},
-            scheduler,
             value: 440
         });
         this.setPeriodicWave = spy();

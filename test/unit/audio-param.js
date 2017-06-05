@@ -1,17 +1,17 @@
-import { AudioEventScheduler } from '../../src/helper/audio-event-scheduler';
 import { AudioParamMock } from '../../src/audio-param-mock';
+import { DeLorean } from 'vehicles';
 
 describe('AudioParamMock', () => {
 
     let audioParamMock;
-    let scheduler;
+    let deLorean;
 
     beforeEach(() => {
-        scheduler = new AudioEventScheduler();
+        deLorean = new DeLorean();
 
         audioParamMock = new AudioParamMock({
+            deLorean,
             onEventListUpdatedHandler: () => {},
-            scheduler,
             value: 1
         });
     });
@@ -53,23 +53,23 @@ describe('AudioParamMock', () => {
 
             expect(audioParamMock.value).to.equal(1);
 
-            scheduler.flush(0.5);
+            deLorean.travel(0.5);
 
             expect(audioParamMock.value).to.equal(1.5);
 
-            scheduler.flush(0.5);
+            deLorean.travel(0.5);
 
             expect(audioParamMock.value).to.equal(2);
 
-            scheduler.flush(0.5);
+            deLorean.travel(0.5);
 
             expect(audioParamMock.value).to.equal(2.5);
 
-            scheduler.flush(0.5);
+            deLorean.travel(0.5);
 
             expect(audioParamMock.value).to.equal(3);
 
-            scheduler.flush(1);
+            deLorean.travel(1);
 
             expect(audioParamMock.value).to.equal(3);
         });
@@ -86,11 +86,11 @@ describe('AudioParamMock', () => {
 
             expect(audioParamMock.value).to.equal(2);
 
-            scheduler.flush(1);
+            deLorean.travel(1);
 
             expect(audioParamMock.value).to.equal(3);
 
-            scheduler.flush(1);
+            deLorean.travel(1);
 
             expect(audioParamMock.value).to.equal(3);
         });

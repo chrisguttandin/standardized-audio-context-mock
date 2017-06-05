@@ -2,9 +2,8 @@ import { AudioBufferMock } from './audio-buffer-mock';
 import { AudioContextMock } from './audio-context-mock';
 import { AudioNodeMock } from './audio-node-mock';
 import { AudioParamMock } from './audio-param-mock';
-import { AudioEventScheduler } from './helper/audio-event-scheduler';
+import { DeLorean } from 'vehicles';
 import { AudioParamEventType } from './helper/audio-param-event-type';
-import { IDefinition } from './interfaces';
 import { registrar } from './registrar';
 import { stub } from 'sinon';
 
@@ -18,9 +17,11 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
 
     private _buffer: null | AudioBufferMock;
 
+    private _deLorean: undefined | DeLorean;
+
     private _onended: null | Function;
 
-    private _onEndedDefinition: null | IDefinition;
+    private _onEndedTicket: null | number;
 
     private _playbackRate: AudioParamMock;
 
@@ -30,8 +31,6 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
 
     private _stopped: null | { when: number };
 
-    private _scheduler: undefined | AudioEventScheduler;
-
     constructor (context: AudioContextMock) {
         super({
             numberOfInputs: 0,
@@ -39,17 +38,17 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
         });
 
         this._buffer = null;
+        this._deLorean = <DeLorean> registrar.getVehicle(context);
         this.loop = false;
         this.loopEnd = 0;
         this.loopStart = 0;
         this._onended = null;
-        this._onEndedDefinition = null;
+        this._onEndedTicket = null;
         this._started = null;
         this._stopped = null;
-        this._scheduler = registrar.getScheduler(context);
         this._playbackRate = new AudioParamMock({
+            deLorean: this._deLorean,
             onEventListUpdatedHandler: this._scheduleOnEndedHandler.bind(this),
-            scheduler: this._scheduler,
             value: 1
         });
         this._playbackRateValue = 1;
@@ -97,13 +96,13 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
     }
 
     _scheduleOnEndedHandler () {
-        if (this._scheduler === undefined) {
+        if (this._deLorean === undefined) {
             return;
         }
 
-        if (this._onEndedDefinition !== null) {
-            this._scheduler.cancel(this._onEndedDefinition);
-            this._onEndedDefinition = null;
+        if (this._onEndedTicket !== null) {
+            this._deLorean.cancel(this._onEndedTicket);
+            this._onEndedTicket = null;
         }
 
         if (this._started !== null) {
@@ -112,15 +111,15 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
             if (this._playbackRate._eventList.length === 0) {
                 let playbackRateOffset;
 
-                if (this._started.when > this._scheduler.currentTime) {
+                if (this._started.when > this._deLorean.position) {
                     playbackRateOffset = 0;
-                    when = (this._started.when - this._scheduler.currentTime);
+                    when = (this._started.when - this._deLorean.position);
                 } else {
-                    playbackRateOffset = (this._scheduler.currentTime - this._started.when) / this._playbackRateValue;
+                    playbackRateOffset = (this._deLorean.position - this._started.when) / this._playbackRateValue;
                     when = 0;
                 }
 
-                when += this._scheduler.currentTime + ((this._started.duration - playbackRateOffset) / this._playbackRate.value);
+                when += this._deLorean.position + ((this._started.duration - playbackRateOffset) / this._playbackRate.value);
                 this._playbackRateValue = this._playbackRate.value;
             } else {
                 let actualDuration = 0;
@@ -157,17 +156,12 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
                 when = this._stopped.when;
             }
 
-            this._onEndedDefinition = {
-                func: this._callOnEndedHandler.bind(this),
-                when
-            };
-
-            this._scheduler.schedule(this._onEndedDefinition);
+            this._onEndedTicket = this._deLorean.schedule(when, this._callOnEndedHandler.bind(this));
         }
     }
 
     start (when: number, offset: number, duration: number) {
-        if (this._scheduler === undefined) {
+        if (this._deLorean === undefined) {
             return;
         }
 
@@ -175,8 +169,8 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
             when = 0;
         }
 
-        if (when < this._scheduler.currentTime) {
-            when = this._scheduler.currentTime;
+        if (when < this._deLorean.position) {
+            when = this._deLorean.position;
         }
 
         if (arguments.length < 2) {
@@ -199,7 +193,7 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
     }
 
     stop (when: number) {
-        if (this._scheduler === undefined) {
+        if (this._deLorean === undefined) {
             return;
         }
 
@@ -207,8 +201,8 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
             when = 0;
         }
 
-        if (when < this._scheduler.currentTime) {
-            when = this._scheduler.currentTime;
+        if (when < this._deLorean.position) {
+            when = this._deLorean.position;
         }
 
         this._stopped = {

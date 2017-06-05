@@ -18,7 +18,7 @@ export class DynamicsCompressorNodeMock extends AudioNodeMock {
     private _threshold: AudioParamMock;
 
     constructor (context: AudioContextMock) {
-        const scheduler = registrar.getScheduler(context);
+        const deLorean = registrar.getDeLorean(context);
 
         super({
             channelCount: 2,
@@ -29,29 +29,29 @@ export class DynamicsCompressorNodeMock extends AudioNodeMock {
         });
 
         this._attack = new AudioParamMock({
+            deLorean,
             onEventListUpdatedHandler: () => {},
-            scheduler,
             value: 0.003
         });
         this._knee = new AudioParamMock({
+            deLorean,
             onEventListUpdatedHandler: () => {},
-            scheduler,
             value: 30
         });
         this._ratio = new AudioParamMock({
+            deLorean,
             onEventListUpdatedHandler: () => {},
-            scheduler,
             value: 12
         });
         this._reduction = 0;
         this._release = new AudioParamMock({
+            deLorean,
             onEventListUpdatedHandler: () => {},
-            scheduler,
             value: 0.25
         });
         this._threshold = new AudioParamMock({
+            deLorean,
             onEventListUpdatedHandler: () => {},
-            scheduler,
             value: -24
         });
     }

@@ -1,16 +1,16 @@
 import { AudioContextMock } from './audio-context-mock';
 import { AudioNodeMock } from './audio-node-mock';
-import { AudioEventScheduler } from './helper/audio-event-scheduler';
+import { DeLorean, IVehicle } from 'vehicles';
 
 export class Registrar {
 
     private _audioNodes: WeakMap<AudioContextMock, Map<string, Set<AudioNodeMock>>>;
 
-    private _schedulers: WeakMap<AudioContextMock, AudioEventScheduler>;
+    private _deLoreans: WeakMap<AudioContextMock, DeLorean>;
 
     constructor () {
         this._audioNodes = new WeakMap();
-        this._schedulers = new WeakMap();
+        this._deLoreans = new WeakMap();
     }
 
     addAudioNode (context: AudioContextMock, type: string, node: AudioNodeMock) {
@@ -46,8 +46,12 @@ export class Registrar {
         return [];
     }
 
-    getScheduler (context: AudioContextMock): undefined | AudioEventScheduler {
-        return this._schedulers.get(context);
+    getDeLorean (context: AudioContextMock): undefined | DeLorean {
+        return this._deLoreans.get(context);
+    }
+
+    getVehicle (context: AudioContextMock): undefined | IVehicle {
+        return this._deLoreans.get(context);
     }
 
     reset (context: AudioContextMock) {
@@ -55,15 +59,15 @@ export class Registrar {
             this._audioNodes.delete(context);
         }
 
-        if (this._schedulers.has(context)) {
-            (<AudioEventScheduler> this._schedulers.get(context)).reset();
+        if (this._deLoreans.has(context)) {
+            (<IVehicle> this._deLoreans.get(context)).reset();
 
-            this._schedulers.delete(context);
+            this._deLoreans.delete(context);
         }
     }
 
-    setScheduler (context: AudioContextMock, scheduler: AudioEventScheduler) {
-        this._schedulers.set(context, scheduler);
+    setDeLorean (context: AudioContextMock, deLorean: DeLorean) {
+        this._deLoreans.set(context, deLorean);
     }
 
 }

@@ -2,7 +2,7 @@ import { SinonSpy, spy, stub } from 'sinon';
 import { AudioParamEvent } from './helper/audio-param-event';
 import { AudioParamEventList } from './helper/audio-param-event-list';
 import { AudioParamEventType } from './helper/audio-param-event-type';
-import { AudioEventScheduler } from './helper/audio-event-scheduler';
+import { DeLorean } from 'vehicles';
 
 export class AudioParamMock {
 
@@ -17,21 +17,21 @@ export class AudioParamMock {
 
     public setValueCurveAtTime: SinonSpy;
 
+    private _deLorean: undefined | DeLorean;
+
     private _defaultValue: number;
 
     private _onEventListUpdatedHandler: Function;
 
-    private _scheduler: undefined | AudioEventScheduler;
-
     private _value: number;
 
-    constructor (options: { onEventListUpdatedHandler: Function, scheduler?: AudioEventScheduler, value: number }) {
+    constructor (options: { deLorean?: DeLorean, onEventListUpdatedHandler: Function, value: number }) {
         this.cancelScheduledValues = spy();
+        this._deLorean = options.deLorean;
         this._defaultValue = options.value;
         this._eventList = new AudioParamEventList();
         this.exponentialRampToValueAtTime = spy();
         this._onEventListUpdatedHandler = options.onEventListUpdatedHandler;
-        this._scheduler = options.scheduler;
         this.setTargetAtTime = spy();
         this.setValueCurveAtTime = spy();
         this._value = options.value;
@@ -62,19 +62,19 @@ export class AudioParamMock {
     _computeValue () {
         let computedValue = null;
 
-        if (this._scheduler === undefined) {
+        if (this._deLorean === undefined) {
             return this._defaultValue;
         }
 
         this._eventList.some((event: AudioParamEvent) => {
-            if (this._scheduler === undefined) {
+            if (this._deLorean === undefined) {
                 return false;
             }
 
-            if ((event.startTime !== undefined && this._scheduler.currentTime >= event.startTime) &&
-                    (event.endTime !== undefined && this._scheduler.currentTime <= event.endTime)) {
+            if ((event.startTime !== undefined && this._deLorean.position >= event.startTime) &&
+                    (event.endTime !== undefined && this._deLorean.position <= event.endTime)) {
                 if (event.previous !== undefined && event.type === AudioParamEventType.LINEAR_RAMP_TO_VALUE) {
-                    computedValue = event.previous.value + ((event.value - event.previous.value) * (1 - ((event.endTime - this._scheduler.currentTime) / (event.endTime - event.startTime))));
+                    computedValue = event.previous.value + ((event.value - event.previous.value) * (1 - ((event.endTime - this._deLorean.position) / (event.endTime - event.startTime))));
                 } else if (event.type === AudioParamEventType.SET_VALUE) {
                     computedValue = event.value;
                 }
@@ -88,7 +88,7 @@ export class AudioParamMock {
         if (computedValue === null && this._eventList.length > 0)  {
             const lastEvent = this._eventList.last();
 
-            if (lastEvent.endTime !== undefined && this._scheduler.currentTime >= lastEvent.endTime) {
+            if (lastEvent.endTime !== undefined && this._deLorean.position >= lastEvent.endTime) {
                 computedValue = lastEvent.value;
             }
         }

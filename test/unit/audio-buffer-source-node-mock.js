@@ -8,7 +8,7 @@ import { spy } from 'sinon';
 describe('AudioBufferSourceNodeMock', () => {
 
     let audioBufferSourceNodeMock;
-    let scheduler;
+    let vehicle;
 
     beforeEach(() => {
         const context = new AudioContextMock();
@@ -20,7 +20,7 @@ describe('AudioBufferSourceNodeMock', () => {
             sampleRate: 44100
         });
 
-        scheduler = registrar.getScheduler(context);
+        vehicle = registrar.getVehicle(context);
     });
 
     describe('onended', () => {
@@ -54,11 +54,11 @@ describe('AudioBufferSourceNodeMock', () => {
             audioBufferSourceNodeMock.start(0, 0, 10);
             audioBufferSourceNodeMock.playbackRate.value = 2;
 
-            scheduler.flush(4);
+            vehicle.travel(4);
 
             expect(onEnded).to.have.not.been.called;
 
-            scheduler.flush(1);
+            vehicle.travel(1);
 
             expect(onEnded).to.have.been.calledOnce;
         });
@@ -67,13 +67,13 @@ describe('AudioBufferSourceNodeMock', () => {
             audioBufferSourceNodeMock.onended = onEnded;
             audioBufferSourceNodeMock.start(0, 0, 10);
 
-            scheduler.flush(5);
+            vehicle.travel(5);
             audioBufferSourceNodeMock.playbackRate.value = 2;
-            scheduler.flush(2);
+            vehicle.travel(2);
 
             expect(onEnded).to.have.not.been.called;
 
-            scheduler.flush(0.5);
+            vehicle.travel(0.5);
 
             expect(onEnded).to.have.been.calledOnce;
         });
@@ -83,11 +83,11 @@ describe('AudioBufferSourceNodeMock', () => {
             audioBufferSourceNodeMock.start(0, 0, 10);
             audioBufferSourceNodeMock.playbackRate.setValueAtTime(2, 5);
 
-            scheduler.flush(7);
+            vehicle.travel(7);
 
             expect(onEnded).to.have.not.been.called;
 
-            scheduler.flush(0.5);
+            vehicle.travel(0.5);
 
             expect(onEnded).to.have.been.calledOnce;
         });
@@ -98,11 +98,11 @@ describe('AudioBufferSourceNodeMock', () => {
             audioBufferSourceNodeMock.playbackRate.setValueAtTime(2, 2);
             audioBufferSourceNodeMock.playbackRate.setValueAtTime(1, 4);
 
-            scheduler.flush(7.5);
+            vehicle.travel(7.5);
 
             expect(onEnded).to.have.not.been.called;
 
-            scheduler.flush(0.5);
+            vehicle.travel(0.5);
 
             expect(onEnded).to.have.been.calledOnce;
         });
@@ -113,11 +113,11 @@ describe('AudioBufferSourceNodeMock', () => {
             audioBufferSourceNodeMock.playbackRate.setValueAtTime(1, 0);
             audioBufferSourceNodeMock.playbackRate.linearRampToValueAtTime(1.5, 1);
 
-            scheduler.flush(6.8);
+            vehicle.travel(6.8);
 
             expect(onEnded).to.have.not.been.called;
 
-            scheduler.flush(0.04);
+            vehicle.travel(0.04);
 
             expect(onEnded).to.have.been.calledOnce;
         });
@@ -158,11 +158,11 @@ describe('AudioBufferSourceNodeMock', () => {
             audioBufferSourceNodeMock.onended = onEnded;
             audioBufferSourceNodeMock.start(0);
 
-            scheduler.flush(9);
+            vehicle.travel(9);
 
             expect(onEnded).to.have.not.been.called;
 
-            scheduler.flush(1);
+            vehicle.travel(1);
 
             expect(onEnded).to.have.been.calledOnce;
         });
@@ -171,11 +171,11 @@ describe('AudioBufferSourceNodeMock', () => {
             audioBufferSourceNodeMock.onended = onEnded;
             audioBufferSourceNodeMock.start(5);
 
-            scheduler.flush(14);
+            vehicle.travel(14);
 
             expect(onEnded).to.have.not.been.called;
 
-            scheduler.flush(1);
+            vehicle.travel(1);
 
             expect(onEnded).to.have.been.calledOnce;
         });
@@ -195,11 +195,11 @@ describe('AudioBufferSourceNodeMock', () => {
             audioBufferSourceNodeMock.start(0, 0, 10);
             audioBufferSourceNodeMock.stop(5);
 
-            scheduler.flush(4);
+            vehicle.travel(4);
 
             expect(onEnded).to.have.not.been.called;
 
-            scheduler.flush(1);
+            vehicle.travel(1);
 
             expect(onEnded).to.have.been.calledOnce;
         });
