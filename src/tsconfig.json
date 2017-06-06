@@ -1,3 +1,6 @@
 {
+  "compilerOptions": {
+    "types": [ "sinon" ]
+  },
   "extends": "../node_modules/tsconfig-holy-grail/src/tsconfig-universal"
 }
