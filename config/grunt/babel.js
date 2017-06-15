@@ -2,14 +2,14 @@ const babelOptions = require('../babel/build.json');
 
 module.exports = {
     build: {
-        files: [{
+        files: [ {
             cwd: 'build/es2015',
             dest: 'build/node',
             expand: true,
             src: [
                 '**/*.js'
             ]
-        }],
+        } ],
         options: babelOptions
     }
 };
