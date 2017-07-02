@@ -57,11 +57,11 @@
     "build/node/",
     "src/"
   ],
+  "homepage": "https://github.com/chrisguttandin/standardized-audio-context-mock",
   "keywords": [
     "testing",
     "Web Audio API"
   ],
-  "homepage": "https://github.com/chrisguttandin/standardized-audio-context-mock",
   "license": "MIT",
   "main": "build/node/module.js",
   "module": "build/esm/module.js",
@@ -72,7 +72,7 @@
   },
   "scripts": {
     "precommit": "grunt lint",
-    "prepublish": "grunt build",
+    "prepublishOnly": "grunt build",
     "test": "grunt lint && grunt test"
   },
   "types": "build/es2015/module.d.ts",
