@@ -11,7 +11,7 @@
   "description": "A mocked version of the standardized-audio-context module.",
   "devDependencies": {
     "@types/sinon": "^2.3.2",
-    "babel-preset-env": "^1.5.2",
+    "babel-preset-env": "^1.6.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-register": "^6.24.1",
     "chai": "^4.0.2",
