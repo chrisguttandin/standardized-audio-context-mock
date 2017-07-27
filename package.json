@@ -41,7 +41,7 @@
     "rollup": "^0.45.2",
     "rollup-plugin-babel": "^2.7.1",
     "sinon-chai": "^2.12.0",
-    "ts-loader": "^2.3.1",
+    "ts-loader": "^2.3.2",
     "tsconfig-holy-grail": "^2.2.17",
     "tslint-config-holy-grail": "^9.0.11",
     "typescript": "^2.4.2",
