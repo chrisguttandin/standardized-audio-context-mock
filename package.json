@@ -5,7 +5,7 @@
     "url": "https://github.com/chrisguttandin/standardized-audio-context-mock/issues"
   },
   "dependencies": {
-    "sinon": "^3.0.0",
+    "sinon": "^3.1.0",
     "vehicles": "^2.2.2"
   },
   "description": "A mocked version of the standardized-audio-context module.",
