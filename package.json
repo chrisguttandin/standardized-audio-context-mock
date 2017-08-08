@@ -40,7 +40,7 @@
     "load-grunt-config": "^0.19.1",
     "mocha": "^3.5.0",
     "rollup": "^0.45.2",
-    "rollup-plugin-babel": "^3.0.0",
+    "rollup-plugin-babel": "^3.0.1",
     "sinon-chai": "^2.12.0",
     "ts-loader": "^2.3.2",
     "tsconfig-holy-grail": "^2.2.19",
