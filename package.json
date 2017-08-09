@@ -17,7 +17,7 @@
     "babel-register": "^6.24.1",
     "chai": "^4.1.1",
     "eslint-config-holy-grail": "^19.0.1",
-    "greenkeeper-lockfile": "^1.7.2",
+    "greenkeeper-lockfile": "^1.8.0",
     "grunt": "^1.0.1",
     "grunt-babel": "^7.0.0",
     "grunt-cli": "^1.0.0",
