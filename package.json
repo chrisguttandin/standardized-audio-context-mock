@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "sinon": "^3.2.1",
+    "tslint": "^5.7.0",
     "vehicles": "^2.2.3"
   },
   "description": "A mocked version of the standardized-audio-context module.",
