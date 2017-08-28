@@ -5,6 +5,7 @@
     "url": "https://github.com/chrisguttandin/standardized-audio-context-mock/issues"
   },
   "dependencies": {
+    "babel-plugin-external-helpers": "^6.22.0",
     "sinon": "^3.2.1",
     "tslint": "^5.7.0",
     "vehicles": "^2.2.3"
