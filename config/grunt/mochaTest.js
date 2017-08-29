@@ -17,11 +17,11 @@ module.exports = {
 
                     require.extensions['.ts'] = function (mdl, filename) {
                         if (!filename.includes('node_modules') && filename.includes('src/')) {
-                            filename = filename
+                            const buildFilename = filename
                                 .replace('src/', 'build/node/')
                                 .slice(0, -3) + '.js';
 
-                            mdl._compile(fs.readFileSync(filename, 'utf8'), filename);
+                            mdl._compile(fs.readFileSync(buildFilename, 'utf8'), buildFilename);
                         }
 
                         if (compiler) {
