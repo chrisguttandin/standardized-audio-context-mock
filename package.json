@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "sinon": "^3.2.1",
-    "vehicles": "^2.2.3"
+    "vehicles": "^2.2.8"
   },
   "description": "A mocked version of the standardized-audio-context module.",
   "devDependencies": {
