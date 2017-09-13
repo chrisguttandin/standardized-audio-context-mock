@@ -1,10 +1,10 @@
-import { AudioBufferMock } from './audio-buffer-mock';
-import { AudioContextMock } from './audio-context-mock';
-import { AudioNodeMock } from './audio-node-mock';
-import { AudioParamMock } from './audio-param-mock';
-import { DeLorean } from 'vehicles';
-import { AudioParamEventType } from './helper/audio-param-event-type';
-import { registrar } from './registrar';
+import { AudioBufferMock } from './audio-buffer-mock';
+import { AudioContextMock } from './audio-context-mock';
+import { AudioNodeMock } from './audio-node-mock';
+import { AudioParamMock } from './audio-param-mock';
+import { DeLorean } from 'vehicles';
+import { AudioParamEventType } from './helper/audio-param-event-type';
+import { registrar } from './registrar';
 import { stub } from 'sinon';
 
 export class AudioBufferSourceNodeMock extends AudioNodeMock {

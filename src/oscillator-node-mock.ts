@@ -1,8 +1,8 @@
 import { AudioNodeMock } from './audio-node-mock';
 import { AudioParamMock } from './audio-param-mock';
 import { SinonSpy, spy } from 'sinon';
-import { registrar } from './registrar';
-import { AudioContextMock } from './audio-context-mock';
+import { registrar } from './registrar';
+import { AudioContextMock } from './audio-context-mock';
 
 export class OscillatorNodeMock extends AudioNodeMock {
 

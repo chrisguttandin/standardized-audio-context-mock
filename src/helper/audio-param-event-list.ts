@@ -1,4 +1,4 @@
-import { AudioParamEvent } from './audio-param-event';
+import { AudioParamEvent } from './audio-param-event';
 
 export class AudioParamEventList {
 
