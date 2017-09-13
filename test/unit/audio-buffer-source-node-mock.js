@@ -1,7 +1,7 @@
-import { AudioBufferMock } from '../../src/audio-buffer-mock';
-import { AudioBufferSourceNodeMock } from '../../src/audio-buffer-source-node-mock';
-import { AudioContextMock } from '../../src/audio-context-mock';
-import { AudioParamMock } from '../../src/audio-param-mock';
+import { AudioBufferMock } from '../../src/audio-buffer-mock';
+import { AudioBufferSourceNodeMock } from '../../src/audio-buffer-source-node-mock';
+import { AudioContextMock } from '../../src/audio-context-mock';
+import { AudioParamMock } from '../../src/audio-param-mock';
 import { registrar } from '../../src/registrar';
 import { spy } from 'sinon';
 

@@ -1,5 +1,5 @@
-import { AudioContextMock } from '../../src/audio-context-mock';
-import { registrar } from '../../src/registrar';
+import { AudioContextMock } from '../../src/audio-context-mock';
+import { registrar } from '../../src/registrar';
 
 describe('AudioContextMock', () => {
 
