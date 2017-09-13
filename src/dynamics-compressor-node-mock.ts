@@ -1,7 +1,7 @@
 import { AudioNodeMock } from './audio-node-mock';
 import { AudioParamMock } from './audio-param-mock';
-import { registrar } from './registrar';
-import { AudioContextMock } from './audio-context-mock';
+import { registrar } from './registrar';
+import { AudioContextMock } from './audio-context-mock';
 
 export class DynamicsCompressorNodeMock extends AudioNodeMock {
 

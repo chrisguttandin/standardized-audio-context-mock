@@ -1,8 +1,8 @@
 import { SinonSpy, spy, stub } from 'sinon';
-import { AudioParamEvent } from './helper/audio-param-event';
-import { AudioParamEventList } from './helper/audio-param-event-list';
-import { AudioParamEventType } from './helper/audio-param-event-type';
-import { DeLorean } from 'vehicles';
+import { AudioParamEvent } from './helper/audio-param-event';
+import { AudioParamEventList } from './helper/audio-param-event-list';
+import { AudioParamEventType } from './helper/audio-param-event-type';
+import { DeLorean } from 'vehicles';
 
 export class AudioParamMock {
 
@@ -17,7 +17,7 @@ export class AudioParamMock {
 
     public setValueCurveAtTime: SinonSpy;
 
-    private _deLorean: undefined | DeLorean;
+    private _deLorean: undefined | DeLorean;
 
     private _defaultValue: number;
 

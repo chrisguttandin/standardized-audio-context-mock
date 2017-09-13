@@ -1,5 +1,5 @@
-import { AudioContextMock } from './audio-context-mock';
-import { AudioNodeMock } from './audio-node-mock';
+import { AudioContextMock } from './audio-context-mock';
+import { AudioNodeMock } from './audio-node-mock';
 import { DeLorean, IVehicle } from 'vehicles';
 
 export class Registrar {
@@ -46,11 +46,11 @@ export class Registrar {
         return [];
     }
 
-    getDeLorean (context: AudioContextMock): undefined | DeLorean {
+    getDeLorean (context: AudioContextMock): undefined | DeLorean {
         return this._deLoreans.get(context);
     }
 
-    getVehicle (context: AudioContextMock): undefined | IVehicle {
+    getVehicle (context: AudioContextMock): undefined | IVehicle {
         return this._deLoreans.get(context);
     }
 

@@ -1,10 +1,10 @@
-import { AudioBufferMock } from './audio-buffer-mock';
-import { AudioBufferSourceNodeMock } from './audio-buffer-source-node-mock';
-import { DeLorean } from 'vehicles';
-import { DynamicsCompressorNodeMock } from './dynamics-compressor-node-mock';
-import { GainNodeMock } from './gain-node-mock';
-import { OscillatorNodeMock } from './oscillator-node-mock';
-import { registrar } from './registrar';
+import { AudioBufferMock } from './audio-buffer-mock';
+import { AudioBufferSourceNodeMock } from './audio-buffer-source-node-mock';
+import { DeLorean } from 'vehicles';
+import { DynamicsCompressorNodeMock } from './dynamics-compressor-node-mock';
+import { GainNodeMock } from './gain-node-mock';
+import { OscillatorNodeMock } from './oscillator-node-mock';
+import { registrar } from './registrar';
 
 export class AudioContextMock {
 

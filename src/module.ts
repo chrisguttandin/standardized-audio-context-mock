@@ -1,13 +1,13 @@
-import { AudioBufferSourceNodeMock } from './audio-buffer-source-node-mock';
-import { AudioContextMock } from './audio-context-mock';
+import { AudioBufferSourceNodeMock } from './audio-buffer-source-node-mock';
+import { AudioContextMock } from './audio-context-mock';
 import { AudioNodeMock } from './audio-node-mock';
-import { DynamicsCompressorNodeMock } from './dynamics-compressor-node-mock';
-import { OscillatorNodeMock } from './oscillator-node-mock';
-import { Registrar, registrar } from './registrar';
+import { DynamicsCompressorNodeMock } from './dynamics-compressor-node-mock';
+import { OscillatorNodeMock } from './oscillator-node-mock';
+import { Registrar, registrar } from './registrar';
 
 export default {
 
-    AudioBufferSourceNode: AudioBufferSourceNodeMock,
+    AudioBufferSourceNode: AudioBufferSourceNodeMock,
 
     AudioContext: AudioContextMock,
 
