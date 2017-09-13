@@ -1,6 +1,6 @@
-import { AudioContextMock } from '../../src/audio-context-mock';
-import { AudioParamMock } from '../../src/audio-param-mock';
-import { DynamicsCompressorNodeMock } from '../../src/dynamics-compressor-node-mock';
+import { AudioContextMock } from '../../src/audio-context-mock';
+import { AudioParamMock } from '../../src/audio-param-mock';
+import { DynamicsCompressorNodeMock } from '../../src/dynamics-compressor-node-mock';
 
 describe('DynamicsCompressorNodeMock', () => {
 
