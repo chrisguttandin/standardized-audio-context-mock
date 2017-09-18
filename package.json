@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "babel-runtime": "^6.26.0",
-    "sinon": "^3.2.1",
+    "sinon": "^3.3.0",
     "tslib": "^1.7.1",
     "vehicles": "^2.2.9"
   },
