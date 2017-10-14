@@ -32,13 +32,15 @@ describe('AudioContextMock', () => {
 
             expect(audioBufferSourceNodeMock.buffer).to.be.null;
 
-            // expect(audioBufferSourceNodeMock.detune.cancelScheduledValues).to.be.a('function');
-            // expect(audioBufferSourceNodeMock.detune.defaultValue).to.equal(0);
-            // expect(audioBufferSourceNodeMock.detune.exponentialRampToValueAtTime).to.be.a('function');
-            // expect(audioBufferSourceNodeMock.detune.linearRampToValueAtTime).to.be.a('function');
-            // expect(audioBufferSourceNodeMock.detune.setTargetAtTime).to.be.a('function');
-            // expect(audioBufferSourceNodeMock.detune.setValueCurveAtTime).to.be.a('function');
-            // expect(audioBufferSourceNodeMock.detune.value).to.equal(0);
+            /*
+             * expect(audioBufferSourceNodeMock.detune.cancelScheduledValues).to.be.a('function');
+             * expect(audioBufferSourceNodeMock.detune.defaultValue).to.equal(0);
+             * expect(audioBufferSourceNodeMock.detune.exponentialRampToValueAtTime).to.be.a('function');
+             * expect(audioBufferSourceNodeMock.detune.linearRampToValueAtTime).to.be.a('function');
+             * expect(audioBufferSourceNodeMock.detune.setTargetAtTime).to.be.a('function');
+             * expect(audioBufferSourceNodeMock.detune.setValueCurveAtTime).to.be.a('function');
+             * expect(audioBufferSourceNodeMock.detune.value).to.equal(0);
+             */
 
             expect(audioBufferSourceNodeMock.loop).to.be.false;
             expect(audioBufferSourceNodeMock.loopEnd).to.equal(0);
@@ -163,9 +165,11 @@ describe('AudioContextMock', () => {
         it('should return an instance of the OscillatorNode interface', function () {
             const oscillatorNode = audioContextMock.createOscillator();
 
-            // channelCount is not specified
-            // channelCountMode is not specified
-            // channelInterpretation is not specified
+            /*
+             * channelCount is not specified
+             * channelCountMode is not specified
+             * channelInterpretation is not specified
+             */
 
             expect(oscillatorNode.detune.cancelScheduledValues).to.be.a('function');
             expect(oscillatorNode.detune.defaultValue).to.equal(0);
