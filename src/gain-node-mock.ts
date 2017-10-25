@@ -1,9 +1,10 @@
+import { IGainNode } from 'standardized-audio-context';
 import { AudioNodeMock } from './audio-node-mock';
 import { AudioParamMock } from './audio-param-mock';
 import { registrar } from './registrar';
 import { AudioContextMock } from './audio-context-mock';
 
-export class GainNodeMock extends AudioNodeMock {
+export class GainNodeMock extends AudioNodeMock implements IGainNode {
 
     private _gain: AudioParamMock;
 
@@ -11,6 +12,8 @@ export class GainNodeMock extends AudioNodeMock {
         const deLorean = registrar.getDeLorean(context);
 
         super({
+            context,
+            channelCount: 2,
             channelCountMode: 'max',
             channelInterpretation: 'speakers',
             numberOfInputs: 1,
