@@ -1,10 +1,11 @@
+import { IOscillatorNode, TEndedEventHandler, TOscillatorType } from 'standardized-audio-context';
 import { AudioNodeMock } from './audio-node-mock';
 import { AudioParamMock } from './audio-param-mock';
 import { SinonSpy, spy } from 'sinon';
 import { registrar } from './registrar';
 import { AudioContextMock } from './audio-context-mock';
 
-export class OscillatorNodeMock extends AudioNodeMock {
+export class OscillatorNodeMock extends AudioNodeMock implements IOscillatorNode {
 
     public setPeriodicWave: SinonSpy;
 
@@ -12,16 +13,20 @@ export class OscillatorNodeMock extends AudioNodeMock {
 
     public stop: SinonSpy;
 
-    public type: string;
+    public type: TOscillatorType;
 
     private _detune: AudioParamMock;
 
     private _frequency: AudioParamMock;
 
+    private _onended: null | TEndedEventHandler;
+
     constructor (context: AudioContextMock) {
         const deLorean = registrar.getDeLorean(context);
 
         super({
+            context,
+            channelCount: 2,
             channelCountMode: 'max',
             channelInterpretation: 'speakers',
             numberOfInputs: 0,
@@ -42,6 +47,8 @@ export class OscillatorNodeMock extends AudioNodeMock {
             onEventListUpdatedHandler: () => {},
             value: 440
         });
+        // @todo Implement the ended event.
+        this._onended = null;
         this.setPeriodicWave = spy();
         this.start = spy();
         this.stop = spy();
@@ -62,6 +69,16 @@ export class OscillatorNodeMock extends AudioNodeMock {
 
     set frequency (value: AudioParamMock) {
         value;
+    }
+
+    get onended () {
+        return this._onended;
+    }
+
+    set onended (value: null | TEndedEventHandler) {
+        if (typeof value === 'function' || value === null) {
+            this._onended = value;
+        }
     }
 
 }
