@@ -1,3 +1,4 @@
+import { IAudioBufferSourceNode, TEndedEventHandler } from 'standardized-audio-context';
 import { AudioBufferMock } from './audio-buffer-mock';
 import { AudioContextMock } from './audio-context-mock';
 import { AudioNodeMock } from './audio-node-mock';
@@ -7,7 +8,7 @@ import { AudioParamEventType } from './helper/audio-param-event-type';
 import { registrar } from './registrar';
 import { stub } from 'sinon';
 
-export class AudioBufferSourceNodeMock extends AudioNodeMock {
+export class AudioBufferSourceNodeMock extends AudioNodeMock implements IAudioBufferSourceNode {
 
     public loop: boolean;
 
@@ -21,7 +22,7 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
 
     private _detune: AudioParamMock;
 
-    private _onended: null | Function;
+    private _onended: null | TEndedEventHandler;
 
     private _onEndedTicket: null | number;
 
@@ -35,6 +36,10 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
 
     constructor (context: AudioContextMock) {
         super({
+            context,
+            channelCount: 2,
+            channelCountMode: 'max',
+            channelInterpretation: 'speakers',
             numberOfInputs: 0,
             numberOfOutputs: 1
         });
@@ -92,7 +97,7 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
         return this._onended;
     }
 
-    set onended (value: null | Function) {
+    set onended (value: null | TEndedEventHandler) {
         if (typeof value === 'function' || value === null) {
             this._onended = value;
         }
@@ -108,7 +113,8 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
 
     _callOnEndedHandler () {
         if (typeof this.onended === 'function') {
-            this.onended();
+            // @todo This should call onended with an event.
+            this.onended({});
         }
     }
 
