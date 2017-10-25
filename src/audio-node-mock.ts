@@ -1,12 +1,14 @@
+import { IAudioNode, IBaseAudioContext, TChannelCountMode, TChannelInterpretation } from 'standardized-audio-context';
 import { SinonSpy, spy } from 'sinon';
+import { AudioContextMock } from './audio-context-mock';
 
-export class AudioNodeMock {
+export class AudioNodeMock implements IAudioNode {
 
-    public channelCount: number | undefined;
+    public channelCount: number;
 
-    public channelCountMode: string | undefined;
+    public channelCountMode: TChannelCountMode;
 
-    public channelInterpretation: string | undefined;
+    public channelInterpretation: TChannelInterpretation;
 
     public connect: SinonSpy;
 
@@ -16,14 +18,22 @@ export class AudioNodeMock {
 
     public numberOfOutputs: number;
 
-    constructor (options: { channelCount?: number, channelCountMode?: string, channelInterpretation?: string, connect?: SinonSpy, disconnect?: SinonSpy, numberOfInputs: number, numberOfOutputs: number }) {
+    private _context: AudioContextMock;
+
+    constructor (options: { channelCount: number, channelCountMode: TChannelCountMode, channelInterpretation: TChannelInterpretation, context: AudioContextMock, connect?: SinonSpy, disconnect?: SinonSpy, numberOfInputs: number, numberOfOutputs: number }) {
         this.channelCount = options.channelCount;
         this.channelCountMode = options.channelCountMode;
         this.channelInterpretation = options.channelInterpretation;
+        this._context = options.context;
         this.connect = spy();
         this.disconnect = spy();
         this.numberOfInputs = options.numberOfInputs;
         this.numberOfOutputs = options.numberOfOutputs;
+    }
+
+    get context () {
+        // @todo Remove this ugly cast again when the context implements the IBaseAudioContext interface.
+        return <IBaseAudioContext> (<any> this._context);
     }
 
 }
