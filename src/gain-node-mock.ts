@@ -19,6 +19,8 @@ export class GainNodeMock extends AudioNodeMock {
 
         this._gain = new AudioParamMock({
             deLorean,
+            maxValue: 3.4028234663852886e38,
+            minValue: -3.4028234663852886e38,
             onEventListUpdatedHandler: () => {},
             value: 1
         });

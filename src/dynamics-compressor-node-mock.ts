@@ -30,27 +30,37 @@ export class DynamicsCompressorNodeMock extends AudioNodeMock {
 
         this._attack = new AudioParamMock({
             deLorean,
+            maxValue: 1,
+            minValue: 0,
             onEventListUpdatedHandler: () => {},
             value: 0.003
         });
         this._knee = new AudioParamMock({
             deLorean,
+            maxValue: 40,
+            minValue: 0,
             onEventListUpdatedHandler: () => {},
             value: 30
         });
         this._ratio = new AudioParamMock({
             deLorean,
+            maxValue: 20,
+            minValue: 1,
             onEventListUpdatedHandler: () => {},
             value: 12
         });
         this._reduction = 0;
         this._release = new AudioParamMock({
             deLorean,
+            maxValue: 1,
+            minValue: 0,
             onEventListUpdatedHandler: () => {},
             value: 0.25
         });
         this._threshold = new AudioParamMock({
             deLorean,
+            maxValue: -100,
+            minValue: 0,
             onEventListUpdatedHandler: () => {},
             value: -24
         });

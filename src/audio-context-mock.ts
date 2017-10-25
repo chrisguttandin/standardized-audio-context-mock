@@ -22,6 +22,10 @@ export class AudioContextMock {
 
     // destination
 
+    get sampleRate () {
+        return 44100;
+    }
+
     close () {}
 
     // @todo This is a lazy hack.

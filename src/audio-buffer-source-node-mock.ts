@@ -43,6 +43,8 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
         this._deLorean = <DeLorean> registrar.getVehicle(context);
         this._detune = new AudioParamMock({
             deLorean: this._deLorean,
+            maxValue: 3.4028234663852886e38,
+            minValue: -3.4028234663852886e38,
             onEventListUpdatedHandler: this._scheduleOnEndedHandler.bind(this),
             value: 0
         });
@@ -55,6 +57,8 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
         this._stopped = null;
         this._playbackRate = new AudioParamMock({
             deLorean: this._deLorean,
+            maxValue: 3.4028234663852886e38,
+            minValue: -3.4028234663852886e38,
             onEventListUpdatedHandler: this._scheduleOnEndedHandler.bind(this),
             value: 1
         });

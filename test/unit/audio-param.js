@@ -11,6 +11,8 @@ describe('AudioParamMock', () => {
 
         audioParamMock = new AudioParamMock({
             deLorean,
+            maxValue: 18,
+            minValue: 0,
             onEventListUpdatedHandler: () => {},
             value: 1
         });
@@ -26,6 +28,34 @@ describe('AudioParamMock', () => {
             audioParamMock.defaultValue = 2;
 
             expect(audioParamMock.defaultValue).to.not.equal(2);
+        });
+
+    });
+
+    describe('maxValue', () => {
+
+        it('should have the maxValue specified in the constructor', () => {
+            expect(audioParamMock.maxValue).to.equal(18);
+        });
+
+        it('should be readonly', () => {
+            audioParamMock.maxValue = 2;
+
+            expect(audioParamMock.maxValue).to.not.equal(2);
+        });
+
+    });
+
+    describe('minValue', () => {
+
+        it('should have the minValue specified in the constructor', () => {
+            expect(audioParamMock.minValue).to.equal(0);
+        });
+
+        it('should be readonly', () => {
+            audioParamMock.minValue = 2;
+
+            expect(audioParamMock.minValue).to.not.equal(2);
         });
 
     });

@@ -30,11 +30,15 @@ export class OscillatorNodeMock extends AudioNodeMock {
 
         this._detune = new AudioParamMock({
             deLorean,
+            maxValue: 3.4028234663852886e38,
+            minValue: -3.4028234663852886e38,
             onEventListUpdatedHandler: () => {},
             value: 0
         });
         this._frequency = new AudioParamMock({
             deLorean,
+            maxValue: context.sampleRate / 2,
+            minValue: -(context.sampleRate / 2),
             onEventListUpdatedHandler: () => {},
             value: 440
         });

@@ -1,10 +1,11 @@
+import { IAudioParam } from 'standardized-audio-context';
 import { SinonSpy, spy, stub } from 'sinon';
 import { AudioParamEvent } from './helper/audio-param-event';
 import { AudioParamEventList } from './helper/audio-param-event-list';
 import { AudioParamEventType } from './helper/audio-param-event-type';
 import { DeLorean } from 'vehicles';
 
-export class AudioParamMock {
+export class AudioParamMock implements IAudioParam {
 
     public cancelScheduledValues: SinonSpy;
 
@@ -21,16 +22,22 @@ export class AudioParamMock {
 
     private _defaultValue: number;
 
+    private _maxValue: number;
+
+    private _minValue: number;
+
     private _onEventListUpdatedHandler: Function;
 
     private _value: number;
 
-    constructor (options: { deLorean?: DeLorean, onEventListUpdatedHandler: Function, value: number }) {
+    constructor (options: { deLorean?: DeLorean, maxValue: number, minValue: number, onEventListUpdatedHandler: Function, value: number }) {
         this.cancelScheduledValues = spy();
         this._deLorean = options.deLorean;
         this._defaultValue = options.value;
         this._eventList = new AudioParamEventList();
         this.exponentialRampToValueAtTime = spy();
+        this._maxValue = options.maxValue;
+        this._minValue = options.minValue;
         this._onEventListUpdatedHandler = options.onEventListUpdatedHandler;
         this.setTargetAtTime = spy();
         this.setValueCurveAtTime = spy();
@@ -47,6 +54,22 @@ export class AudioParamMock {
     }
 
     set defaultValue (value) {
+        value;
+    }
+
+    get maxValue () {
+        return this._maxValue;
+    }
+
+    set maxValue (value) {
+        value;
+    }
+
+    get minValue () {
+        return this._minValue;
+    }
+
+    set minValue (value) {
         value;
     }
 
@@ -94,6 +117,11 @@ export class AudioParamMock {
         }
 
         return (computedValue === null) ? this._value : computedValue;
+    }
+
+    cancelAndHoldAtTime (cancelTime: number) {
+        // @todo Implemnt cancelAndHoldTime().
+        cancelTime;
     }
 
     linearRampToValueAtTime (value: number, endTime: number) {
