@@ -23,6 +23,28 @@ describe('AudioBufferSourceNodeMock', () => {
         vehicle = registrar.getVehicle(context);
     });
 
+    describe('detune', () => {
+
+        it('should be readonly', () => {
+            audioBufferSourceNodeMock.detune = 'new value';
+
+            expect(audioBufferSourceNodeMock.detune).to.not.equal('new value');
+        });
+
+        it('should be a instance of AudioParamMock', () => {
+            expect(audioBufferSourceNodeMock.detune).to.be.an.instanceOf(AudioParamMock);
+        });
+
+        it('should have a default value of 0', () => {
+            expect(audioBufferSourceNodeMock.detune.defaultValue).to.equal(0);
+        });
+
+        it('should have a value of 0', () => {
+            expect(audioBufferSourceNodeMock.detune.value).to.equal(0);
+        });
+
+    });
+
     describe('onended', () => {
 
         let onEnded;

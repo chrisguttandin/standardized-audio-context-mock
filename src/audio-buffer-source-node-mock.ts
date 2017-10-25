@@ -19,6 +19,8 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
 
     private _deLorean: undefined | DeLorean;
 
+    private _detune: AudioParamMock;
+
     private _onended: null | Function;
 
     private _onEndedTicket: null | number;
@@ -39,6 +41,11 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
 
         this._buffer = null;
         this._deLorean = <DeLorean> registrar.getVehicle(context);
+        this._detune = new AudioParamMock({
+            deLorean: this._deLorean,
+            onEventListUpdatedHandler: this._scheduleOnEndedHandler.bind(this),
+            value: 0
+        });
         this.loop = false;
         this.loopEnd = 0;
         this.loopStart = 0;
@@ -69,7 +76,13 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock {
         this._buffer = value;
     }
 
-    // get detune () {}
+    get detune () {
+        return this._detune;
+    }
+
+    set detune (value) {
+        value;
+    }
 
     get onended () {
         return this._onended;
