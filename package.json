@@ -13,6 +13,7 @@
   "description": "A mocked version of the standardized-audio-context module.",
   "devDependencies": {
     "@types/sinon": "^2.3.7",
+    "babel-core": "^6.26.0",
     "chai": "^4.1.2",
     "eslint": "^4.9.0",
     "eslint-config-holy-grail": "^24.0.1",
