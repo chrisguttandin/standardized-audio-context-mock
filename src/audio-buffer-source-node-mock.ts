@@ -113,8 +113,7 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock implements IAudioBu
 
     _callOnEndedHandler () {
         if (typeof this.onended === 'function') {
-            // @todo This should call onended with an event.
-            this.onended({});
+            this.onended(new Event('ended'));
         }
     }
 
