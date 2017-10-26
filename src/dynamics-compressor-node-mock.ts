@@ -21,6 +21,7 @@ export class DynamicsCompressorNodeMock extends AudioNodeMock {
         const deLorean = registrar.getDeLorean(context);
 
         super({
+            context,
             channelCount: 2,
             channelCountMode: 'explicit',
             channelInterpretation: 'speakers',
