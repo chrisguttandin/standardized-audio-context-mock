@@ -98,8 +98,17 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock implements IAudioBu
     }
 
     set onended (value: null | TEndedEventHandler) {
+        // @todo It is theoretically possible that the ended handler gets removed by using the public API.
+        if (typeof this._onended === 'function') {
+            this.removeEventListener('ended', this._onended);
+        }
+
         if (typeof value === 'function' || value === null) {
             this._onended = value;
+
+            if (typeof value === 'function') {
+                this.addEventListener('ended', value);
+            }
         }
     }
 
@@ -112,9 +121,7 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock implements IAudioBu
     }
 
     _callOnEndedHandler () {
-        if (typeof this.onended === 'function') {
-            this.onended(new Event('ended'));
-        }
+        this.dispatchEvent(new Event('ended'));
     }
 
     _scheduleOnEndedHandler () {

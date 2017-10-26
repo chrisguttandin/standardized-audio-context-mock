@@ -1,24 +1,51 @@
 export class EventTarget {
 
+    private _eventListeners: Map<string, Set<EventListener>>;
+
+    constructor () {
+        this._eventListeners = new Map();
+    }
+
     public addEventListener (type: string, listener?: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions) {
-        // @todo Implement the addEventListener() method.
-        listener; // tslint:disable-line:no-unused-expression
+        let eventListenersOfType = this._eventListeners.get(type);
+
+        if (eventListenersOfType === undefined) {
+            eventListenersOfType = new Set();
+
+            this._eventListeners.set(type, eventListenersOfType);
+        }
+
+        if (typeof listener === 'function') {
+            eventListenersOfType.add(listener);
+        }
+
+        // @todo Fully implement the addEventListener() method.
         options; // tslint:disable-line:no-unused-expression
-        type; // tslint:disable-line:no-unused-expression
     }
 
     public dispatchEvent (evt: Event) {
-        // @todo Implement the dispatchEvent() method.
-        evt; // tslint:disable-line:no-unused-expression
+        const eventListenersOfType = this._eventListeners.get(evt.type);
+
+        if (eventListenersOfType !== undefined) {
+            eventListenersOfType.forEach((listener) => listener(evt));
+
+            return true;
+        }
+
+        // @todo Fully implement the dispatchEvent() method.
 
         return false;
     }
 
     public removeEventListener (type: string, listener?: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions) {
-        // @todo Implement the removeEventListener() method.
-        listener; // tslint:disable-line:no-unused-expression
+        const eventListenersOfType = this._eventListeners.get(type);
+
+        if (eventListenersOfType !== undefined && typeof listener === 'function') {
+            eventListenersOfType.delete(listener);
+        }
+
+        // @todo Fully implement the removeEventListener() method.
         options; // tslint:disable-line:no-unused-expression
-        type; // tslint:disable-line:no-unused-expression
     }
 
 }
