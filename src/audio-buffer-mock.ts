@@ -1,4 +1,6 @@
-export class AudioBufferMock {
+import { IAudioBuffer } from 'standardized-audio-context';
+
+export class AudioBufferMock implements IAudioBuffer {
 
     public length: number;
 
@@ -21,7 +23,7 @@ export class AudioBufferMock {
     copyToChannel () {}
 
     getChannelData () {
-        return [];
+        return new Float32Array([]);
     }
 
 }
