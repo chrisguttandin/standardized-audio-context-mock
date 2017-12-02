@@ -1,22 +1,22 @@
-import { IAudioParam } from 'standardized-audio-context';
 import { SinonSpy, spy, stub } from 'sinon';
+import { IAudioParam } from 'standardized-audio-context';
+import { DeLorean } from 'vehicles';
 import { AudioParamEvent } from './helper/audio-param-event';
 import { AudioParamEventList } from './helper/audio-param-event-list';
 import { AudioParamEventType } from './helper/audio-param-event-type';
-import { DeLorean } from 'vehicles';
 
 export class AudioParamMock implements IAudioParam {
 
     public cancelScheduledValues: SinonSpy;
-
-    // @todo Fix access modifier.
-    public _eventList: AudioParamEventList;
 
     public exponentialRampToValueAtTime: SinonSpy;
 
     public setTargetAtTime: SinonSpy;
 
     public setValueCurveAtTime: SinonSpy;
+
+    // @todo Fix access modifier.
+    private _eventList: AudioParamEventList;
 
     private _deLorean: undefined | DeLorean;
 
@@ -54,7 +54,7 @@ export class AudioParamMock implements IAudioParam {
     }
 
     set defaultValue (value) {
-        value;
+        value; // tslint:disable-line:no-unused-expression
     }
 
     get maxValue () {
@@ -62,7 +62,7 @@ export class AudioParamMock implements IAudioParam {
     }
 
     set maxValue (value) {
-        value;
+        value; // tslint:disable-line:no-unused-expression
     }
 
     get minValue () {
@@ -70,7 +70,7 @@ export class AudioParamMock implements IAudioParam {
     }
 
     set minValue (value) {
-        value;
+        value; // tslint:disable-line:no-unused-expression
     }
 
     get value () {
@@ -82,7 +82,28 @@ export class AudioParamMock implements IAudioParam {
         this._onEventListUpdatedHandler();
     }
 
-    _computeValue () {
+    public cancelAndHoldAtTime (cancelTime: number) {
+        // @todo Implemnt cancelAndHoldTime().
+        cancelTime; // tslint:disable-line:no-unused-expression
+    }
+
+    public linearRampToValueAtTime (value: number, endTime: number) {
+        this._eventList.add(new AudioParamEvent({
+            endTime,
+            type: AudioParamEventType.LINEAR_RAMP_TO_VALUE,
+            value
+        }));
+    }
+
+    public setValueAtTime (value: number, startTime: number) {
+        this._eventList.add(new AudioParamEvent({
+            startTime,
+            type: AudioParamEventType.SET_VALUE,
+            value
+        }));
+    }
+
+    private _computeValue () {
         let computedValue = null;
 
         if (this._deLorean === undefined) {
@@ -97,7 +118,7 @@ export class AudioParamMock implements IAudioParam {
             if ((event.startTime !== undefined && this._deLorean.position >= event.startTime) &&
                     (event.endTime !== undefined && this._deLorean.position <= event.endTime)) {
                 if (event.previous !== undefined && event.type === AudioParamEventType.LINEAR_RAMP_TO_VALUE) {
-                    computedValue = event.previous.value + ((event.value - event.previous.value) * (1 - ((event.endTime - this._deLorean.position) / (event.endTime - event.startTime))));
+                    computedValue = event.previous.value + ((event.value - event.previous.value) * (1 - ((event.endTime - this._deLorean.position) / (event.endTime - event.startTime)))); // tslint:disable-line:max-line-length
                 } else if (event.type === AudioParamEventType.SET_VALUE) {
                     computedValue = event.value;
                 }
@@ -117,27 +138,6 @@ export class AudioParamMock implements IAudioParam {
         }
 
         return (computedValue === null) ? this._value : computedValue;
-    }
-
-    cancelAndHoldAtTime (cancelTime: number) {
-        // @todo Implemnt cancelAndHoldTime().
-        cancelTime;
-    }
-
-    linearRampToValueAtTime (value: number, endTime: number) {
-        this._eventList.add(new AudioParamEvent({
-            endTime,
-            type: AudioParamEventType.LINEAR_RAMP_TO_VALUE,
-            value
-        }));
-    }
-
-    setValueAtTime (value: number, startTime: number) {
-        this._eventList.add(new AudioParamEvent({
-            startTime,
-            type: AudioParamEventType.SET_VALUE,
-            value
-        }));
     }
 
 }

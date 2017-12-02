@@ -1,8 +1,8 @@
 import { IGainNode } from 'standardized-audio-context';
+import { AudioContextMock } from './audio-context-mock';
 import { AudioNodeMock } from './audio-node-mock';
 import { AudioParamMock } from './audio-param-mock';
 import { registrar } from './registrar';
-import { AudioContextMock } from './audio-context-mock';
 
 export class GainNodeMock extends AudioNodeMock implements IGainNode {
 
@@ -12,10 +12,10 @@ export class GainNodeMock extends AudioNodeMock implements IGainNode {
         const deLorean = registrar.getDeLorean(context);
 
         super({
-            context,
             channelCount: 2,
             channelCountMode: 'max',
             channelInterpretation: 'speakers',
+            context,
             numberOfInputs: 1,
             numberOfOutputs: 1
         });
@@ -24,7 +24,7 @@ export class GainNodeMock extends AudioNodeMock implements IGainNode {
             deLorean,
             maxValue: 3.4028234663852886e38,
             minValue: -3.4028234663852886e38,
-            onEventListUpdatedHandler: () => {},
+            onEventListUpdatedHandler () { }, // tslint:disable-line:no-empty
             value: 1
         });
     }
@@ -34,7 +34,7 @@ export class GainNodeMock extends AudioNodeMock implements IGainNode {
     }
 
     set gain (value: AudioParamMock) {
-        value;
+        value; // tslint:disable-line:no-unused-expression
     }
 
 }

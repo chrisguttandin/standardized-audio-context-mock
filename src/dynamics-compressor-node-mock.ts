@@ -1,7 +1,7 @@
+import { AudioContextMock } from './audio-context-mock';
 import { AudioNodeMock } from './audio-node-mock';
 import { AudioParamMock } from './audio-param-mock';
 import { registrar } from './registrar';
-import { AudioContextMock } from './audio-context-mock';
 
 export class DynamicsCompressorNodeMock extends AudioNodeMock {
 
@@ -21,10 +21,10 @@ export class DynamicsCompressorNodeMock extends AudioNodeMock {
         const deLorean = registrar.getDeLorean(context);
 
         super({
-            context,
             channelCount: 2,
             channelCountMode: 'explicit',
             channelInterpretation: 'speakers',
+            context,
             numberOfInputs: 1,
             numberOfOutputs: 1
         });
@@ -33,21 +33,21 @@ export class DynamicsCompressorNodeMock extends AudioNodeMock {
             deLorean,
             maxValue: 1,
             minValue: 0,
-            onEventListUpdatedHandler: () => {},
+            onEventListUpdatedHandler () { }, // tslint:disable-line:no-empty
             value: 0.003
         });
         this._knee = new AudioParamMock({
             deLorean,
             maxValue: 40,
             minValue: 0,
-            onEventListUpdatedHandler: () => {},
+            onEventListUpdatedHandler () { }, // tslint:disable-line:no-empty
             value: 30
         });
         this._ratio = new AudioParamMock({
             deLorean,
             maxValue: 20,
             minValue: 1,
-            onEventListUpdatedHandler: () => {},
+            onEventListUpdatedHandler () { }, // tslint:disable-line:no-empty
             value: 12
         });
         this._reduction = 0;
@@ -55,14 +55,14 @@ export class DynamicsCompressorNodeMock extends AudioNodeMock {
             deLorean,
             maxValue: 1,
             minValue: 0,
-            onEventListUpdatedHandler: () => {},
+            onEventListUpdatedHandler () { }, // tslint:disable-line:no-empty
             value: 0.25
         });
         this._threshold = new AudioParamMock({
             deLorean,
             maxValue: -100,
             minValue: 0,
-            onEventListUpdatedHandler: () => {},
+            onEventListUpdatedHandler () { }, // tslint:disable-line:no-empty
             value: -24
         });
     }
@@ -72,7 +72,7 @@ export class DynamicsCompressorNodeMock extends AudioNodeMock {
     }
 
     set attack (value) {
-        value;
+        value; // tslint:disable-line:no-unused-expression
     }
 
     get knee () {
@@ -80,7 +80,7 @@ export class DynamicsCompressorNodeMock extends AudioNodeMock {
     }
 
     set knee (value) {
-        value;
+        value; // tslint:disable-line:no-unused-expression
     }
 
     get ratio () {
@@ -88,7 +88,7 @@ export class DynamicsCompressorNodeMock extends AudioNodeMock {
     }
 
     set ratio (value) {
-        value;
+        value; // tslint:disable-line:no-unused-expression
     }
 
     get reduction () {
@@ -96,7 +96,7 @@ export class DynamicsCompressorNodeMock extends AudioNodeMock {
     }
 
     set reduction (value) {
-        value;
+        value; // tslint:disable-line:no-unused-expression
     }
 
     get release () {
@@ -104,7 +104,7 @@ export class DynamicsCompressorNodeMock extends AudioNodeMock {
     }
 
     set release (value) {
-        value;
+        value; // tslint:disable-line:no-unused-expression
     }
 
     get threshold () {
@@ -112,7 +112,7 @@ export class DynamicsCompressorNodeMock extends AudioNodeMock {
     }
 
     set threshold (value) {
-        value;
+        value; // tslint:disable-line:no-unused-expression
     }
 
 }

@@ -1,6 +1,6 @@
+import { DeLorean, IVehicle } from 'vehicles';
 import { AudioContextMock } from './audio-context-mock';
 import { AudioNodeMock } from './audio-node-mock';
-import { DeLorean, IVehicle } from 'vehicles';
 
 export class Registrar {
 
@@ -13,7 +13,7 @@ export class Registrar {
         this._deLoreans = new WeakMap();
     }
 
-    addAudioNode (context: AudioContextMock, type: string, node: AudioNodeMock) {
+    public addAudioNode (context: AudioContextMock, type: string, node: AudioNodeMock) {
         let audioNodesOfContext: Map<string, Set<AudioNodeMock>>;
         let audioNodesOfType: Set<AudioNodeMock>;
 
@@ -34,7 +34,7 @@ export class Registrar {
         audioNodesOfType.add(node);
     }
 
-    getAudioNodes (context: AudioContextMock, type: string) {
+    public getAudioNodes (context: AudioContextMock, type: string) {
         if (this._audioNodes.has(context)) {
             const audioNodesOfContext = <Map<string, Set<AudioNodeMock>>> this._audioNodes.get(context);
 
@@ -46,15 +46,15 @@ export class Registrar {
         return [];
     }
 
-    getDeLorean (context: AudioContextMock): undefined | DeLorean {
+    public getDeLorean (context: AudioContextMock): undefined | DeLorean {
         return this._deLoreans.get(context);
     }
 
-    getVehicle (context: AudioContextMock): undefined | IVehicle {
+    public getVehicle (context: AudioContextMock): undefined | IVehicle {
         return this._deLoreans.get(context);
     }
 
-    reset (context: AudioContextMock) {
+    public reset (context: AudioContextMock) {
         if (this._audioNodes.has(context)) {
             this._audioNodes.delete(context);
         }
@@ -66,7 +66,7 @@ export class Registrar {
         }
     }
 
-    setDeLorean (context: AudioContextMock, deLorean: DeLorean) {
+    public setDeLorean (context: AudioContextMock, deLorean: DeLorean) {
         this._deLoreans.set(context, deLorean);
     }
 

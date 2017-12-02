@@ -8,11 +8,11 @@ import {
     IIIRFilterNode,
     TAudioContextState
 } from 'standardized-audio-context';
+import { DeLorean } from 'vehicles';
 import { AudioBufferMock } from './audio-buffer-mock';
 import { AudioBufferSourceNodeMock } from './audio-buffer-source-node-mock';
-import { EventTarget } from './event-target';
-import { DeLorean } from 'vehicles';
 import { DynamicsCompressorNodeMock } from './dynamics-compressor-node-mock';
+import { EventTarget } from './event-target';
 import { GainNodeMock } from './gain-node-mock';
 import { OscillatorNodeMock } from './oscillator-node-mock';
 import { registrar } from './registrar';
@@ -49,12 +49,12 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
         return <TAudioContextState> 'running';
     }
 
-    close () {
+    public close () {
         return Promise.resolve();
     }
 
     // @todo This is a lazy hack.
-    createAnalyser () {
+    public createAnalyser () {
         const analyserNode = new GainNodeMock(this);
 
         (<any> analyserNode).fftSize = 2048;
@@ -62,23 +62,23 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
         return <IAnalyserNode> (<any> analyserNode);
     }
 
-    createChannelMerger () {
+    public createChannelMerger () {
         // @todo
         return <IAudioNode> { };
     }
 
-    createChannelSplitter () {
+    public createChannelSplitter () {
         // @todo
         return <IAudioNode> { };
     }
 
-    createBiquadFilter () {
+    public createBiquadFilter () {
         // @todo
         return <IBiquadFilterNode> (<any> {
             Q: {
                 value: 0
             },
-            connect: () => {},
+            connect () { }, // tslint:disable-line:no-empty
             frequency: {
                 value: 0
             },
@@ -88,7 +88,7 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
         });
     }
 
-    createBuffer (numberOfChannels: number, length: number, sampleRate: number) {
+    public createBuffer (numberOfChannels: number, length: number, sampleRate: number) {
         return new AudioBufferMock({
             length,
             numberOfChannels,
@@ -96,7 +96,7 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
         });
     }
 
-    createBufferSource () {
+    public createBufferSource () {
         const audioBufferSourceNode = new AudioBufferSourceNodeMock(this);
 
         registrar.addAudioNode(this, 'AudioBufferSourceNode', audioBufferSourceNode);
@@ -104,7 +104,7 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
         return audioBufferSourceNode;
     }
 
-    createGain () {
+    public createGain () {
         const gainNode = new GainNodeMock(this);
 
         registrar.addAudioNode(this, 'GainNode', gainNode);
@@ -112,7 +112,7 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
         return gainNode;
     }
 
-    createDynamicsCompressor () {
+    public createDynamicsCompressor () {
         const dynamicsCompressorNode = new DynamicsCompressorNodeMock(this);
 
         registrar.addAudioNode(this, 'DynamicsCompressorNode', dynamicsCompressorNode);
@@ -120,12 +120,12 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
         return dynamicsCompressorNode;
     }
 
-    createIIRFilter () {
+    public createIIRFilter () {
         // @todo
         return <IIIRFilterNode> { };
     }
 
-    createOscillator () {
+    public createOscillator () {
         const oscillatorNode = new OscillatorNodeMock(this);
 
         registrar.addAudioNode(this, 'OscillatorNode', oscillatorNode);
@@ -133,7 +133,7 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
         return oscillatorNode;
     }
 
-    decodeAudioData () {
+    public decodeAudioData () {
         return <Promise<IAudioBuffer>> (<any> Promise.resolve());
     }
 

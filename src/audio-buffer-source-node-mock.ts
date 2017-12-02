@@ -1,12 +1,12 @@
+import { stub } from 'sinon';
 import { IAudioBufferSourceNode, TEndedEventHandler } from 'standardized-audio-context';
+import { DeLorean } from 'vehicles';
 import { AudioBufferMock } from './audio-buffer-mock';
 import { AudioContextMock } from './audio-context-mock';
 import { AudioNodeMock } from './audio-node-mock';
 import { AudioParamMock } from './audio-param-mock';
-import { DeLorean } from 'vehicles';
 import { AudioParamEventType } from './helper/audio-param-event-type';
 import { registrar } from './registrar';
-import { stub } from 'sinon';
 
 export class AudioBufferSourceNodeMock extends AudioNodeMock implements IAudioBufferSourceNode {
 
@@ -36,10 +36,10 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock implements IAudioBu
 
     constructor (context: AudioContextMock) {
         super({
-            context,
             channelCount: 2,
             channelCountMode: 'max',
             channelInterpretation: 'speakers',
+            context,
             numberOfInputs: 0,
             numberOfOutputs: 1
         });
@@ -79,7 +79,7 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock implements IAudioBu
 
     set buffer (value: null | AudioBufferMock) {
         if (!(value instanceof AudioBufferMock)) {
-            throw new TypeError('Failed to set the \'buffer\' property on \'AudioBufferSourceNode\': The provided value is not of type \'AudioBufferMock\'.');
+            throw new TypeError('Failed to set the \'buffer\' property on \'AudioBufferSourceNode\': The provided value is not of type \'AudioBufferMock\'.'); // tslint:disable-line:max-line-length
         }
 
         this._buffer = value;
@@ -90,7 +90,7 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock implements IAudioBu
     }
 
     set detune (value) {
-        value;
+        value; // tslint:disable-line:no-unused-expression
     }
 
     get onended () {
@@ -117,14 +117,72 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock implements IAudioBu
     }
 
     set playbackRate (value) {
-        value;
+        value; // tslint:disable-line:no-unused-expression
     }
 
-    _callOnEndedHandler () {
+    public start (when: number, offset: number, duration: number) {
+        if (this._deLorean === undefined) {
+            return;
+        }
+
+        let sanitizedDuration = duration;
+        let sanitizedOffset = offset;
+        let sanitizedWhen = when;
+
+        if (arguments.length === 0) {
+            sanitizedWhen = 0;
+        }
+
+        if (when < this._deLorean.position) {
+            sanitizedWhen = this._deLorean.position;
+        }
+
+        if (arguments.length < 2) {
+            sanitizedOffset = 0;
+        }
+
+        if (arguments.length < 3) {
+            sanitizedDuration = (this.buffer === null) ? 0 : this.buffer.duration - sanitizedOffset;
+        }
+
+        const maxEffectiveDuration = Math.max(sanitizedDuration, (this.buffer === null) ? 0 : this.buffer.duration - sanitizedOffset);
+
+        this._started = {
+            duration: sanitizedDuration,
+            maxEffectiveDuration,
+            when: sanitizedWhen
+        };
+
+        this._scheduleOnEndedHandler();
+    }
+
+    public stop (when: number) {
+        if (this._deLorean === undefined) {
+            return;
+        }
+
+        let sanitizedWhen = when;
+
+        if (arguments.length === 0) {
+            sanitizedWhen = 0;
+        }
+
+        if (when < this._deLorean.position) {
+            sanitizedWhen = this._deLorean.position;
+        }
+
+        this._stopped = {
+            when: sanitizedWhen
+        };
+
+        this._scheduleOnEndedHandler();
+    }
+
+    private _callOnEndedHandler () {
         this.dispatchEvent(new Event('ended'));
     }
 
-    _scheduleOnEndedHandler () {
+    private _scheduleOnEndedHandler () {
         if (this._deLorean === undefined) {
             return;
         }
@@ -137,7 +195,8 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock implements IAudioBu
         if (this._started !== null) {
             let when;
 
-            if (this._playbackRate._eventList.length === 0) {
+            // @todo Do not access private properties.
+            if ((<any> this._playbackRate)._eventList.length === 0) {
                 let playbackRateOffset;
 
                 if (this._started.when > this._deLorean.position) {
@@ -154,7 +213,8 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock implements IAudioBu
                 let actualDuration = 0;
                 let effectiveDuration = 0;
 
-                this._playbackRate._eventList.forEach((event) => {
+                // @todo Do not access private properties.
+                (<any> this._playbackRate)._eventList.forEach((event: any) => {
                     if (event.endTime !== undefined &&
                             event.startTime !== undefined &&
                             event.previous !== undefined &&
@@ -174,7 +234,8 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock implements IAudioBu
                 });
 
                 if (effectiveDuration < this._started.maxEffectiveDuration) {
-                    actualDuration += (this._started.maxEffectiveDuration - effectiveDuration) / this._playbackRate._eventList.last().value;
+                    // @todo Do not access private properties.
+                    actualDuration += (this._started.maxEffectiveDuration - effectiveDuration) / (<any> this._playbackRate)._eventList.last().value; // tslint:disable-line:max-line-length
                     effectiveDuration = this._started.maxEffectiveDuration;
                 }
 
@@ -187,58 +248,6 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock implements IAudioBu
 
             this._onEndedTicket = this._deLorean.schedule(when, this._callOnEndedHandler.bind(this));
         }
-    }
-
-    start (when: number, offset: number, duration: number) {
-        if (this._deLorean === undefined) {
-            return;
-        }
-
-        if (arguments.length === 0) {
-            when = 0;
-        }
-
-        if (when < this._deLorean.position) {
-            when = this._deLorean.position;
-        }
-
-        if (arguments.length < 2) {
-            offset = 0;
-        }
-
-        if (arguments.length < 3) {
-            duration = (this.buffer === null) ? 0 : this.buffer.duration - offset;
-        }
-
-        const maxEffectiveDuration = Math.max(duration, (this.buffer === null) ? 0 : this.buffer.duration - offset);
-
-        this._started = {
-            duration,
-            maxEffectiveDuration,
-            when
-        };
-
-        this._scheduleOnEndedHandler();
-    }
-
-    stop (when: number) {
-        if (this._deLorean === undefined) {
-            return;
-        }
-
-        if (arguments.length === 0) {
-            when = 0;
-        }
-
-        if (when < this._deLorean.position) {
-            when = this._deLorean.position;
-        }
-
-        this._stopped = {
-            when
-        };
-
-        this._scheduleOnEndedHandler();
     }
 
 }

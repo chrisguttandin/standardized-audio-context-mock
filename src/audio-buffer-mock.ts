@@ -1,4 +1,4 @@
-import { IAudioBuffer } from 'standardized-audio-context';
+import { IAudioBuffer } from 'standardized-audio-context';
 
 export class AudioBufferMock implements IAudioBuffer {
 
@@ -18,11 +18,11 @@ export class AudioBufferMock implements IAudioBuffer {
         return this.length / this.sampleRate;
     }
 
-    copyFromChannel () {}
+    public copyFromChannel () {} // tslint:disable-line:no-empty
 
-    copyToChannel () {}
+    public copyToChannel () {} // tslint:disable-line:no-empty
 
-    getChannelData () {
+    public getChannelData () {
         return new Float32Array([]);
     }
 

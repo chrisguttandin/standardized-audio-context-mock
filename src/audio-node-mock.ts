@@ -1,6 +1,6 @@
-import { IAudioNode, IBaseAudioContext, TChannelCountMode, TChannelInterpretation } from 'standardized-audio-context';
 import { SinonSpy, spy } from 'sinon';
-import { AudioContextMock } from './audio-context-mock';
+import { IAudioNode, IBaseAudioContext, TChannelCountMode, TChannelInterpretation } from 'standardized-audio-context';
+import { AudioContextMock } from './audio-context-mock';
 import { EventTarget } from './event-target';
 
 export class AudioNodeMock extends EventTarget implements IAudioNode {
@@ -21,7 +21,7 @@ export class AudioNodeMock extends EventTarget implements IAudioNode {
 
     private _context: AudioContextMock;
 
-    constructor (options: { channelCount: number, channelCountMode: TChannelCountMode, channelInterpretation: TChannelInterpretation, context: AudioContextMock, connect?: SinonSpy, disconnect?: SinonSpy, numberOfInputs: number, numberOfOutputs: number }) {
+    constructor (options: { channelCount: number, channelCountMode: TChannelCountMode, channelInterpretation: TChannelInterpretation, context: AudioContextMock, connect?: SinonSpy, disconnect?: SinonSpy, numberOfInputs: number, numberOfOutputs: number }) { // tslint:disable-line:max-line-length
         super();
 
         this.channelCount = options.channelCount;
