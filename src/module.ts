@@ -15,6 +15,6 @@ export { DynamicsCompressorNodeMock as DynamicsCompressorNode };
 
 export { OscillatorNodeMock as OscillatorNode };
 
-export const isSupported = true;
+export const isSupported = () => true;
 
 export { registrar };
