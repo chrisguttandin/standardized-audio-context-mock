@@ -45,8 +45,10 @@ export class AudioParamMock implements IAudioParam {
 
         this._eventList.onUpdated = () => options.onEventListUpdatedHandler();
 
-        stub(this, 'linearRampToValueAtTime').callThrough();
-        stub(this, 'setValueAtTime').callThrough();
+        stub(this, 'linearRampToValueAtTime')
+            .callThrough();
+        stub(this, 'setValueAtTime')
+            .callThrough();
     }
 
     get defaultValue () {
