@@ -69,8 +69,10 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock implements IAudioBu
         });
         this._playbackRateValue = 1;
 
-        stub(this, 'start').callThrough();
-        stub(this, 'stop').callThrough();
+        stub(this, 'start')
+            .callThrough();
+        stub(this, 'stop')
+            .callThrough();
     }
 
     get buffer () {
