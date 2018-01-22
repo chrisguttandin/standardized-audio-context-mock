@@ -137,4 +137,12 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
         return <Promise<IAudioBuffer>> (<any> Promise.resolve());
     }
 
+    public resume () {
+        return Promise.resolve();
+    }
+
+    public suspend () {
+        return Promise.resolve();
+    }
+
 }
