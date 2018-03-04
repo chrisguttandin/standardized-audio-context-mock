@@ -4,6 +4,7 @@
     "url": "https://github.com/chrisguttandin/standardized-audio-context-mock/issues"
   },
   "dependencies": {
+    "@commitlint/cli": "^6.1.3",
     "babel-runtime": "^6.26.0",
     "sinon": "^4.4.2",
     "standardized-audio-context": "^11.1.15",
