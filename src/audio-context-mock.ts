@@ -4,8 +4,12 @@ import {
     IAudioContext,
     IAudioDestinationNode,
     IAudioNode,
+    IAudioWorklet,
     IBiquadFilterNode,
+    IConstantSourceNode,
     IIIRFilterNode,
+    IMediaElementAudioSourceNode,
+    IMediaStreamAudioSourceNode,
     TAudioContextState
 } from 'standardized-audio-context';
 import { DeLorean } from 'vehicles';
@@ -27,6 +31,10 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
         this._deLorean = new DeLorean();
 
         registrar.setDeLorean(this, this._deLorean);
+    }
+
+    get audioWorklet () {
+        return <IAudioWorklet> { };
     }
 
     get currentTime () {
@@ -62,16 +70,6 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
         return <IAnalyserNode> (<any> analyserNode);
     }
 
-    public createChannelMerger () {
-        // @todo
-        return <IAudioNode> { };
-    }
-
-    public createChannelSplitter () {
-        // @todo
-        return <IAudioNode> { };
-    }
-
     public createBiquadFilter () {
         // @todo
         return <IBiquadFilterNode> (<any> {
@@ -104,12 +102,19 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
         return audioBufferSourceNode;
     }
 
-    public createGain () {
-        const gainNode = new GainNodeMock(this);
+    public createChannelMerger () {
+        // @todo
+        return <IAudioNode> { };
+    }
 
-        registrar.addAudioNode(this, 'GainNode', gainNode);
+    public createChannelSplitter () {
+        // @todo
+        return <IAudioNode> { };
+    }
 
-        return gainNode;
+    public createConstantSource () {
+        // @todo
+        return <IConstantSourceNode> { };
     }
 
     public createDynamicsCompressor () {
@@ -120,9 +125,27 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
         return dynamicsCompressorNode;
     }
 
+    public createGain () {
+        const gainNode = new GainNodeMock(this);
+
+        registrar.addAudioNode(this, 'GainNode', gainNode);
+
+        return gainNode;
+    }
+
     public createIIRFilter () {
         // @todo
         return <IIIRFilterNode> { };
+    }
+
+    public createMediaElementSource () {
+        // @todo
+        return <IMediaElementAudioSourceNode> { };
+    }
+
+    public createMediaStreamSource () {
+        // @todo
+        return <IMediaStreamAudioSourceNode> { };
     }
 
     public createOscillator () {
