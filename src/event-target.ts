@@ -6,7 +6,11 @@ export class EventTarget {
         this._eventListeners = new Map();
     }
 
-    public addEventListener (type: string, listener?: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions) {
+    public addEventListener (
+        type: string,
+        listener: any, // @todo EventListenerOrEventListenerObject | null = null,
+        options?: boolean | AddEventListenerOptions
+    ): void {
         let eventListenersOfType = this._eventListeners.get(type);
 
         if (eventListenersOfType === undefined) {
@@ -37,7 +41,11 @@ export class EventTarget {
         return false;
     }
 
-    public removeEventListener (type: string, listener?: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions) {
+    public removeEventListener (
+        type: string,
+        listener: any, // @todo EventListenerOrEventListenerObject | null = null,
+        options?: EventListenerOptions | boolean
+    ): void {
         const eventListenersOfType = this._eventListeners.get(type);
 
         if (eventListenersOfType !== undefined && typeof listener === 'function') {
