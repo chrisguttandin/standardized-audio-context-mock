@@ -89,20 +89,24 @@ export class AudioParamMock implements IAudioParam {
         cancelTime; // tslint:disable-line:no-unused-expression
     }
 
-    public linearRampToValueAtTime (value: number, endTime: number) {
+    public linearRampToValueAtTime (value: number, endTime: number): IAudioParam {
         this._eventList.add(new AudioParamEvent({
             endTime,
             type: AudioParamEventType.LINEAR_RAMP_TO_VALUE,
             value
         }));
+
+        return this;
     }
 
-    public setValueAtTime (value: number, startTime: number) {
+    public setValueAtTime (value: number, startTime: number): IAudioParam {
         this._eventList.add(new AudioParamEvent({
             startTime,
             type: AudioParamEventType.SET_VALUE,
             value
         }));
+
+        return this;
     }
 
     private _computeValue () {
