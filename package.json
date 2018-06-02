@@ -17,7 +17,7 @@
   },
   "description": "A mocked version of the standardized-audio-context module.",
   "devDependencies": {
-    "@commitlint/cli": "^6.2.0",
+    "@commitlint/cli": "^7.0.0",
     "@commitlint/config-angular": "^6.1.3",
     "@types/sinon": "^5.0.1",
     "babel-core": "^6.26.3",
