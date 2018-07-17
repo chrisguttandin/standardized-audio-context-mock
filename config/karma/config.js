@@ -1,3 +1,5 @@
+const { env } = require('process');
+
 module.exports = function (config) {
 
     config.set({
@@ -45,7 +47,7 @@ module.exports = function (config) {
 
     });
 
-    if (process.env.TRAVIS) {
+    if (env.TRAVIS) {
 
         config.set({
 
@@ -89,7 +91,7 @@ module.exports = function (config) {
                 }
             },
 
-            tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER
+            tunnelIdentifier: env.TRAVIS_JOB_NUMBER
 
         });
 
