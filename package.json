@@ -73,8 +73,8 @@
   ],
   "homepage": "https://github.com/chrisguttandin/standardized-audio-context-mock",
   "keywords": [
-    "Web Audio API",
-    "testing"
+    "testing",
+    "Web Audio API"
   ],
   "license": "MIT",
   "main": "build/es5/bundle.js",
