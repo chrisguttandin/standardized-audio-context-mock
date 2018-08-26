@@ -15,12 +15,12 @@ export class AudioParamMock implements IAudioParam {
 
     public setValueCurveAtTime: SinonSpy;
 
-    // @todo Fix access modifier.
-    private _eventList: AudioParamEventList;
+    private _defaultValue: number;
 
     private _deLorean: undefined | DeLorean;
 
-    private _defaultValue: number;
+    // @todo Fix access modifier.
+    private _eventList: AudioParamEventList;
 
     private _maxValue: number;
 
