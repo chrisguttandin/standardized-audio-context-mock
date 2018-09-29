@@ -10,6 +10,7 @@ import {
     IIIRFilterNode,
     IMediaElementAudioSourceNode,
     IMediaStreamAudioSourceNode,
+    IStereoPannerNode,
     TAudioContextState
 } from 'standardized-audio-context';
 import { DeLorean } from 'vehicles';
@@ -154,6 +155,11 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
         registrar.addAudioNode(this, 'OscillatorNode', oscillatorNode);
 
         return oscillatorNode;
+    }
+
+    public createStereoPanner () {
+        // @todo
+        return <IStereoPannerNode> { };
     }
 
     public decodeAudioData () {
