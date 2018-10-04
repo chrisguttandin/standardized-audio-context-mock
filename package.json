@@ -16,7 +16,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "sinon": "^6.3.4",
+    "sinon": "^6.3.5",
     "standardized-audio-context": "^15.1.1",
     "tslib": "^1.9.3",
     "vehicles": "^3.0.11"
