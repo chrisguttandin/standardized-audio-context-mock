@@ -26,7 +26,7 @@ export class AudioParamEvent {
         }
     }
 
-    get previous () {
+    get previous (): undefined | AudioParamEvent {
         return this._previous;
     }
 

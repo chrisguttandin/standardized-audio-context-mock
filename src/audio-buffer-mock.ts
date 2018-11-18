@@ -14,15 +14,15 @@ export class AudioBufferMock implements IAudioBuffer {
         this.sampleRate = options.sampleRate;
     }
 
-    get duration () {
+    get duration (): number {
         return this.length / this.sampleRate;
     }
 
-    public copyFromChannel () {} // tslint:disable-line:no-empty
+    public copyFromChannel (): void { } // tslint:disable-line:no-empty
 
-    public copyToChannel () {} // tslint:disable-line:no-empty
+    public copyToChannel (): void { } // tslint:disable-line:no-empty
 
-    public getChannelData () {
+    public getChannelData (): Float32Array {
         return new Float32Array([]);
     }
 

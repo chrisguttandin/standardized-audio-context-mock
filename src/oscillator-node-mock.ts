@@ -37,14 +37,14 @@ export class OscillatorNodeMock extends AudioNodeMock implements IOscillatorNode
             deLorean,
             maxValue: 3.4028234663852886e38,
             minValue: -3.4028234663852886e38,
-            onEventListUpdatedHandler () { }, // tslint:disable-line:no-empty
+            onEventListUpdatedHandler (): any { }, // tslint:disable-line:no-empty
             value: 0
         });
         this._frequency = new AudioParamMock({
             deLorean,
             maxValue: context.sampleRate / 2,
             minValue: -(context.sampleRate / 2),
-            onEventListUpdatedHandler () { }, // tslint:disable-line:no-empty
+            onEventListUpdatedHandler (): any { }, // tslint:disable-line:no-empty
             value: 440
         });
         // @todo Implement the ended event.
@@ -55,27 +55,27 @@ export class OscillatorNodeMock extends AudioNodeMock implements IOscillatorNode
         this.type = 'sine';
     }
 
-    get detune () {
+    get detune (): AudioParamMock {
         return this._detune;
     }
 
-    set detune (value: AudioParamMock) {
+    set detune (value) {
         value; // tslint:disable-line:no-unused-expression
     }
 
-    get frequency () {
+    get frequency (): AudioParamMock {
         return this._frequency;
     }
 
-    set frequency (value: AudioParamMock) {
+    set frequency (value) {
         value; // tslint:disable-line:no-unused-expression
     }
 
-    get onended () {
+    get onended (): null | TEndedEventHandler {
         return this._onended;
     }
 
-    set onended (value: null | TEndedEventHandler) {
+    set onended (value) {
         if (typeof value === 'function' || value === null) {
             this._onended = value;
         }

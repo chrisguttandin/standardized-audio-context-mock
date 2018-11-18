@@ -24,16 +24,16 @@ export class GainNodeMock extends AudioNodeMock implements IGainNode {
             deLorean,
             maxValue: 3.4028234663852886e38,
             minValue: -3.4028234663852886e38,
-            onEventListUpdatedHandler () { }, // tslint:disable-line:no-empty
+            onEventListUpdatedHandler (): any { }, // tslint:disable-line:no-empty
             value: 1
         });
     }
 
-    get gain () {
+    get gain (): AudioParamMock {
         return this._gain;
     }
 
-    set gain (value: AudioParamMock) {
+    set gain (value) {
         value; // tslint:disable-line:no-unused-expression
     }
 

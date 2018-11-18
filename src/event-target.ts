@@ -27,7 +27,7 @@ export class EventTarget {
         options; // tslint:disable-line:no-unused-expression
     }
 
-    public dispatchEvent (evt: Event) {
+    public dispatchEvent (evt: Event): boolean {
         const eventListenersOfType = this._eventListeners.get(evt.type);
 
         if (eventListenersOfType !== undefined) {

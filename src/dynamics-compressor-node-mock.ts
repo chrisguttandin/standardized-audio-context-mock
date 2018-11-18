@@ -33,21 +33,21 @@ export class DynamicsCompressorNodeMock extends AudioNodeMock {
             deLorean,
             maxValue: 1,
             minValue: 0,
-            onEventListUpdatedHandler () { }, // tslint:disable-line:no-empty
+            onEventListUpdatedHandler (): any { }, // tslint:disable-line:no-empty
             value: 0.003
         });
         this._knee = new AudioParamMock({
             deLorean,
             maxValue: 40,
             minValue: 0,
-            onEventListUpdatedHandler () { }, // tslint:disable-line:no-empty
+            onEventListUpdatedHandler (): any { }, // tslint:disable-line:no-empty
             value: 30
         });
         this._ratio = new AudioParamMock({
             deLorean,
             maxValue: 20,
             minValue: 1,
-            onEventListUpdatedHandler () { }, // tslint:disable-line:no-empty
+            onEventListUpdatedHandler (): any { }, // tslint:disable-line:no-empty
             value: 12
         });
         this._reduction = 0;
@@ -55,19 +55,19 @@ export class DynamicsCompressorNodeMock extends AudioNodeMock {
             deLorean,
             maxValue: 1,
             minValue: 0,
-            onEventListUpdatedHandler () { }, // tslint:disable-line:no-empty
+            onEventListUpdatedHandler (): any { }, // tslint:disable-line:no-empty
             value: 0.25
         });
         this._threshold = new AudioParamMock({
             deLorean,
             maxValue: -100,
             minValue: 0,
-            onEventListUpdatedHandler () { }, // tslint:disable-line:no-empty
+            onEventListUpdatedHandler (): any { }, // tslint:disable-line:no-empty
             value: -24
         });
     }
 
-    get attack () {
+    get attack (): AudioParamMock {
         return this._attack;
     }
 
@@ -75,7 +75,7 @@ export class DynamicsCompressorNodeMock extends AudioNodeMock {
         value; // tslint:disable-line:no-unused-expression
     }
 
-    get knee () {
+    get knee (): AudioParamMock {
         return this._knee;
     }
 
@@ -83,7 +83,7 @@ export class DynamicsCompressorNodeMock extends AudioNodeMock {
         value; // tslint:disable-line:no-unused-expression
     }
 
-    get ratio () {
+    get ratio (): AudioParamMock {
         return this._ratio;
     }
 
@@ -91,7 +91,7 @@ export class DynamicsCompressorNodeMock extends AudioNodeMock {
         value; // tslint:disable-line:no-unused-expression
     }
 
-    get reduction () {
+    get reduction (): number {
         return this._reduction;
     }
 
@@ -99,7 +99,7 @@ export class DynamicsCompressorNodeMock extends AudioNodeMock {
         value; // tslint:disable-line:no-unused-expression
     }
 
-    get release () {
+    get release (): AudioParamMock {
         return this._release;
     }
 
@@ -107,7 +107,7 @@ export class DynamicsCompressorNodeMock extends AudioNodeMock {
         value; // tslint:disable-line:no-unused-expression
     }
 
-    get threshold () {
+    get threshold (): AudioParamMock {
         return this._threshold;
     }
 

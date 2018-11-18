@@ -75,11 +75,11 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock implements IAudioBu
             .callThrough();
     }
 
-    get buffer () {
+    get buffer (): null | AudioBufferMock {
         return this._buffer;
     }
 
-    set buffer (value: null | AudioBufferMock) {
+    set buffer (value) {
         if (!(value instanceof AudioBufferMock)) {
             throw new TypeError('Failed to set the \'buffer\' property on \'AudioBufferSourceNode\': The provided value is not of type \'AudioBufferMock\'.'); // tslint:disable-line:max-line-length
         }
@@ -87,7 +87,7 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock implements IAudioBu
         this._buffer = value;
     }
 
-    get detune () {
+    get detune (): AudioParamMock {
         return this._detune;
     }
 
@@ -95,11 +95,11 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock implements IAudioBu
         value; // tslint:disable-line:no-unused-expression
     }
 
-    get onended () {
+    get onended (): null | TEndedEventHandler {
         return this._onended;
     }
 
-    set onended (value: null | TEndedEventHandler) {
+    set onended (value) {
         // @todo It is theoretically possible that the ended handler gets removed by using the public API.
         if (typeof this._onended === 'function') {
             this.removeEventListener('ended', this._onended);
@@ -114,7 +114,7 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock implements IAudioBu
         }
     }
 
-    get playbackRate () {
+    get playbackRate (): AudioParamMock {
         return this._playbackRate;
     }
 
@@ -122,7 +122,7 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock implements IAudioBu
         value; // tslint:disable-line:no-unused-expression
     }
 
-    public start (when: number, offset: number, duration: number) {
+    public start (when: number, offset: number, duration: number): void {
         if (this._deLorean === undefined) {
             return;
         }
@@ -158,7 +158,7 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock implements IAudioBu
         this._scheduleOnEndedHandler();
     }
 
-    public stop (when: number) {
+    public stop (when: number): void {
         if (this._deLorean === undefined) {
             return;
         }
@@ -180,11 +180,11 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock implements IAudioBu
         this._scheduleOnEndedHandler();
     }
 
-    private _callOnEndedHandler () {
+    private _callOnEndedHandler (): void {
         this.dispatchEvent(new Event('ended'));
     }
 
-    private _scheduleOnEndedHandler () {
+    private _scheduleOnEndedHandler (): void {
         if (this._deLorean === undefined) {
             return;
         }

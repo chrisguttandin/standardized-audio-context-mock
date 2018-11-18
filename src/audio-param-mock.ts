@@ -51,7 +51,7 @@ export class AudioParamMock implements IAudioParam {
             .callThrough();
     }
 
-    get defaultValue () {
+    get defaultValue (): number {
         return this._defaultValue;
     }
 
@@ -59,7 +59,7 @@ export class AudioParamMock implements IAudioParam {
         value; // tslint:disable-line:no-unused-expression
     }
 
-    get maxValue () {
+    get maxValue (): number {
         return this._maxValue;
     }
 
@@ -67,7 +67,7 @@ export class AudioParamMock implements IAudioParam {
         value; // tslint:disable-line:no-unused-expression
     }
 
-    get minValue () {
+    get minValue (): number {
         return this._minValue;
     }
 
@@ -75,7 +75,7 @@ export class AudioParamMock implements IAudioParam {
         value; // tslint:disable-line:no-unused-expression
     }
 
-    get value () {
+    get value (): number {
         return this._computeValue();
     }
 
@@ -84,9 +84,11 @@ export class AudioParamMock implements IAudioParam {
         this._onEventListUpdatedHandler();
     }
 
-    public cancelAndHoldAtTime (cancelTime: number) {
+    public cancelAndHoldAtTime (cancelTime: number): IAudioParam {
         // @todo Implemnt cancelAndHoldTime().
         cancelTime; // tslint:disable-line:no-unused-expression
+
+        return this;
     }
 
     public linearRampToValueAtTime (value: number, endTime: number): IAudioParam {
@@ -109,7 +111,7 @@ export class AudioParamMock implements IAudioParam {
         return this;
     }
 
-    private _computeValue () {
+    private _computeValue (): number {
         let computedValue = null;
 
         if (this._deLorean === undefined) {

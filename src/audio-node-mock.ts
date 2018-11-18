@@ -1,5 +1,5 @@
 import { SinonSpy, spy } from 'sinon';
-import { IAudioNode, TChannelCountMode, TChannelInterpretation, TContext } from 'standardized-audio-context';
+import { IAudioNode, TChannelCountMode, TChannelInterpretation } from 'standardized-audio-context';
 import { AudioContextMock } from './audio-context-mock';
 import { EventTarget } from './event-target';
 
@@ -34,9 +34,8 @@ export class AudioNodeMock extends EventTarget implements IAudioNode {
         this.numberOfOutputs = options.numberOfOutputs;
     }
 
-    get context () {
-        // @todo Remove this ugly cast again when the context implements the TContext interface.
-        return <TContext> (<any> this._context);
+    get context (): AudioContextMock {
+        return this._context;
     }
 
 }

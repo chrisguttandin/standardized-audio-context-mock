@@ -11,11 +11,11 @@ export class AudioParamEventList {
         this.onUpdated = null;
     }
 
-    get length () {
+    get length (): number {
         return this._events.length;
     }
 
-    public add (event: AudioParamEvent) {
+    public add (event: AudioParamEvent): void {
         let index = this._events.length;
 
         this._events.some((value, i) => {
@@ -42,15 +42,15 @@ export class AudioParamEventList {
         }
     }
 
-    public forEach (callback: (event: AudioParamEvent) => void) {
+    public forEach (callback: (event: AudioParamEvent) => void): void {
         return this._events.forEach.call(this._events, callback);
     }
 
-    public last () {
+    public last (): AudioParamEvent {
         return this._events[this._events.length - 1];
     }
 
-    public some (callback: (event: AudioParamEvent) => boolean) {
+    public some (callback: (event: AudioParamEvent) => boolean): boolean {
         return this._events.some.call(this._events, callback);
     }
 

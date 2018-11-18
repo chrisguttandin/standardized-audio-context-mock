@@ -13,7 +13,7 @@ export class Registrar {
         this._deLoreans = new WeakMap();
     }
 
-    public addAudioNode (context: AudioContextMock, type: string, node: AudioNodeMock) {
+    public addAudioNode (context: AudioContextMock, type: string, node: AudioNodeMock): void {
         let audioNodesOfContext: Map<string, Set<AudioNodeMock>>;
         let audioNodesOfType: Set<AudioNodeMock>;
 
@@ -34,7 +34,7 @@ export class Registrar {
         audioNodesOfType.add(node);
     }
 
-    public getAudioNodes (context: AudioContextMock, type: string) {
+    public getAudioNodes (context: AudioContextMock, type: string): AudioNodeMock[] {
         if (this._audioNodes.has(context)) {
             const audioNodesOfContext = <Map<string, Set<AudioNodeMock>>> this._audioNodes.get(context);
 
@@ -54,7 +54,7 @@ export class Registrar {
         return this._deLoreans.get(context);
     }
 
-    public reset (context: AudioContextMock) {
+    public reset (context: AudioContextMock): void {
         if (this._audioNodes.has(context)) {
             this._audioNodes.delete(context);
         }
@@ -66,7 +66,7 @@ export class Registrar {
         }
     }
 
-    public setDeLorean (context: AudioContextMock, deLorean: DeLorean) {
+    public setDeLorean (context: AudioContextMock, deLorean: DeLorean): void {
         this._deLoreans.set(context, deLorean);
     }
 
