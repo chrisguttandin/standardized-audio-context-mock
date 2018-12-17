@@ -3,6 +3,7 @@ import {
     IAudioBuffer,
     IAudioContext,
     IAudioDestinationNode,
+    IAudioListener,
     IAudioNode,
     IAudioWorklet,
     IBiquadFilterNode,
@@ -48,6 +49,10 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
 
     get destination (): IAudioDestinationNode {
         return <IAudioDestinationNode> {};
+    }
+
+    get listener (): IAudioListener {
+        return <IAudioListener> {};
     }
 
     get onstatechange (): null | TStateChangeEventHandler {
