@@ -8,6 +8,7 @@ import {
     IAudioWorklet,
     IBiquadFilterNode,
     IConstantSourceNode,
+    IConvolverNode,
     IDelayNode,
     IIIRFilterNode,
     IMediaElementAudioSourceNode,
@@ -125,6 +126,11 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
     public createConstantSource (): IConstantSourceNode {
         // @todo
         return <IConstantSourceNode> { };
+    }
+
+    public createConvolver (): IConvolverNode {
+        // @todo
+        return <IConvolverNode> { };
     }
 
     public createDelay (): IDelayNode {
