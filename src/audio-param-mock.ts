@@ -30,7 +30,7 @@ export class AudioParamMock implements IAudioParam {
 
     private _value: number;
 
-    constructor (options: { deLorean?: DeLorean, maxValue: number, minValue: number, onEventListUpdatedHandler: Function, value: number }) {
+    constructor (options: { deLorean?: DeLorean; maxValue: number; minValue: number; onEventListUpdatedHandler: Function; value: number }) {
         this.cancelScheduledValues = spy();
         this._deLorean = options.deLorean;
         this._defaultValue = options.value;

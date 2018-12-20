@@ -8,7 +8,7 @@ export class AudioBufferMock implements IAudioBuffer {
 
     public sampleRate: number;
 
-    constructor (options: { length: number, numberOfChannels: number, sampleRate: number }) {
+    constructor (options: { length: number; numberOfChannels: number; sampleRate: number }) {
         this.length = options.length;
         this.numberOfChannels = options.numberOfChannels;
         this.sampleRate = options.sampleRate;

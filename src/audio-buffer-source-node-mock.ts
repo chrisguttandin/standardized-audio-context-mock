@@ -30,7 +30,7 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock implements IAudioBu
 
     private _playbackRateValue: number;
 
-    private _started: null | { duration: number, maxEffectiveDuration: number, when: number };
+    private _started: null | { duration: number; maxEffectiveDuration: number; when: number };
 
     private _stopped: null | { when: number };
 

@@ -21,7 +21,7 @@ export class AudioNodeMock extends EventTarget implements IAudioNode {
 
     private _context: AudioContextMock;
 
-    constructor (options: { channelCount: number, channelCountMode: TChannelCountMode, channelInterpretation: TChannelInterpretation, connect?: SinonSpy, context: AudioContextMock, disconnect?: SinonSpy, numberOfInputs: number, numberOfOutputs: number }) { // tslint:disable-line:max-line-length
+    constructor (options: { channelCount: number; channelCountMode: TChannelCountMode; channelInterpretation: TChannelInterpretation; connect?: SinonSpy; context: AudioContextMock; disconnect?: SinonSpy; numberOfInputs: number; numberOfOutputs: number }) { // tslint:disable-line:max-line-length
         super();
 
         this.channelCount = options.channelCount;
