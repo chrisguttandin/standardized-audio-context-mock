@@ -49,11 +49,11 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
     }
 
     get destination (): IAudioDestinationNode {
-        return <IAudioDestinationNode> {};
+        return <IAudioDestinationNode> { };
     }
 
     get listener (): IAudioListener {
-        return <IAudioListener> {};
+        return <IAudioListener> { };
     }
 
     get onstatechange (): null | TStateChangeEventHandler {
