@@ -44,6 +44,10 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
         return <IAudioWorklet> { };
     }
 
+    get baseLatency (): number {
+        return 512 / 44100;
+    }
+
     get currentTime (): number {
         return this._deLorean.position;
     }
