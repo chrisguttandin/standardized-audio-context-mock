@@ -6,8 +6,6 @@ module.exports = function (config) {
 
         basePath: '../../',
 
-        concurrency: 2,
-
         files: [
             'test/unit/**/*.js'
         ],
@@ -106,7 +104,9 @@ module.exports = function (config) {
                 'FirefoxDeveloperHeadless',
                 'Opera',
                 'Safari'
-            ]
+            ],
+
+            concurrency: 2
 
         });
 
