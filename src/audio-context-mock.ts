@@ -13,6 +13,7 @@ import {
     IIIRFilterNode,
     IMediaElementAudioSourceNode,
     IMediaStreamAudioSourceNode,
+    IPannerNode,
     IPeriodicWave,
     IStereoPannerNode,
     IWaveShaperNode,
@@ -179,6 +180,11 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
         registrar.addAudioNode(this, 'OscillatorNode', oscillatorNode);
 
         return oscillatorNode;
+    }
+
+    public createPanner (): IPannerNode {
+        // @todo
+        return <IPannerNode> { };
     }
 
     public createPeriodicWave (): IPeriodicWave {
