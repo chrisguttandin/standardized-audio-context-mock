@@ -29,7 +29,7 @@
     "@babel/preset-env": "^7.3.1",
     "@commitlint/cli": "^7.3.2",
     "@commitlint/config-angular": "^7.3.1",
-    "@types/sinon": "^7.0.4",
+    "@types/sinon": "^7.0.5",
     "chai": "^4.2.0",
     "commitizen": "^3.0.5",
     "cz-conventional-changelog": "^2.1.0",
