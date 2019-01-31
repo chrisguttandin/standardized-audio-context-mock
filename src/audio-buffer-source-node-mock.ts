@@ -22,7 +22,7 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock implements IAudioBu
 
     private _detune: AudioParamMock;
 
-    private _onended: null | TEndedEventHandler;
+    private _onended: null | TEndedEventHandler<IAudioBufferSourceNode>;
 
     private _onEndedTicket: null | number;
 
@@ -95,7 +95,7 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock implements IAudioBu
         value; // tslint:disable-line:no-unused-expression
     }
 
-    get onended (): null | TEndedEventHandler {
+    get onended (): null | TEndedEventHandler<IAudioBufferSourceNode> {
         return this._onended;
     }
 

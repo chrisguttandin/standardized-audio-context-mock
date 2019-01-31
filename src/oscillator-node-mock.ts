@@ -19,7 +19,7 @@ export class OscillatorNodeMock extends AudioNodeMock implements IOscillatorNode
 
     private _frequency: AudioParamMock;
 
-    private _onended: null | TEndedEventHandler;
+    private _onended: null | TEndedEventHandler<IOscillatorNode>;
 
     constructor (context: AudioContextMock) {
         const deLorean = registrar.getDeLorean(context);
@@ -71,7 +71,7 @@ export class OscillatorNodeMock extends AudioNodeMock implements IOscillatorNode
         value; // tslint:disable-line:no-unused-expression
     }
 
-    get onended (): null | TEndedEventHandler {
+    get onended (): null | TEndedEventHandler<IOscillatorNode> {
         return this._onended;
     }
 
