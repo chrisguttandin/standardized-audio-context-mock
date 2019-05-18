@@ -1,11 +1,10 @@
 import { SinonSpy, spy } from 'sinon';
-import { IOscillatorNode, TEndedEventHandler, TOscillatorType } from 'standardized-audio-context';
-import { AudioContextMock } from './audio-context-mock';
+import { IEndedEventHandler, IMinimalBaseAudioContext, IOscillatorNode, TOscillatorType } from 'standardized-audio-context';
 import { AudioNodeMock } from './audio-node-mock';
 import { AudioParamMock } from './audio-param-mock';
 import { registrar } from './registrar';
 
-export class OscillatorNodeMock extends AudioNodeMock implements IOscillatorNode {
+export class OscillatorNodeMock<T extends IMinimalBaseAudioContext> extends AudioNodeMock<T> implements IOscillatorNode<T> {
 
     public setPeriodicWave: SinonSpy;
 
@@ -19,9 +18,9 @@ export class OscillatorNodeMock extends AudioNodeMock implements IOscillatorNode
 
     private _frequency: AudioParamMock;
 
-    private _onended: null | TEndedEventHandler<IOscillatorNode>;
+    private _onended: null | IEndedEventHandler<T, IOscillatorNode<T>>;
 
-    constructor (context: AudioContextMock) {
+    constructor (context: T) {
         const deLorean = registrar.getDeLorean(context);
 
         super({
@@ -71,7 +70,7 @@ export class OscillatorNodeMock extends AudioNodeMock implements IOscillatorNode
         value; // tslint:disable-line:no-unused-expression
     }
 
-    get onended (): null | TEndedEventHandler<IOscillatorNode> {
+    get onended (): null | IEndedEventHandler<T, IOscillatorNode<T>> {
         return this._onended;
     }
 

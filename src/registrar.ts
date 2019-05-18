@@ -1,31 +1,31 @@
+import { IMinimalBaseAudioContext } from 'standardized-audio-context';
 import { DeLorean, IVehicle } from 'vehicles';
-import { AudioContextMock } from './audio-context-mock';
 import { AudioNodeMock } from './audio-node-mock';
 
 export class Registrar {
 
-    private _audioNodes: WeakMap<AudioContextMock, Map<string, Set<AudioNodeMock>>>;
+    private _audioNodes: WeakMap<IMinimalBaseAudioContext, Map<string, Set<AudioNodeMock<IMinimalBaseAudioContext>>>>;
 
-    private _deLoreans: WeakMap<AudioContextMock, DeLorean>;
+    private _deLoreans: WeakMap<IMinimalBaseAudioContext, DeLorean>;
 
     constructor () {
         this._audioNodes = new WeakMap();
         this._deLoreans = new WeakMap();
     }
 
-    public addAudioNode (context: AudioContextMock, type: string, node: AudioNodeMock): void {
-        let audioNodesOfContext: Map<string, Set<AudioNodeMock>>;
-        let audioNodesOfType: Set<AudioNodeMock>;
+    public addAudioNode <T extends IMinimalBaseAudioContext> (context: T, type: string, node: AudioNodeMock<T>): void {
+        let audioNodesOfContext: Map<string, Set<AudioNodeMock<T>>>;
+        let audioNodesOfType: Set<AudioNodeMock<T>>;
 
         if (this._audioNodes.has(context)) {
-            audioNodesOfContext = <Map<string, Set<AudioNodeMock>>> this._audioNodes.get(context);
+            audioNodesOfContext = <Map<string, Set<AudioNodeMock<T>>>> this._audioNodes.get(context);
         } else {
             audioNodesOfContext = new Map();
             this._audioNodes.set(context, audioNodesOfContext);
         }
 
         if (audioNodesOfContext.has(type)) {
-            audioNodesOfType = <Set<AudioNodeMock>> audioNodesOfContext.get(type);
+            audioNodesOfType = <Set<AudioNodeMock<T>>> audioNodesOfContext.get(type);
         } else {
             audioNodesOfType = new Set();
             audioNodesOfContext.set(type, audioNodesOfType);
@@ -34,27 +34,27 @@ export class Registrar {
         audioNodesOfType.add(node);
     }
 
-    public getAudioNodes (context: AudioContextMock, type: string): AudioNodeMock[] {
+    public getAudioNodes <T extends IMinimalBaseAudioContext> (context: T, type: string): AudioNodeMock<T>[] {
         if (this._audioNodes.has(context)) {
-            const audioNodesOfContext = <Map<string, Set<AudioNodeMock>>> this._audioNodes.get(context);
+            const audioNodesOfContext = <Map<string, Set<AudioNodeMock<T>>>> this._audioNodes.get(context);
 
             if (audioNodesOfContext.has(type)) {
-                return Array.from(<Set<AudioNodeMock>> audioNodesOfContext.get(type));
+                return Array.from(<Set<AudioNodeMock<T>>> audioNodesOfContext.get(type));
             }
         }
 
         return [];
     }
 
-    public getDeLorean (context: AudioContextMock): undefined | DeLorean {
+    public getDeLorean <T extends IMinimalBaseAudioContext> (context: T): undefined | DeLorean {
         return this._deLoreans.get(context);
     }
 
-    public getVehicle (context: AudioContextMock): undefined | IVehicle {
+    public getVehicle <T extends IMinimalBaseAudioContext> (context: T): undefined | IVehicle {
         return this._deLoreans.get(context);
     }
 
-    public reset (context: AudioContextMock): void {
+    public reset <T extends IMinimalBaseAudioContext> (context: T): void {
         if (this._audioNodes.has(context)) {
             this._audioNodes.delete(context);
         }
@@ -66,7 +66,7 @@ export class Registrar {
         }
     }
 
-    public setDeLorean (context: AudioContextMock, deLorean: DeLorean): void {
+    public setDeLorean <T extends IMinimalBaseAudioContext> (context: T, deLorean: DeLorean): void {
         this._deLoreans.set(context, deLorean);
     }
 

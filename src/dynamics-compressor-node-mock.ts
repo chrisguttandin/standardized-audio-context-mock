@@ -1,9 +1,9 @@
-import { AudioContextMock } from './audio-context-mock';
+import { IDynamicsCompressorNode, IMinimalBaseAudioContext } from 'standardized-audio-context';
 import { AudioNodeMock } from './audio-node-mock';
 import { AudioParamMock } from './audio-param-mock';
 import { registrar } from './registrar';
 
-export class DynamicsCompressorNodeMock extends AudioNodeMock {
+export class DynamicsCompressorNodeMock<T extends IMinimalBaseAudioContext> extends AudioNodeMock<T> implements IDynamicsCompressorNode<T> {
 
     private _attack: AudioParamMock;
 
@@ -17,7 +17,7 @@ export class DynamicsCompressorNodeMock extends AudioNodeMock {
 
     private _threshold: AudioParamMock;
 
-    constructor (context: AudioContextMock) {
+    constructor (context: T) {
         const deLorean = registrar.getDeLorean(context);
 
         super({

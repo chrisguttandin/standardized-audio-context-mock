@@ -1,14 +1,13 @@
 import { stub } from 'sinon';
-import { IAudioBufferSourceNode, TEndedEventHandler } from 'standardized-audio-context';
+import { IAudioBufferSourceNode, IEndedEventHandler, IMinimalBaseAudioContext } from 'standardized-audio-context';
 import { DeLorean } from 'vehicles';
 import { AudioBufferMock } from './audio-buffer-mock';
-import { AudioContextMock } from './audio-context-mock';
 import { AudioNodeMock } from './audio-node-mock';
 import { AudioParamMock } from './audio-param-mock';
 import { AudioParamEventType } from './helper/audio-param-event-type';
 import { registrar } from './registrar';
 
-export class AudioBufferSourceNodeMock extends AudioNodeMock implements IAudioBufferSourceNode {
+export class AudioBufferSourceNodeMock<T extends IMinimalBaseAudioContext> extends AudioNodeMock<T> implements IAudioBufferSourceNode<T> {
 
     public loop: boolean;
 
@@ -22,7 +21,7 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock implements IAudioBu
 
     private _detune: AudioParamMock;
 
-    private _onended: null | TEndedEventHandler<IAudioBufferSourceNode>;
+    private _onended: null | IEndedEventHandler<T, this>;
 
     private _onEndedTicket: null | number;
 
@@ -34,7 +33,7 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock implements IAudioBu
 
     private _stopped: null | { when: number };
 
-    constructor (context: AudioContextMock) {
+    constructor (context: T) {
         super({
             channelCount: 2,
             channelCountMode: 'max',
@@ -95,7 +94,7 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock implements IAudioBu
         value; // tslint:disable-line:no-unused-expression
     }
 
-    get onended (): null | TEndedEventHandler<IAudioBufferSourceNode> {
+    get onended (): null | IEndedEventHandler<T, this> {
         return this._onended;
     }
 
@@ -122,7 +121,7 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock implements IAudioBu
         value; // tslint:disable-line:no-unused-expression
     }
 
-    public start (when: number, offset: number, duration: number): void {
+    public start (when: number, offset?: number, duration?: number): void {
         if (this._deLorean === undefined) {
             return;
         }
@@ -144,13 +143,16 @@ export class AudioBufferSourceNodeMock extends AudioNodeMock implements IAudioBu
         }
 
         if (arguments.length < 3) {
-            sanitizedDuration = (this.buffer === null) ? 0 : this.buffer.duration - sanitizedOffset;
+            sanitizedDuration = (this.buffer === null) ? 0 : this.buffer.duration - <number> sanitizedOffset;
         }
 
-        const maxEffectiveDuration = Math.max(sanitizedDuration, (this.buffer === null) ? 0 : this.buffer.duration - sanitizedOffset);
+        const maxEffectiveDuration = Math.max(
+            <number> sanitizedDuration,
+            (this.buffer === null) ? 0 : this.buffer.duration - <number> sanitizedOffset
+        );
 
         this._started = {
-            duration: sanitizedDuration,
+            duration: <number> sanitizedDuration,
             maxEffectiveDuration,
             when: sanitizedWhen
         };

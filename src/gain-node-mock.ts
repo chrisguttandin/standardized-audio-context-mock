@@ -1,14 +1,13 @@
-import { IGainNode } from 'standardized-audio-context';
-import { AudioContextMock } from './audio-context-mock';
+import { IGainNode, IMinimalBaseAudioContext } from 'standardized-audio-context';
 import { AudioNodeMock } from './audio-node-mock';
 import { AudioParamMock } from './audio-param-mock';
 import { registrar } from './registrar';
 
-export class GainNodeMock extends AudioNodeMock implements IGainNode {
+export class GainNodeMock<T extends IMinimalBaseAudioContext> extends AudioNodeMock<T> implements IGainNode<T> {
 
     private _gain: AudioParamMock;
 
-    constructor (context: AudioContextMock) {
+    constructor (context: T) {
         const deLorean = registrar.getDeLorean(context);
 
         super({
