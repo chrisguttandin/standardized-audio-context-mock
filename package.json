@@ -19,7 +19,8 @@
     "sinon": "^7.3.2",
     "standardized-audio-context": "^20.1.6",
     "tslib": "^1.10.0",
-    "vehicles": "^5.0.1"
+    "vehicles": "^5.0.1",
+    "snyk": "^1.189.0"
   },
   "description": "A mocked version of the standardized-audio-context module.",
   "devDependencies": {
@@ -90,8 +91,11 @@
   },
   "scripts": {
     "prepublishOnly": "grunt build",
-    "test": "grunt lint && grunt test"
+    "test": "grunt lint && grunt test",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "types": "build/es2018/module.d.ts",
-  "version": "7.0.5"
+  "version": "7.0.5",
+  "snyk": true
 }
