@@ -126,6 +126,12 @@ describe('AudioParamMock', () => {
 
     });
 
+    describe('setTargetAtTime()', () => {
+
+        // @todo
+
+    });
+
     describe('setValueAtTime()', () => {
 
         it('should compute the value correctly', () => {

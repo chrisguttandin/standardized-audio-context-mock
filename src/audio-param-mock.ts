@@ -4,6 +4,7 @@ import {
     createCancelScheduledValuesAutomationEvent,
     createExponentialRampToValueAutomationEvent,
     createLinearRampToValueAutomationEvent,
+    createSetTargetAutomationEvent,
     createSetValueAutomationEvent
 } from 'automation-events';
 import { SinonSpy, spy, stub } from 'sinon';
@@ -11,8 +12,6 @@ import { IAudioParam } from 'standardized-audio-context';
 import { DeLorean } from 'vehicles';
 
 export class AudioParamMock implements IAudioParam {
-
-    public setTargetAtTime: SinonSpy;
 
     public setValueCurveAtTime: SinonSpy;
 
@@ -32,7 +31,6 @@ export class AudioParamMock implements IAudioParam {
         this._defaultValue = options.automationEventList.getValue(0);
         this._maxValue = options.maxValue;
         this._minValue = options.minValue;
-        this.setTargetAtTime = spy();
         this.setValueCurveAtTime = spy();
 
         stub(this, 'cancelAndHoldAtTime')
@@ -42,6 +40,8 @@ export class AudioParamMock implements IAudioParam {
         stub(this, 'exponentialRampToValueAtTime')
             .callThrough();
         stub(this, 'linearRampToValueAtTime')
+            .callThrough();
+        stub(this, 'setTargetAtTime')
             .callThrough();
         stub(this, 'setValueAtTime')
             .callThrough();
@@ -103,6 +103,12 @@ export class AudioParamMock implements IAudioParam {
 
     public linearRampToValueAtTime (value: number, endTime: number): IAudioParam {
         this._automationEventList.add(createLinearRampToValueAutomationEvent(value, endTime));
+
+        return this;
+    }
+
+    public setTargetAtTime (target: number, startTime: number, timeConstant: number): IAudioParam {
+        this._automationEventList.add(createSetTargetAutomationEvent(target, startTime, timeConstant));
 
         return this;
     }
