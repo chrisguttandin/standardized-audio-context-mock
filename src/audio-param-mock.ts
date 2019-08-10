@@ -1,4 +1,9 @@
-import { AutomationEventList, createLinearRampToValueAutomationEvent, createSetValueAutomationEvent } from 'automation-events';
+import {
+    AutomationEventList,
+    createCancelAndHoldAutomationEvent,
+    createLinearRampToValueAutomationEvent,
+    createSetValueAutomationEvent
+} from 'automation-events';
 import { SinonSpy, spy, stub } from 'sinon';
 import { IAudioParam } from 'standardized-audio-context';
 import { DeLorean } from 'vehicles';
@@ -34,6 +39,8 @@ export class AudioParamMock implements IAudioParam {
         this.setTargetAtTime = spy();
         this.setValueCurveAtTime = spy();
 
+        stub(this, 'cancelAndHoldAtTime')
+            .callThrough();
         stub(this, 'linearRampToValueAtTime')
             .callThrough();
         stub(this, 'setValueAtTime')
@@ -77,8 +84,7 @@ export class AudioParamMock implements IAudioParam {
     }
 
     public cancelAndHoldAtTime (cancelTime: number): IAudioParam {
-        // @todo Implemnt cancelAndHoldTime().
-        cancelTime; // tslint:disable-line:no-unused-expression
+        this._automationEventList.add(createCancelAndHoldAutomationEvent(cancelTime));
 
         return this;
     }

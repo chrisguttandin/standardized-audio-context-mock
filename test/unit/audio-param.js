@@ -74,6 +74,12 @@ describe('AudioParamMock', () => {
 
     });
 
+    describe('cancelAndHoldAtTime()', () => {
+
+        // @todo
+
+    });
+
     describe('linearRampToValueAtTime()', () => {
 
         it('should compute the value correctly', () => {
