@@ -1,3 +1,4 @@
+import { AutomationEventList } from 'automation-events';
 import { IDynamicsCompressorNode, IMinimalBaseAudioContext } from 'standardized-audio-context';
 import { AudioNodeMock } from './audio-node-mock';
 import { AudioParamMock } from './audio-param-mock';
@@ -30,40 +31,35 @@ export class DynamicsCompressorNodeMock<T extends IMinimalBaseAudioContext> exte
         });
 
         this._attack = new AudioParamMock({
+            automationEventList: new AutomationEventList(0.003),
             deLorean,
             maxValue: 1,
-            minValue: 0,
-            onEventListUpdatedHandler (): any { }, // tslint:disable-line:no-empty
-            value: 0.003
+            minValue: 0
         });
         this._knee = new AudioParamMock({
+            automationEventList: new AutomationEventList(30),
             deLorean,
             maxValue: 40,
-            minValue: 0,
-            onEventListUpdatedHandler (): any { }, // tslint:disable-line:no-empty
-            value: 30
+            minValue: 0
         });
         this._ratio = new AudioParamMock({
+            automationEventList: new AutomationEventList(12),
             deLorean,
             maxValue: 20,
-            minValue: 1,
-            onEventListUpdatedHandler (): any { }, // tslint:disable-line:no-empty
-            value: 12
+            minValue: 1
         });
         this._reduction = 0;
         this._release = new AudioParamMock({
+            automationEventList: new AutomationEventList(0.25),
             deLorean,
             maxValue: 1,
-            minValue: 0,
-            onEventListUpdatedHandler (): any { }, // tslint:disable-line:no-empty
-            value: 0.25
+            minValue: 0
         });
         this._threshold = new AudioParamMock({
+            automationEventList: new AutomationEventList(-24),
             deLorean,
             maxValue: -100,
-            minValue: 0,
-            onEventListUpdatedHandler (): any { }, // tslint:disable-line:no-empty
-            value: -24
+            minValue: 0
         });
     }
 

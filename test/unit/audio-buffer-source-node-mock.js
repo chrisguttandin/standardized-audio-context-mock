@@ -11,13 +11,13 @@ describe('AudioBufferSourceNodeMock', () => {
     let vehicle;
 
     beforeEach(() => {
-        const context = new AudioContextMock();
+        const context = new AudioContextMock({ sampleRate: 1280 });
 
         audioBufferSourceNodeMock = new AudioBufferSourceNodeMock(context);
         audioBufferSourceNodeMock.buffer = new AudioBufferMock({
-            length: 441000,
+            length: 12800,
             numberOfChannels: 2,
-            sampleRate: 44100
+            sampleRate: 1280
         });
 
         vehicle = registrar.getVehicle(context);
@@ -139,7 +139,7 @@ describe('AudioBufferSourceNodeMock', () => {
 
             expect(onEnded).to.have.not.been.called;
 
-            vehicle.travel(0.04);
+            vehicle.travel(0.05);
 
             expect(onEnded).to.have.been.calledOnce;
         });

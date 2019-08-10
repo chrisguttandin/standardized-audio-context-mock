@@ -1,10 +1,10 @@
+import { AutomationEventList, TAutomationEvent } from 'automation-events';
 import { stub } from 'sinon';
 import { IAudioBufferSourceNode, IEndedEventHandler, IMinimalBaseAudioContext } from 'standardized-audio-context';
 import { DeLorean } from 'vehicles';
 import { AudioBufferMock } from './audio-buffer-mock';
 import { AudioNodeMock } from './audio-node-mock';
 import { AudioParamMock } from './audio-param-mock';
-import { AudioParamEventType } from './helper/audio-param-event-type';
 import { registrar } from './registrar';
 
 export class AudioBufferSourceNodeMock<T extends IMinimalBaseAudioContext> extends AudioNodeMock<T> implements IAudioBufferSourceNode<T> {
@@ -27,7 +27,7 @@ export class AudioBufferSourceNodeMock<T extends IMinimalBaseAudioContext> exten
 
     private _playbackRate: AudioParamMock;
 
-    private _playbackRateValue: number;
+    private _playbackRateAutomationEventList: AutomationEventList;
 
     private _started: null | { duration: number; maxEffectiveDuration: number; when: number };
 
@@ -43,14 +43,29 @@ export class AudioBufferSourceNodeMock<T extends IMinimalBaseAudioContext> exten
             numberOfOutputs: 1
         });
 
+        const playbackRateAutomationEventList = new Proxy(new AutomationEventList(1), {
+            get: (target, key): any => {
+                if (key === 'add') {
+                    return (automationEvent: TAutomationEvent) => {
+                        const result = target.add(automationEvent);
+
+                        this._scheduleOnEndedHandler();
+
+                        return result;
+                    };
+                }
+
+                return target[<keyof AutomationEventList> key];
+            }
+        });
+
         this._buffer = null;
         this._deLorean = <DeLorean> registrar.getVehicle(context);
         this._detune = new AudioParamMock({
+            automationEventList: new AutomationEventList(0),
             deLorean: this._deLorean,
             maxValue: 3.4028234663852886e38,
-            minValue: -3.4028234663852886e38,
-            onEventListUpdatedHandler: this._scheduleOnEndedHandler.bind(this),
-            value: 0
+            minValue: -3.4028234663852886e38
         });
         this.loop = false;
         this.loopEnd = 0;
@@ -60,13 +75,12 @@ export class AudioBufferSourceNodeMock<T extends IMinimalBaseAudioContext> exten
         this._started = null;
         this._stopped = null;
         this._playbackRate = new AudioParamMock({
+            automationEventList: playbackRateAutomationEventList,
             deLorean: this._deLorean,
             maxValue: 3.4028234663852886e38,
-            minValue: -3.4028234663852886e38,
-            onEventListUpdatedHandler: this._scheduleOnEndedHandler.bind(this),
-            value: 1
+            minValue: -3.4028234663852886e38
         });
-        this._playbackRateValue = 1;
+        this._playbackRateAutomationEventList = playbackRateAutomationEventList;
 
         stub(this, 'start')
             .callThrough();
@@ -121,38 +135,33 @@ export class AudioBufferSourceNodeMock<T extends IMinimalBaseAudioContext> exten
         value; // tslint:disable-line:no-unused-expression
     }
 
-    public start (when: number, offset?: number, duration?: number): void {
+    public start (...args: [ number?, number?, number? ]): void {
         if (this._deLorean === undefined) {
             return;
         }
 
-        let sanitizedDuration = duration;
-        let sanitizedOffset = offset;
-        let sanitizedWhen = when;
+        let [ sanitizedWhen, sanitizedOffset, sanitizedDuration ] = args;
 
-        if (arguments.length === 0) {
+        if (sanitizedWhen === undefined) {
             sanitizedWhen = 0;
         }
 
-        if (when < this._deLorean.position) {
+        if (sanitizedWhen < this._deLorean.position) {
             sanitizedWhen = this._deLorean.position;
         }
 
-        if (arguments.length < 2) {
+        if (sanitizedOffset === undefined) {
             sanitizedOffset = 0;
         }
 
-        if (arguments.length < 3) {
-            sanitizedDuration = (this.buffer === null) ? 0 : this.buffer.duration - <number> sanitizedOffset;
+        if (sanitizedDuration === undefined) {
+            sanitizedDuration = (this.buffer === null) ? 0 : this.buffer.duration - sanitizedOffset;
         }
 
-        const maxEffectiveDuration = Math.max(
-            <number> sanitizedDuration,
-            (this.buffer === null) ? 0 : this.buffer.duration - <number> sanitizedOffset
-        );
+        const maxEffectiveDuration = Math.max(sanitizedDuration, (this.buffer === null) ? 0 : this.buffer.duration - sanitizedOffset);
 
         this._started = {
-            duration: <number> sanitizedDuration,
+            duration: sanitizedDuration,
             maxEffectiveDuration,
             when: sanitizedWhen
         };
@@ -160,23 +169,13 @@ export class AudioBufferSourceNodeMock<T extends IMinimalBaseAudioContext> exten
         this._scheduleOnEndedHandler();
     }
 
-    public stop (when: number): void {
+    public stop (when = 0): void {
         if (this._deLorean === undefined) {
             return;
         }
 
-        let sanitizedWhen = when;
-
-        if (arguments.length === 0) {
-            sanitizedWhen = 0;
-        }
-
-        if (when < this._deLorean.position) {
-            sanitizedWhen = this._deLorean.position;
-        }
-
         this._stopped = {
-            when: sanitizedWhen
+            when: (when < this._deLorean.position) ? this._deLorean.position : when
         };
 
         this._scheduleOnEndedHandler();
@@ -197,54 +196,44 @@ export class AudioBufferSourceNodeMock<T extends IMinimalBaseAudioContext> exten
         }
 
         if (this._started !== null) {
-            let when;
+            const renderQuantum = 128 / this.context.sampleRate;
 
-            // @todo Do not access private properties.
-            if ((<any> this._playbackRate)._eventList.length === 0) {
-                let playbackRateOffset;
+            let when = this._started.when;
+            let effectiveDuration = 0;
+            let duration = 0;
+            let i = Math.ceil(when / renderQuantum);
 
-                if (this._started.when > this._deLorean.position) {
-                    playbackRateOffset = 0;
-                    when = (this._started.when - this._deLorean.position);
-                } else {
-                    playbackRateOffset = (this._deLorean.position - this._started.when) / this._playbackRateValue;
-                    when = 0;
+            if (effectiveDuration < this._started.maxEffectiveDuration) {
+                const partialRenderQuantum = when % renderQuantum;
+
+                if (partialRenderQuantum > 0) {
+                    const value = this._playbackRateAutomationEventList.getValue(when - partialRenderQuantum);
+
+                    [ duration, effectiveDuration ] = AudioBufferSourceNodeMock._accumulateDurationAndEffectiveDuration(
+                        value,
+                        (renderQuantum - partialRenderQuantum),
+                        duration,
+                        effectiveDuration,
+                        this._started.maxEffectiveDuration
+                    );
                 }
-
-                when += this._deLorean.position + ((this._started.duration - playbackRateOffset) / this._playbackRate.value);
-                this._playbackRateValue = this._playbackRate.value;
-            } else {
-                let actualDuration = 0;
-                let effectiveDuration = 0;
-
-                // @todo Do not access private properties.
-                (<any> this._playbackRate)._eventList.forEach((event: any) => {
-                    if (event.endTime !== undefined &&
-                            event.startTime !== undefined &&
-                            event.previous !== undefined &&
-                            event.type === AudioParamEventType.LINEAR_RAMP_TO_VALUE) {
-                        effectiveDuration += (event.endTime - event.startTime) * ((event.value + event.previous.value) / 2);
-                        actualDuration += (event.endTime - event.startTime);
-                    } else if (event.startTime !== undefined &&
-                            event.type === AudioParamEventType.SET_VALUE) {
-                        if (event.previous !== undefined && event.previous.endTime !== undefined) {
-                            effectiveDuration += (event.startTime - event.previous.endTime) * event.previous.value;
-                            actualDuration += (event.startTime - event.previous.endTime);
-                        } else if (this._started !== null) {
-                            effectiveDuration = (event.startTime - this._started.when) * this._playbackRate.value;
-                            actualDuration = (event.startTime - this._started.when);
-                        }
-                    }
-                });
-
-                if (effectiveDuration < this._started.maxEffectiveDuration) {
-                    // @todo Do not access private properties.
-                    actualDuration += (this._started.maxEffectiveDuration - effectiveDuration) / (<any> this._playbackRate)._eventList.last().value; // tslint:disable-line:max-line-length
-                    effectiveDuration = this._started.maxEffectiveDuration;
-                }
-
-                when = this._started.when + actualDuration;
             }
+
+            while (effectiveDuration < this._started.maxEffectiveDuration) {
+                const value = this._playbackRateAutomationEventList.getValue(i * renderQuantum);
+
+                [ duration, effectiveDuration ] = AudioBufferSourceNodeMock._accumulateDurationAndEffectiveDuration(
+                    value,
+                    renderQuantum,
+                    duration,
+                    effectiveDuration,
+                    this._started.maxEffectiveDuration
+                );
+
+                i += 1;
+            }
+
+            when += duration;
 
             if (this._stopped !== null && this._stopped.when < when) {
                 when = this._stopped.when;
@@ -252,6 +241,29 @@ export class AudioBufferSourceNodeMock<T extends IMinimalBaseAudioContext> exten
 
             this._onEndedTicket = this._deLorean.schedule(when, this._callOnEndedHandler.bind(this));
         }
+    }
+
+    private static _accumulateDurationAndEffectiveDuration (
+        value: number,
+        quantum: number,
+        duration: number,
+        effectiveDuration: number,
+        maxEffectiveDuration: number
+    ): [ number, number ] {
+        const effectiveQuantum = value * quantum;
+        const newEffectiveDuration = effectiveDuration + effectiveQuantum;
+
+        if (newEffectiveDuration > maxEffectiveDuration) {
+            return [
+                duration + ((maxEffectiveDuration - effectiveDuration) / effectiveQuantum) * quantum,
+                maxEffectiveDuration
+            ];
+        }
+
+        return [
+            duration + quantum,
+            newEffectiveDuration
+        ];
     }
 
 }

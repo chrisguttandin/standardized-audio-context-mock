@@ -1,3 +1,4 @@
+import { AutomationEventList } from 'automation-events';
 import { SinonSpy, spy } from 'sinon';
 import { IEndedEventHandler, IMinimalBaseAudioContext, IOscillatorNode, TOscillatorType } from 'standardized-audio-context';
 import { AudioNodeMock } from './audio-node-mock';
@@ -33,18 +34,16 @@ export class OscillatorNodeMock<T extends IMinimalBaseAudioContext> extends Audi
         });
 
         this._detune = new AudioParamMock({
+            automationEventList: new AutomationEventList(0),
             deLorean,
             maxValue: 3.4028234663852886e38,
-            minValue: -3.4028234663852886e38,
-            onEventListUpdatedHandler (): any { }, // tslint:disable-line:no-empty
-            value: 0
+            minValue: -3.4028234663852886e38
         });
         this._frequency = new AudioParamMock({
+            automationEventList: new AutomationEventList(440),
             deLorean,
             maxValue: context.sampleRate / 2,
-            minValue: -(context.sampleRate / 2),
-            onEventListUpdatedHandler (): any { }, // tslint:disable-line:no-empty
-            value: 440
+            minValue: -(context.sampleRate / 2)
         });
         // @todo Implement the ended event.
         this._onended = null;

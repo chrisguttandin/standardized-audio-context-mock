@@ -1,4 +1,5 @@
 import { AudioParamMock } from '../../src/audio-param-mock';
+import { AutomationEventList } from 'automation-events';
 import { DeLorean } from 'vehicles';
 
 describe('AudioParamMock', () => {
@@ -10,11 +11,10 @@ describe('AudioParamMock', () => {
         deLorean = new DeLorean();
 
         audioParamMock = new AudioParamMock({
+            automationEventList: new AutomationEventList(1),
             deLorean,
             maxValue: 18,
-            minValue: 0,
-            onEventListUpdatedHandler: () => {},
-            value: 1
+            minValue: 0
         });
     });
 

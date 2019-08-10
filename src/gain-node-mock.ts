@@ -1,3 +1,4 @@
+import { AutomationEventList } from 'automation-events';
 import { IGainNode, IMinimalBaseAudioContext } from 'standardized-audio-context';
 import { AudioNodeMock } from './audio-node-mock';
 import { AudioParamMock } from './audio-param-mock';
@@ -20,11 +21,10 @@ export class GainNodeMock<T extends IMinimalBaseAudioContext> extends AudioNodeM
         });
 
         this._gain = new AudioParamMock({
+            automationEventList: new AutomationEventList(1),
             deLorean,
             maxValue: 3.4028234663852886e38,
-            minValue: -3.4028234663852886e38,
-            onEventListUpdatedHandler (): any { }, // tslint:disable-line:no-empty
-            value: 1
+            minValue: -3.4028234663852886e38
         });
     }
 
