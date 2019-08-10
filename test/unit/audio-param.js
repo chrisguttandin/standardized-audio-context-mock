@@ -80,6 +80,12 @@ describe('AudioParamMock', () => {
 
     });
 
+    describe('cancelScheduledValues()', () => {
+
+        // @todo
+
+    });
+
     describe('exponentialRampToValueAtTime()', () => {
 
         // @todo
