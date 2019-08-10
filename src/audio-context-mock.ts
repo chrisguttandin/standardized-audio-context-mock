@@ -3,6 +3,7 @@ import {
     IAudioBuffer,
     IAudioBufferSourceNode,
     IAudioContext,
+    IAudioContextOptions,
     IAudioDestinationNode,
     IAudioListener,
     IAudioNode,
@@ -38,10 +39,13 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
 
     private _deLorean: DeLorean;
 
-    constructor () {
+    private _options: IAudioContextOptions;
+
+    constructor (options: IAudioContextOptions = { }) {
         super();
 
         this._deLorean = new DeLorean();
+        this._options = options;
 
         registrar.setDeLorean(this, this._deLorean);
     }
@@ -51,7 +55,7 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
     }
 
     get baseLatency (): number {
-        return 512 / 44100;
+        return 512 / this.sampleRate;
     }
 
     get currentTime (): number {
@@ -71,7 +75,7 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
     }
 
     get sampleRate (): number {
-        return 44100;
+        return (this._options.sampleRate === undefined) ? 44100 : this._options.sampleRate;
     }
 
     get state (): TAudioContextState {
