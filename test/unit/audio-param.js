@@ -80,6 +80,12 @@ describe('AudioParamMock', () => {
 
     });
 
+    describe('exponentialRampToValueAtTime()', () => {
+
+        // @todo
+
+    });
+
     describe('linearRampToValueAtTime()', () => {
 
         it('should compute the value correctly', () => {
