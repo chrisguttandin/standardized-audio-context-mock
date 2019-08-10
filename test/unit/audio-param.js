@@ -151,4 +151,10 @@ describe('AudioParamMock', () => {
 
     });
 
+    describe('setValueCurveAtTime()', () => {
+
+        // @todo
+
+    });
+
 });

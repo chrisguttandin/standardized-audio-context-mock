@@ -5,15 +5,14 @@ import {
     createExponentialRampToValueAutomationEvent,
     createLinearRampToValueAutomationEvent,
     createSetTargetAutomationEvent,
-    createSetValueAutomationEvent
+    createSetValueAutomationEvent,
+    createSetValueCurveAutomationEvent
 } from 'automation-events';
-import { SinonSpy, spy, stub } from 'sinon';
+import { stub } from 'sinon';
 import { IAudioParam } from 'standardized-audio-context';
 import { DeLorean } from 'vehicles';
 
 export class AudioParamMock implements IAudioParam {
-
-    public setValueCurveAtTime: SinonSpy;
 
     private _automationEventList: AutomationEventList;
 
@@ -31,7 +30,6 @@ export class AudioParamMock implements IAudioParam {
         this._defaultValue = options.automationEventList.getValue(0);
         this._maxValue = options.maxValue;
         this._minValue = options.minValue;
-        this.setValueCurveAtTime = spy();
 
         stub(this, 'cancelAndHoldAtTime')
             .callThrough();
@@ -44,6 +42,8 @@ export class AudioParamMock implements IAudioParam {
         stub(this, 'setTargetAtTime')
             .callThrough();
         stub(this, 'setValueAtTime')
+            .callThrough();
+        stub(this, 'setValueCurveAtTime')
             .callThrough();
     }
 
@@ -115,6 +115,12 @@ export class AudioParamMock implements IAudioParam {
 
     public setValueAtTime (value: number, startTime: number): IAudioParam {
         this._automationEventList.add(createSetValueAutomationEvent(value, startTime));
+
+        return this;
+    }
+
+    public setValueCurveAtTime (values: Float32Array, startTime: number, duration: number): IAudioParam {
+        this._automationEventList.add(createSetValueCurveAutomationEvent(values, startTime, duration));
 
         return this;
     }
