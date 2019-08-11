@@ -29,7 +29,7 @@ export class AudioBufferSourceNodeMock<T extends IMinimalBaseAudioContext> exten
 
     private _playbackRateAutomationEventList: AutomationEventList;
 
-    private _started: null | { duration: number; maxEffectiveDuration: number; when: number };
+    private _started: null | { duration: number; offset: number; when: number };
 
     private _stopped: null | { when: number };
 
@@ -98,6 +98,8 @@ export class AudioBufferSourceNodeMock<T extends IMinimalBaseAudioContext> exten
         }
 
         this._buffer = value;
+
+        this._scheduleOnEndedHandler();
     }
 
     get detune (): AudioParamMock {
@@ -135,35 +137,15 @@ export class AudioBufferSourceNodeMock<T extends IMinimalBaseAudioContext> exten
         value; // tslint:disable-line:no-unused-expression
     }
 
-    public start (...args: [ number?, number?, number? ]): void {
+    public start (when?: number, offset?: number, duration?: number): void {
         if (this._deLorean === undefined) {
             return;
         }
 
-        let [ sanitizedWhen, sanitizedOffset, sanitizedDuration ] = args;
-
-        if (sanitizedWhen === undefined) {
-            sanitizedWhen = 0;
-        }
-
-        if (sanitizedWhen < this._deLorean.position) {
-            sanitizedWhen = this._deLorean.position;
-        }
-
-        if (sanitizedOffset === undefined) {
-            sanitizedOffset = 0;
-        }
-
-        if (sanitizedDuration === undefined) {
-            sanitizedDuration = (this.buffer === null) ? 0 : this.buffer.duration - sanitizedOffset;
-        }
-
-        const maxEffectiveDuration = Math.max(sanitizedDuration, (this.buffer === null) ? 0 : this.buffer.duration - sanitizedOffset);
-
         this._started = {
-            duration: sanitizedDuration,
-            maxEffectiveDuration,
-            when: sanitizedWhen
+            duration: (duration === undefined) ? Number.POSITIVE_INFINITY : duration,
+            offset: (offset === undefined) ? 0 : offset,
+            when: (when === undefined || when < this._deLorean.position) ? this._deLorean.position : when
         };
 
         this._scheduleOnEndedHandler();
@@ -196,6 +178,10 @@ export class AudioBufferSourceNodeMock<T extends IMinimalBaseAudioContext> exten
         }
 
         if (this._started !== null) {
+            const maxEffectiveDuration = Math.min(
+                (this.buffer === null) ? 0 : this.buffer.duration - this._started.offset,
+                this._started.duration
+            );
             const renderQuantum = 128 / this.context.sampleRate;
 
             let when = this._started.when;
@@ -203,7 +189,7 @@ export class AudioBufferSourceNodeMock<T extends IMinimalBaseAudioContext> exten
             let duration = 0;
             let i = Math.ceil(when / renderQuantum);
 
-            if (effectiveDuration < this._started.maxEffectiveDuration) {
+            if (effectiveDuration < maxEffectiveDuration) {
                 const partialRenderQuantum = when % renderQuantum;
 
                 if (partialRenderQuantum > 0) {
@@ -214,12 +200,12 @@ export class AudioBufferSourceNodeMock<T extends IMinimalBaseAudioContext> exten
                         (renderQuantum - partialRenderQuantum),
                         duration,
                         effectiveDuration,
-                        this._started.maxEffectiveDuration
+                        maxEffectiveDuration
                     );
                 }
             }
 
-            while (effectiveDuration < this._started.maxEffectiveDuration) {
+            while (effectiveDuration < maxEffectiveDuration) {
                 const value = this._playbackRateAutomationEventList.getValue(i * renderQuantum);
 
                 [ duration, effectiveDuration ] = AudioBufferSourceNodeMock._accumulateDurationAndEffectiveDuration(
@@ -227,7 +213,7 @@ export class AudioBufferSourceNodeMock<T extends IMinimalBaseAudioContext> exten
                     renderQuantum,
                     duration,
                     effectiveDuration,
-                    this._started.maxEffectiveDuration
+                    maxEffectiveDuration
                 );
 
                 i += 1;
