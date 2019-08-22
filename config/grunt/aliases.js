@@ -5,9 +5,9 @@ module.exports = {
         'sh:build-es5'
     ],
     lint: [
-        'eslint',
-        // @todo Use grunt-lint again when it support the type-check option.
-        'sh:lint'
+        'sh:lint-config',
+        'sh:lint-src',
+        'sh:lint-test'
     ],
     test: [
         'karma:test'
