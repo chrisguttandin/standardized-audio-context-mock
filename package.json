@@ -18,7 +18,7 @@
     "@babel/runtime": "^7.6.3",
     "automation-events": "^1.0.3",
     "sinon": "^7.5.0",
-    "standardized-audio-context": "^22.0.1",
+    "standardized-audio-context": "^22.0.2",
     "tslib": "^1.10.0",
     "vehicles": "^5.0.9"
   },
