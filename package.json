@@ -20,7 +20,7 @@
     "sinon": "^8.0.2",
     "standardized-audio-context": "^23.1.0",
     "tslib": "^1.10.0",
-    "vehicles": "^5.0.16"
+    "vehicles": "^5.0.17"
   },
   "description": "A mocked version of the standardized-audio-context module.",
   "devDependencies": {
