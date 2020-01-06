@@ -203,4 +203,24 @@ describe('AudioContextMock', () => {
 
     });
 
+    describe('decodeAudioData()', () => {
+
+        it('should return an instance of a Promise', () => {
+            expect(audioContextMock.decodeAudioData()).to.be.an.instanceOf(Promise);
+        });
+
+        it('should resolve the promise with an instance of the AudioBuffer interface', async () => {
+            const audioBufferMock = await audioContextMock.decodeAudioData();
+
+            expect(audioBufferMock.duration).to.be.closeTo(10 / 44100, 0.001);
+            expect(audioBufferMock.length).to.equal(10);
+            expect(audioBufferMock.numberOfChannels).to.equal(1);
+            expect(audioBufferMock.sampleRate).to.equal(44100);
+            expect(audioBufferMock.getChannelData).to.be.a('function');
+            expect(audioBufferMock.copyFromChannel).to.be.a('function');
+            expect(audioBufferMock.copyToChannel).to.be.a('function');
+        });
+
+    });
+
 });

@@ -217,7 +217,7 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
     }
 
     public decodeAudioData (): Promise<IAudioBuffer> {
-        return <Promise<IAudioBuffer>> (<any> Promise.resolve());
+        return Promise.resolve(new AudioBufferMock({ length: 10, numberOfChannels: 1, sampleRate: this.sampleRate }));
     }
 
     public resume (): Promise<void> { // tslint:disable-line:invalid-void
