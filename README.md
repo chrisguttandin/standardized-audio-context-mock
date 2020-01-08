@@ -1,16 +1,17 @@
 # standardized-audio-context-mock
 
-**A mocked version of the standardized-audio-context module.**
-
 [![tests](https://img.shields.io/travis/chrisguttandin/standardized-audio-context-mock/master.svg?style=flat-square)](https://travis-ci.org/chrisguttandin/standardized-audio-context-mock)
 [![dependencies](https://img.shields.io/david/chrisguttandin/standardized-audio-context-mock.svg?style=flat-square)](https://www.npmjs.com/package/standardized-audio-context-mock)
 [![version](https://img.shields.io/npm/v/standardized-audio-context-mock.svg?style=flat-square)](https://www.npmjs.com/package/standardized-audio-context-mock)
 
-This library is meant to test code which is using [`standardized-audio-context`](https://github.com/chrisguttandin/standardized-audio-context) without acutally rendering any audio.
+**A mocked version of the [standardized-audio-context](https://github.com/chrisguttandin/standardized-audio-context) module.**
+
+This library is meant to test code that uses [`standardized-audio-context`](https://github.com/chrisguttandin/standardized-audio-context). It can be used with popular JavaScript testing frameworks ([Jest](https://jestjs.io/), [Mocha](https://mochajs.org), [Chai](https://www.chaijs.com), etc) 
+
 
 It does depend on [Sinon.JS](https://sinonjs.org) to do the mocking.
 
-## Usage
+## Installing
 
 `standardized-audio-context-mock` is published on
 [npm](https://www.npmjs.com/package/standardized-audio-context-mock) and can be installed as usual.
@@ -19,7 +20,7 @@ It does depend on [Sinon.JS](https://sinonjs.org) to do the mocking.
 npm install standardized-audio-context-mock
 ```
 
-## Testing
+## Usage
 
 Let's say you have the following code that you want to test:
 
@@ -36,7 +37,7 @@ const play = (audioBuffer: IAudioBuffer, audioContext: IAudioContext) => {
 };
 ```
 
-A test suite for the `play()` function which will run with [Mocha](https://mochajs.org) and [Chai](https://www.chaijs.com) and uses `standardized-audio-context-mock` might look like this:
+A test suite for the `play()` function which will run with your favorite JavaScript test framework, and might look something like this:
 
 ```js
 import { AudioBufferMock, AudioContextMock, registrar } from 'standardized-audio-context-mock';
@@ -86,3 +87,13 @@ describe('play()', () => {
 
 });
 ```
+
+## Scripts
+
+### npm run prepublishOnly
+
+This script pulls and builds [`standardized-audio-context`](https://github.com/chrisguttandin/standardized-audio-context)
+
+### npm run test
+
+Validates mock code of [`standardized-audio-context`](https://github.com/chrisguttandin/standardized-audio-context). Run `npm run prepublishOnly` prior to running this script to pull and build `standardized-audio-context`](https://github.com/chrisguttandin/standardized-audio-context).
