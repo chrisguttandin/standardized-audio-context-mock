@@ -21,6 +21,7 @@ import {
     IOscillatorNode,
     IPannerNode,
     IPeriodicWave,
+    IScriptProcessorNode,
     IStateChangeEventHandler,
     IStereoPannerNode,
     IWaveShaperNode,
@@ -204,6 +205,11 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
     public createPeriodicWave (): IPeriodicWave {
         // @todo
         return <IPeriodicWave> { };
+    }
+
+    public createScriptProcessor (): IScriptProcessorNode {
+        // @todo
+        return <IScriptProcessorNode<this>> { };
     }
 
     public createStereoPanner (): IStereoPannerNode<this> {
