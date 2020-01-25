@@ -10,6 +10,6 @@ module.exports = {
         'sh:lint-test'
     ],
     test: [
-        'karma:test'
+        'sh:test-unit'
     ]
 };
