@@ -1,8 +1,8 @@
 import { SinonSpy, spy } from 'sinon';
-import { IAudioNode, IMinimalBaseAudioContext, TChannelCountMode, TChannelInterpretation } from 'standardized-audio-context';
+import { IAudioNode, TChannelCountMode, TChannelInterpretation, TContext } from 'standardized-audio-context';
 import { EventTarget } from './event-target';
 
-export class AudioNodeMock<T extends IMinimalBaseAudioContext> extends EventTarget implements IAudioNode<T> {
+export class AudioNodeMock<T extends TContext> extends EventTarget implements IAudioNode<T> {
 
     public channelCount: number;
 

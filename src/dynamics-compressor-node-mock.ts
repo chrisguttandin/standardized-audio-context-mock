@@ -1,10 +1,10 @@
 import { AutomationEventList } from 'automation-events';
-import { IDynamicsCompressorNode, IMinimalBaseAudioContext } from 'standardized-audio-context';
+import { IDynamicsCompressorNode, TContext } from 'standardized-audio-context';
 import { AudioNodeMock } from './audio-node-mock';
 import { AudioParamMock } from './audio-param-mock';
 import { registrar } from './registrar';
 
-export class DynamicsCompressorNodeMock<T extends IMinimalBaseAudioContext> extends AudioNodeMock<T> implements IDynamicsCompressorNode<T> {
+export class DynamicsCompressorNodeMock<T extends TContext> extends AudioNodeMock<T> implements IDynamicsCompressorNode<T> {
 
     private _attack: AudioParamMock;
 

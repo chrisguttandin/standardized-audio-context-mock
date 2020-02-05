@@ -1,10 +1,10 @@
 import { AutomationEventList } from 'automation-events';
-import { IGainNode, IMinimalBaseAudioContext } from 'standardized-audio-context';
+import { IGainNode, TContext } from 'standardized-audio-context';
 import { AudioNodeMock } from './audio-node-mock';
 import { AudioParamMock } from './audio-param-mock';
 import { registrar } from './registrar';
 
-export class GainNodeMock<T extends IMinimalBaseAudioContext> extends AudioNodeMock<T> implements IGainNode<T> {
+export class GainNodeMock<T extends TContext> extends AudioNodeMock<T> implements IGainNode<T> {
 
     private _gain: AudioParamMock;
 
