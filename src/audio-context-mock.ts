@@ -83,7 +83,7 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
         return <TAudioContextState> 'running';
     }
 
-    public close (): Promise<void> { // tslint:disable-line:invalid-void
+    public close (): Promise<void> {
         return Promise.resolve();
     }
 
@@ -221,11 +221,11 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
         return Promise.resolve(new AudioBufferMock({ length: 10, numberOfChannels: 1, sampleRate: this.sampleRate }));
     }
 
-    public resume (): Promise<void> { // tslint:disable-line:invalid-void
+    public resume (): Promise<void> {
         return Promise.resolve();
     }
 
-    public suspend (): Promise<void> { // tslint:disable-line:invalid-void
+    public suspend (): Promise<void> {
         return Promise.resolve();
     }
 
