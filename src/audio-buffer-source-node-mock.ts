@@ -1,6 +1,6 @@
 import { AutomationEventList, TAutomationEvent } from 'automation-events';
 import { stub } from 'sinon';
-import { IAudioBufferSourceNode, TContext, TEndedEventHandler } from 'standardized-audio-context';
+import { IAudioBufferSourceNode, TContext, TEventHandler } from 'standardized-audio-context';
 import { DeLorean } from 'vehicles';
 import { AudioBufferMock } from './audio-buffer-mock';
 import { AudioNodeMock } from './audio-node-mock';
@@ -21,7 +21,7 @@ export class AudioBufferSourceNodeMock<T extends TContext> extends AudioNodeMock
 
     private _detune: AudioParamMock;
 
-    private _onended: null | TEndedEventHandler<this>;
+    private _onended: null | TEventHandler<this>;
 
     private _onEndedTicket: null | number;
 
@@ -110,7 +110,7 @@ export class AudioBufferSourceNodeMock<T extends TContext> extends AudioNodeMock
         value; // tslint:disable-line:no-unused-expression
     }
 
-    get onended (): null | TEndedEventHandler<this> {
+    get onended (): null | TEventHandler<this> {
         return this._onended;
     }
 

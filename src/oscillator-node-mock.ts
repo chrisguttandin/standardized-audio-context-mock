@@ -1,6 +1,6 @@
 import { AutomationEventList } from 'automation-events';
 import { SinonSpy, spy } from 'sinon';
-import { IOscillatorNode, TContext, TEndedEventHandler, TOscillatorType } from 'standardized-audio-context';
+import { IOscillatorNode, TContext, TEventHandler, TOscillatorType } from 'standardized-audio-context';
 import { AudioNodeMock } from './audio-node-mock';
 import { AudioParamMock } from './audio-param-mock';
 import { registrar } from './registrar';
@@ -19,7 +19,7 @@ export class OscillatorNodeMock<T extends TContext> extends AudioNodeMock<T> imp
 
     private _frequency: AudioParamMock;
 
-    private _onended: null | TEndedEventHandler<this>;
+    private _onended: null | TEventHandler<this>;
 
     constructor (context: T) {
         const deLorean = registrar.getDeLorean(context);
@@ -69,7 +69,7 @@ export class OscillatorNodeMock<T extends TContext> extends AudioNodeMock<T> imp
         value; // tslint:disable-line:no-unused-expression
     }
 
-    get onended (): null | TEndedEventHandler<this> {
+    get onended (): null | TEventHandler<this> {
         return this._onended;
     }
 

@@ -25,7 +25,7 @@ import {
     IWaveShaperNode,
     TAudioContextState,
     TContext,
-    TStateChangeEventHandler
+    TEventHandler
 } from 'standardized-audio-context';
 import { DeLorean } from 'vehicles';
 import { AudioBufferMock } from './audio-buffer-mock';
@@ -71,7 +71,7 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
         return <IAudioListener> { };
     }
 
-    get onstatechange (): null | TStateChangeEventHandler<IAudioContext> {
+    get onstatechange (): null | TEventHandler<IAudioContext> {
         return null;
     }
 
