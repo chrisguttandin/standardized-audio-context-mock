@@ -16,6 +16,7 @@ import {
     IGainNode,
     IIIRFilterNode,
     IMediaElementAudioSourceNode,
+    IMediaStreamAudioDestinationNode,
     IMediaStreamAudioSourceNode,
     IMediaStreamTrackAudioSourceNode,
     IOscillatorNode,
@@ -177,6 +178,11 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
     public createMediaElementSource (): IMediaElementAudioSourceNode<this> {
         // @todo
         return <IMediaElementAudioSourceNode<this>> { };
+    }
+
+    public createMediaStreamDestination (): IMediaStreamAudioDestinationNode<this> {
+        // @todo
+        return <IMediaStreamAudioDestinationNode<this>> { };
     }
 
     public createMediaStreamSource (): IMediaStreamAudioSourceNode<this> {
