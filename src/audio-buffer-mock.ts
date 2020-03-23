@@ -1,4 +1,4 @@
-import { IAudioBuffer } from 'standardized-audio-context';
+import { IAudioBuffer, IAudioBufferOptions } from 'standardized-audio-context';
 
 export class AudioBufferMock implements IAudioBuffer {
 
@@ -8,10 +8,10 @@ export class AudioBufferMock implements IAudioBuffer {
 
     public sampleRate: number;
 
-    constructor (options: { length: number; numberOfChannels: number; sampleRate: number }) {
-        this.length = options.length;
-        this.numberOfChannels = options.numberOfChannels;
-        this.sampleRate = options.sampleRate;
+    constructor ({ length, numberOfChannels = 1, sampleRate }: IAudioBufferOptions) {
+        this.length = length;
+        this.numberOfChannels = numberOfChannels;
+        this.sampleRate = sampleRate;
     }
 
     get duration (): number {
