@@ -10,6 +10,7 @@ module.exports = {
         'sh:lint-test'
     ],
     test: [
+        'sh:test-integration',
         'sh:test-unit'
     ]
 };
