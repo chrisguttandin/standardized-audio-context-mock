@@ -74,9 +74,7 @@ export class OscillatorNodeMock<T extends TContext> extends AudioNodeMock<T> imp
     }
 
     set onended (value) {
-        if (typeof value === 'function' || value === null) {
-            this._onended = value;
-        }
+        this._onended = (typeof value === 'function') ? value : null;
     }
 
 }

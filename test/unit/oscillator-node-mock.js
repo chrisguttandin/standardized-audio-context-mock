@@ -56,4 +56,38 @@ describe('OscillatorNodeMock', () => {
 
     });
 
+    describe('onended', () => {
+
+        it('should be null', () => {
+            expect(oscillatorNodeMock.onended).to.be.null;
+        });
+
+        it('should be assignable to a function', () => {
+            const fn = () => {}; // eslint-disable-line unicorn/consistent-function-scoping
+            const onended = oscillatorNodeMock.onended = fn; // eslint-disable-line no-multi-assign
+
+            expect(onended).to.equal(fn);
+            expect(oscillatorNodeMock.onended).to.equal(fn);
+        });
+
+        it('should be assignable to null', () => {
+            const onended = oscillatorNodeMock.onended = null; // eslint-disable-line no-multi-assign
+
+            expect(onended).to.be.null;
+            expect(oscillatorNodeMock.onended).to.be.null;
+        });
+
+        it('should not be assignable to something else', () => {
+            const string = 'no function or null value';
+
+            oscillatorNodeMock.onended = () => {};
+
+            const onended = oscillatorNodeMock.onended = string; // eslint-disable-line no-multi-assign
+
+            expect(onended).to.equal(string);
+            expect(oscillatorNodeMock.onended).to.be.null;
+        });
+
+    });
+
 });

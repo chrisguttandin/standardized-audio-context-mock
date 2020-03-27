@@ -120,12 +120,10 @@ export class AudioBufferSourceNodeMock<T extends TContext> extends AudioNodeMock
             this.removeEventListener('ended', this._onended);
         }
 
-        if (typeof value === 'function' || value === null) {
-            this._onended = value;
+        this._onended = (typeof value === 'function') ? value : null;
 
-            if (typeof value === 'function') {
-                this.addEventListener('ended', value);
-            }
+        if (typeof value === 'function') {
+            this.addEventListener('ended', value);
         }
     }
 
