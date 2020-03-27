@@ -23,7 +23,7 @@ export class AudioBufferSourceNodeMock<T extends TContext> extends AudioNodeMock
 
     private _onended: null | TEventHandler<this>;
 
-    private _onEndedTicket: null | number;
+    private _onendedTicket: null | number;
 
     private _playbackRate: AudioParamMock;
 
@@ -49,7 +49,7 @@ export class AudioBufferSourceNodeMock<T extends TContext> extends AudioNodeMock
                     return (automationEvent: TAutomationEvent) => {
                         const result = target.add(automationEvent);
 
-                        this._scheduleOnEndedHandler();
+                        this._scheduleOnendedHandler();
 
                         return result;
                     };
@@ -71,7 +71,7 @@ export class AudioBufferSourceNodeMock<T extends TContext> extends AudioNodeMock
         this.loopEnd = 0;
         this.loopStart = 0;
         this._onended = null;
-        this._onEndedTicket = null;
+        this._onendedTicket = null;
         this._started = null;
         this._stopped = null;
         this._playbackRate = new AudioParamMock({
@@ -99,7 +99,7 @@ export class AudioBufferSourceNodeMock<T extends TContext> extends AudioNodeMock
 
         this._buffer = value;
 
-        this._scheduleOnEndedHandler();
+        this._scheduleOnendedHandler();
     }
 
     get detune (): AudioParamMock {
@@ -148,7 +148,7 @@ export class AudioBufferSourceNodeMock<T extends TContext> extends AudioNodeMock
             when: (when === undefined || when < this._deLorean.position) ? this._deLorean.position : when
         };
 
-        this._scheduleOnEndedHandler();
+        this._scheduleOnendedHandler();
     }
 
     public stop (when = 0): void {
@@ -160,21 +160,21 @@ export class AudioBufferSourceNodeMock<T extends TContext> extends AudioNodeMock
             when: (when < this._deLorean.position) ? this._deLorean.position : when
         };
 
-        this._scheduleOnEndedHandler();
+        this._scheduleOnendedHandler();
     }
 
-    private _callOnEndedHandler (): void {
+    private _callOnendedHandler (): void {
         this.dispatchEvent(new Event('ended'));
     }
 
-    private _scheduleOnEndedHandler (): void {
+    private _scheduleOnendedHandler (): void {
         if (this._deLorean === undefined) {
             return;
         }
 
-        if (this._onEndedTicket !== null) {
-            this._deLorean.cancel(this._onEndedTicket);
-            this._onEndedTicket = null;
+        if (this._onendedTicket !== null) {
+            this._deLorean.cancel(this._onendedTicket);
+            this._onendedTicket = null;
         }
 
         if (this._started !== null) {
@@ -225,7 +225,7 @@ export class AudioBufferSourceNodeMock<T extends TContext> extends AudioNodeMock
                 when = this._stopped.when;
             }
 
-            this._onEndedTicket = this._deLorean.schedule(when, this._callOnEndedHandler.bind(this));
+            this._onendedTicket = this._deLorean.schedule(when, this._callOnendedHandler.bind(this));
         }
     }
 

@@ -47,10 +47,10 @@ describe('AudioBufferSourceNodeMock', () => {
 
     describe('onended', () => {
 
-        let onEnded;
+        let onended;
 
         beforeEach(() => {
-            onEnded = spy();
+            onended = spy();
         });
 
         it('should have a default value of null', () => {
@@ -62,86 +62,86 @@ describe('AudioBufferSourceNodeMock', () => {
 
             expect(audioBufferSourceNodeMock.onended).to.be.null;
 
-            audioBufferSourceNodeMock.onended = onEnded;
+            audioBufferSourceNodeMock.onended = onended;
 
-            expect(audioBufferSourceNodeMock.onended).to.equal(onEnded);
+            expect(audioBufferSourceNodeMock.onended).to.equal(onended);
 
             audioBufferSourceNodeMock.onended = null;
 
             expect(audioBufferSourceNodeMock.onended).to.be.null;
         });
 
-        it('should reschedule the onEnded event when setting playbackRate\'s value property before playing', () => {
-            audioBufferSourceNodeMock.onended = onEnded;
+        it('should reschedule the onended event when setting playbackRate\'s value property before playing', () => {
+            audioBufferSourceNodeMock.onended = onended;
             audioBufferSourceNodeMock.start(0, 0, 10);
             audioBufferSourceNodeMock.playbackRate.value = 2;
 
             vehicle.travel(4);
 
-            expect(onEnded).to.have.not.been.called;
+            expect(onended).to.have.not.been.called;
 
             vehicle.travel(1);
 
-            expect(onEnded).to.have.been.calledOnce;
+            expect(onended).to.have.been.calledOnce;
         });
 
-        it('should reschedule the onEnded event when setting playbackRate\'s value property while playing', () => {
-            audioBufferSourceNodeMock.onended = onEnded;
+        it('should reschedule the onended event when setting playbackRate\'s value property while playing', () => {
+            audioBufferSourceNodeMock.onended = onended;
             audioBufferSourceNodeMock.start(0, 0, 10);
 
             vehicle.travel(5);
             audioBufferSourceNodeMock.playbackRate.value = 2;
             vehicle.travel(2);
 
-            expect(onEnded).to.have.not.been.called;
+            expect(onended).to.have.not.been.called;
 
             vehicle.travel(0.5);
 
-            expect(onEnded).to.have.been.calledOnce;
+            expect(onended).to.have.been.calledOnce;
         });
 
-        it('should reschedule the onEnded event when calling playbackRate\'s setValueAtTime() method before playing', () => {
-            audioBufferSourceNodeMock.onended = onEnded;
+        it('should reschedule the onended event when calling playbackRate\'s setValueAtTime() method before playing', () => {
+            audioBufferSourceNodeMock.onended = onended;
             audioBufferSourceNodeMock.start(0, 0, 10);
             audioBufferSourceNodeMock.playbackRate.setValueAtTime(2, 5);
 
             vehicle.travel(7);
 
-            expect(onEnded).to.have.not.been.called;
+            expect(onended).to.have.not.been.called;
 
             vehicle.travel(0.5);
 
-            expect(onEnded).to.have.been.calledOnce;
+            expect(onended).to.have.been.calledOnce;
         });
 
-        it('should reschedule the onEnded event when calling playbackRate\'s setValueAtTime() method multiple times before playing', () => {
-            audioBufferSourceNodeMock.onended = onEnded;
+        it('should reschedule the onended event when calling playbackRate\'s setValueAtTime() method multiple times before playing', () => {
+            audioBufferSourceNodeMock.onended = onended;
             audioBufferSourceNodeMock.start(0, 0, 10);
             audioBufferSourceNodeMock.playbackRate.setValueAtTime(2, 2);
             audioBufferSourceNodeMock.playbackRate.setValueAtTime(1, 4);
 
             vehicle.travel(7.5);
 
-            expect(onEnded).to.have.not.been.called;
+            expect(onended).to.have.not.been.called;
 
             vehicle.travel(0.5);
 
-            expect(onEnded).to.have.been.calledOnce;
+            expect(onended).to.have.been.calledOnce;
         });
 
-        it('should reschedule the onEnded event when calling playbackRate\'s linearRampToValueAtTime() method before playing', () => {
-            audioBufferSourceNodeMock.onended = onEnded;
+        it('should reschedule the onended event when calling playbackRate\'s linearRampToValueAtTime() method before playing', () => {
+            audioBufferSourceNodeMock.onended = onended;
             audioBufferSourceNodeMock.start(0, 0, 10);
             audioBufferSourceNodeMock.playbackRate.setValueAtTime(1, 0);
             audioBufferSourceNodeMock.playbackRate.linearRampToValueAtTime(1.5, 1);
 
             vehicle.travel(6.8);
 
-            expect(onEnded).to.have.not.been.called;
+            expect(onended).to.have.not.been.called;
 
             vehicle.travel(0.05);
 
-            expect(onEnded).to.have.been.calledOnce;
+            expect(onended).to.have.been.calledOnce;
         });
 
     });
@@ -170,60 +170,60 @@ describe('AudioBufferSourceNodeMock', () => {
 
     describe('start()', () => {
 
-        let onEnded;
+        let onended;
 
         beforeEach(() => {
-            onEnded = spy();
+            onended = spy();
         });
 
-        it('should schedule the onEnded event when started now', () => {
-            audioBufferSourceNodeMock.onended = onEnded;
+        it('should schedule the onended event when started now', () => {
+            audioBufferSourceNodeMock.onended = onended;
             audioBufferSourceNodeMock.start(0);
 
             vehicle.travel(9);
 
-            expect(onEnded).to.have.not.been.called;
+            expect(onended).to.have.not.been.called;
 
             vehicle.travel(1);
 
-            expect(onEnded).to.have.been.calledOnce;
+            expect(onended).to.have.been.calledOnce;
         });
 
-        it('should schedule the onEnded event when started in the future', () => {
-            audioBufferSourceNodeMock.onended = onEnded;
+        it('should schedule the onended event when started in the future', () => {
+            audioBufferSourceNodeMock.onended = onended;
             audioBufferSourceNodeMock.start(5);
 
             vehicle.travel(14);
 
-            expect(onEnded).to.have.not.been.called;
+            expect(onended).to.have.not.been.called;
 
             vehicle.travel(1);
 
-            expect(onEnded).to.have.been.calledOnce;
+            expect(onended).to.have.been.calledOnce;
         });
 
     });
 
     describe('stop()', () => {
 
-        let onEnded;
+        let onended;
 
         beforeEach(() => {
-            onEnded = spy();
+            onended = spy();
         });
 
-        it('should reschedule the onEnded event', () => {
-            audioBufferSourceNodeMock.onended = onEnded;
+        it('should reschedule the onended event', () => {
+            audioBufferSourceNodeMock.onended = onended;
             audioBufferSourceNodeMock.start(0, 0, 10);
             audioBufferSourceNodeMock.stop(5);
 
             vehicle.travel(4);
 
-            expect(onEnded).to.have.not.been.called;
+            expect(onended).to.have.not.been.called;
 
             vehicle.travel(1);
 
-            expect(onEnded).to.have.been.calledOnce;
+            expect(onended).to.have.been.calledOnce;
         });
 
     });
