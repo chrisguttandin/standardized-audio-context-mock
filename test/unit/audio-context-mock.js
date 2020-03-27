@@ -9,6 +9,40 @@ describe('AudioContextMock', () => {
         audioContextMock = new AudioContextMock();
     });
 
+    describe('onstatechange', () => {
+
+        it('should be null', () => {
+            expect(audioContextMock.onstatechange).to.be.null;
+        });
+
+        it('should be assignable to a function', () => {
+            const fn = () => {}; // eslint-disable-line unicorn/consistent-function-scoping
+            const onstatechange = audioContextMock.onstatechange = fn; // eslint-disable-line no-multi-assign
+
+            expect(onstatechange).to.equal(fn);
+            expect(audioContextMock.onstatechange).to.equal(fn);
+        });
+
+        it('should be assignable to null', () => {
+            const onstatechange = audioContextMock.onstatechange = null; // eslint-disable-line no-multi-assign
+
+            expect(onstatechange).to.be.null;
+            expect(audioContextMock.onstatechange).to.be.null;
+        });
+
+        it('should not be assignable to something else', () => {
+            const string = 'no function or null value';
+
+            audioContextMock.onstatechange = () => {};
+
+            const onstatechange = audioContextMock.onstatechange = string; // eslint-disable-line no-multi-assign
+
+            expect(onstatechange).to.equal(string);
+            expect(audioContextMock.onstatechange).to.be.null;
+        });
+
+    });
+
     describe('createBuffer()', () => {
 
         it('should return an instance of the AudioBuffer interface', () => {

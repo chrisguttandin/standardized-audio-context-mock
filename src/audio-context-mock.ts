@@ -41,12 +41,15 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
 
     private _deLorean: DeLorean;
 
+    private _onstatechange: null | TEventHandler<IAudioContext>;
+
     private _options: IAudioContextOptions;
 
     constructor (options: IAudioContextOptions = { }) {
         super();
 
         this._deLorean = new DeLorean();
+        this._onstatechange = null;
         this._options = options;
 
         registrar.setDeLorean(<TContext> this, this._deLorean);
@@ -73,7 +76,11 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
     }
 
     get onstatechange (): null | TEventHandler<IAudioContext> {
-        return null;
+        return this._onstatechange;
+    }
+
+    set onstatechange (value) {
+        this._onstatechange = (typeof value === 'function') ? value : null;
     }
 
     get sampleRate (): number {
