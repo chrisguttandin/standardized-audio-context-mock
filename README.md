@@ -39,7 +39,7 @@ const play = (audioBuffer: IAudioBuffer, audioContext: IAudioContext) => {
 A test suite for the `play()` function which will run with [Mocha](https://mochajs.org) and [Chai](https://www.chaijs.com) and uses `standardized-audio-context-mock` might look like this:
 
 ```js
-import { AudioBufferMock, AudioContextMock, registrar } from 'standardized-audio-context-mock';
+import { AudioBuffer, AudioContext, registrar } from 'standardized-audio-context-mock';
 
 describe('play()', () => {
 
@@ -49,8 +49,8 @@ describe('play()', () => {
     afterEach(() => registrar.reset());
 
     beforeEach(() => {
-        audioBufferMock = new AudioBufferMock({ length: 10, sampleRate: 44100 });
-        audioContextMock = new AudioContextMock();
+        audioBufferMock = new AudioBuffer({ length: 10, sampleRate: 44100 });
+        audioContextMock = new AudioContext();
     });
 
     it('should create a new AudioBufferSourceNode', () => {
