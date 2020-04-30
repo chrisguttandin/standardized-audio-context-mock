@@ -15,7 +15,7 @@
     }
   ],
   "dependencies": {
-    "@babel/runtime": "^7.9.2",
+    "@babel/runtime": "^7.9.6",
     "automation-events": "^2.0.5",
     "sinon": "^9.0.2",
     "standardized-audio-context": "^24.1.7",
