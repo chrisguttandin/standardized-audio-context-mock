@@ -63,7 +63,7 @@ describe('OscillatorNodeMock', () => {
         });
 
         it('should be assignable to a function', () => {
-            const fn = () => {}; // eslint-disable-line unicorn/consistent-function-scoping
+            const fn = () => {};
             const onended = oscillatorNodeMock.onended = fn; // eslint-disable-line no-multi-assign
 
             expect(onended).to.equal(fn);
