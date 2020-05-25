@@ -24,9 +24,10 @@ npm install standardized-audio-context-mock
 Let's say you have the following code that you want to test:
 
 ```typescript
+// File `./play.ts`
 import { IAudioBuffer, IAudioContext } from 'standardized-audio-context';
 
-const play = (audioBuffer: IAudioBuffer, audioContext: IAudioContext) => {
+export const play = (audioBuffer: IAudioBuffer, audioContext: IAudioContext) => {
     const audioBufferSourceNode = audioContext.createBufferSource();
 
     audioBufferSourceNode.buffer = audioBuffer;
@@ -39,7 +40,9 @@ const play = (audioBuffer: IAudioBuffer, audioContext: IAudioContext) => {
 A test suite for the `play()` function which will run with [Mocha](https://mochajs.org) and [Chai](https://www.chaijs.com) and uses `standardized-audio-context-mock` might look like this:
 
 ```js
-import { AudioBufferMock, AudioContextMock, registrar } from 'standardized-audio-context-mock';
+// File `./play.test.js`
+import { AudioBuffer, AudioContext, registrar } from 'standardized-audio-context-mock';
+import { play } from './play'
 
 describe('play()', () => {
 
@@ -49,8 +52,8 @@ describe('play()', () => {
     afterEach(() => registrar.reset());
 
     beforeEach(() => {
-        audioBufferMock = new AudioBufferMock({ length: 10, sampleRate: 44100 });
-        audioContextMock = new AudioContextMock();
+        audioBufferMock = new AudioBuffer({ length: 10, sampleRate: 44100 });
+        audioContextMock = new AudioContext();
     });
 
     it('should create a new AudioBufferSourceNode', () => {
