@@ -3,7 +3,6 @@ import { AudioParamMock } from '../../src/audio-param-mock';
 import { DynamicsCompressorNodeMock } from '../../src/dynamics-compressor-node-mock';
 
 describe('DynamicsCompressorNodeMock', () => {
-
     let dynamicsCompressorNodeMock;
 
     beforeEach(() => {
@@ -13,7 +12,6 @@ describe('DynamicsCompressorNodeMock', () => {
     });
 
     describe('attack', () => {
-
         it('should be readonly', () => {
             dynamicsCompressorNodeMock.attack = 'new value';
 
@@ -31,11 +29,9 @@ describe('DynamicsCompressorNodeMock', () => {
         it('should have a value of 0.003', () => {
             expect(dynamicsCompressorNodeMock.attack.value).to.equal(0.003);
         });
-
     });
 
     describe('knee', () => {
-
         it('should be readonly', () => {
             dynamicsCompressorNodeMock.knee = 'new value';
 
@@ -53,11 +49,9 @@ describe('DynamicsCompressorNodeMock', () => {
         it('should have a value of 30', () => {
             expect(dynamicsCompressorNodeMock.knee.value).to.equal(30);
         });
-
     });
 
     describe('ratio', () => {
-
         it('should be readonly', () => {
             dynamicsCompressorNodeMock.ratio = 'new value';
 
@@ -75,11 +69,9 @@ describe('DynamicsCompressorNodeMock', () => {
         it('should have a value of 12', () => {
             expect(dynamicsCompressorNodeMock.ratio.value).to.equal(12);
         });
-
     });
 
     describe('reduction', () => {
-
         it('should be readonly', () => {
             dynamicsCompressorNodeMock.reduction = 'new value';
 
@@ -89,11 +81,9 @@ describe('DynamicsCompressorNodeMock', () => {
         it('should have a value of 0', () => {
             expect(dynamicsCompressorNodeMock.reduction).to.equal(0);
         });
-
     });
 
     describe('release', () => {
-
         it('should be readonly', () => {
             dynamicsCompressorNodeMock.release = 'new value';
 
@@ -111,11 +101,9 @@ describe('DynamicsCompressorNodeMock', () => {
         it('should have a value of 0.25', () => {
             expect(dynamicsCompressorNodeMock.release.value).to.equal(0.25);
         });
-
     });
 
     describe('threshold', () => {
-
         it('should be readonly', () => {
             dynamicsCompressorNodeMock.threshold = 'new value';
 
@@ -133,7 +121,5 @@ describe('DynamicsCompressorNodeMock', () => {
         it('should have a value of -24', () => {
             expect(dynamicsCompressorNodeMock.threshold.value).to.equal(-24);
         });
-
     });
-
 });

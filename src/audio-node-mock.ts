@@ -3,7 +3,6 @@ import { IAudioNode, TChannelCountMode, TChannelInterpretation, TContext } from 
 import { EventTarget } from './event-target';
 
 export class AudioNodeMock<T extends TContext> extends EventTarget implements IAudioNode<T> {
-
     public channelCount: number;
 
     public channelCountMode: TChannelCountMode;
@@ -20,7 +19,17 @@ export class AudioNodeMock<T extends TContext> extends EventTarget implements IA
 
     private _context: T;
 
-    constructor (options: { channelCount: number; channelCountMode: TChannelCountMode; channelInterpretation: TChannelInterpretation; connect?: SinonSpy; context: T; disconnect?: SinonSpy; numberOfInputs: number; numberOfOutputs: number }) { // tslint:disable-line:max-line-length
+    constructor(options: {
+        channelCount: number;
+        channelCountMode: TChannelCountMode;
+        channelInterpretation: TChannelInterpretation;
+        connect?: SinonSpy;
+        context: T;
+        disconnect?: SinonSpy;
+        numberOfInputs: number;
+        numberOfOutputs: number;
+    }) {
+        // tslint:disable-line:max-line-length
         super();
 
         this.channelCount = options.channelCount;
@@ -33,8 +42,7 @@ export class AudioNodeMock<T extends TContext> extends EventTarget implements IA
         this.numberOfOutputs = options.numberOfOutputs;
     }
 
-    get context (): T {
+    get context(): T {
         return this._context;
     }
-
 }

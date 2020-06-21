@@ -8,7 +8,6 @@ import { AudioParamMock } from './audio-param-mock';
 import { registrar } from './registrar';
 
 export class AudioBufferSourceNodeMock<T extends TContext> extends AudioNodeMock<T> implements IAudioBufferSourceNode<T> {
-
     public loop: boolean;
 
     public loopEnd: number;
@@ -33,7 +32,7 @@ export class AudioBufferSourceNodeMock<T extends TContext> extends AudioNodeMock
 
     private _stopped: null | { when: number };
 
-    constructor (context: T) {
+    constructor(context: T) {
         super({
             channelCount: 2,
             channelCountMode: 'max',
@@ -55,12 +54,12 @@ export class AudioBufferSourceNodeMock<T extends TContext> extends AudioNodeMock
                     };
                 }
 
-                return target[<keyof AutomationEventList> key];
+                return target[<keyof AutomationEventList>key];
             }
         });
 
         this._buffer = null;
-        this._deLorean = <DeLorean> registrar.getVehicle(context);
+        this._deLorean = <DeLorean>registrar.getVehicle(context);
         this._detune = new AudioParamMock({
             automationEventList: new AutomationEventList(0),
             deLorean: this._deLorean,
@@ -82,19 +81,19 @@ export class AudioBufferSourceNodeMock<T extends TContext> extends AudioNodeMock
         });
         this._playbackRateAutomationEventList = playbackRateAutomationEventList;
 
-        stub(this, 'start')
-            .callThrough();
-        stub(this, 'stop')
-            .callThrough();
+        stub(this, 'start').callThrough();
+        stub(this, 'stop').callThrough();
     }
 
-    get buffer (): null | AudioBufferMock {
+    get buffer(): null | AudioBufferMock {
         return this._buffer;
     }
 
-    set buffer (value) {
+    set buffer(value) {
         if (!(value instanceof AudioBufferMock)) {
-            throw new TypeError('Failed to set the \'buffer\' property on \'AudioBufferSourceNode\': The provided value is not of type \'AudioBufferMock\'.'); // tslint:disable-line:max-line-length
+            throw new TypeError(
+                "Failed to set the 'buffer' property on 'AudioBufferSourceNode': The provided value is not of type 'AudioBufferMock'."
+            ); // tslint:disable-line:max-line-length
         }
 
         this._buffer = value;
@@ -102,70 +101,70 @@ export class AudioBufferSourceNodeMock<T extends TContext> extends AudioNodeMock
         this._scheduleOnendedHandler();
     }
 
-    get detune (): AudioParamMock {
+    get detune(): AudioParamMock {
         return this._detune;
     }
 
-    set detune (value) {
+    set detune(value) {
         value; // tslint:disable-line:no-unused-expression
     }
 
-    get onended (): null | TEventHandler<this> {
+    get onended(): null | TEventHandler<this> {
         return this._onended;
     }
 
-    set onended (value) {
+    set onended(value) {
         // @todo It is theoretically possible that the ended handler gets removed by using the public API.
         if (typeof this._onended === 'function') {
             this.removeEventListener('ended', this._onended);
         }
 
-        this._onended = (typeof value === 'function') ? value : null;
+        this._onended = typeof value === 'function' ? value : null;
 
         if (typeof value === 'function') {
             this.addEventListener('ended', value);
         }
     }
 
-    get playbackRate (): AudioParamMock {
+    get playbackRate(): AudioParamMock {
         return this._playbackRate;
     }
 
-    set playbackRate (value) {
+    set playbackRate(value) {
         value; // tslint:disable-line:no-unused-expression
     }
 
-    public start (when?: number, offset?: number, duration?: number): void {
+    public start(when?: number, offset?: number, duration?: number): void {
         if (this._deLorean === undefined) {
             return;
         }
 
         this._started = {
-            duration: (duration === undefined) ? Number.POSITIVE_INFINITY : duration,
-            offset: (offset === undefined) ? 0 : offset,
-            when: (when === undefined || when < this._deLorean.position) ? this._deLorean.position : when
+            duration: duration === undefined ? Number.POSITIVE_INFINITY : duration,
+            offset: offset === undefined ? 0 : offset,
+            when: when === undefined || when < this._deLorean.position ? this._deLorean.position : when
         };
 
         this._scheduleOnendedHandler();
     }
 
-    public stop (when = 0): void {
+    public stop(when = 0): void {
         if (this._deLorean === undefined) {
             return;
         }
 
         this._stopped = {
-            when: (when < this._deLorean.position) ? this._deLorean.position : when
+            when: when < this._deLorean.position ? this._deLorean.position : when
         };
 
         this._scheduleOnendedHandler();
     }
 
-    private _callOnendedHandler (): void {
+    private _callOnendedHandler(): void {
         this.dispatchEvent(new Event('ended'));
     }
 
-    private _scheduleOnendedHandler (): void {
+    private _scheduleOnendedHandler(): void {
         if (this._deLorean === undefined) {
             return;
         }
@@ -177,7 +176,7 @@ export class AudioBufferSourceNodeMock<T extends TContext> extends AudioNodeMock
 
         if (this._started !== null) {
             const maxEffectiveDuration = Math.min(
-                (this.buffer === null) ? 0 : this.buffer.duration - this._started.offset,
+                this.buffer === null ? 0 : this.buffer.duration - this._started.offset,
                 this._started.duration
             );
             const renderQuantum = 128 / this.context.sampleRate;
@@ -193,9 +192,9 @@ export class AudioBufferSourceNodeMock<T extends TContext> extends AudioNodeMock
                 if (partialRenderQuantum > 0) {
                     const value = this._playbackRateAutomationEventList.getValue(when - partialRenderQuantum);
 
-                    [ duration, effectiveDuration ] = AudioBufferSourceNodeMock._accumulateDurationAndEffectiveDuration(
+                    [duration, effectiveDuration] = AudioBufferSourceNodeMock._accumulateDurationAndEffectiveDuration(
                         value,
-                        (renderQuantum - partialRenderQuantum),
+                        renderQuantum - partialRenderQuantum,
                         duration,
                         effectiveDuration,
                         maxEffectiveDuration
@@ -206,7 +205,7 @@ export class AudioBufferSourceNodeMock<T extends TContext> extends AudioNodeMock
             while (effectiveDuration < maxEffectiveDuration) {
                 const value = this._playbackRateAutomationEventList.getValue(i * renderQuantum);
 
-                [ duration, effectiveDuration ] = AudioBufferSourceNodeMock._accumulateDurationAndEffectiveDuration(
+                [duration, effectiveDuration] = AudioBufferSourceNodeMock._accumulateDurationAndEffectiveDuration(
                     value,
                     renderQuantum,
                     duration,
@@ -227,27 +226,20 @@ export class AudioBufferSourceNodeMock<T extends TContext> extends AudioNodeMock
         }
     }
 
-    private static _accumulateDurationAndEffectiveDuration (
+    private static _accumulateDurationAndEffectiveDuration(
         value: number,
         quantum: number,
         duration: number,
         effectiveDuration: number,
         maxEffectiveDuration: number
-    ): [ number, number ] {
+    ): [number, number] {
         const effectiveQuantum = value * quantum;
         const newEffectiveDuration = effectiveDuration + effectiveQuantum;
 
         if (newEffectiveDuration > maxEffectiveDuration) {
-            return [
-                duration + ((maxEffectiveDuration - effectiveDuration) / effectiveQuantum) * quantum,
-                maxEffectiveDuration
-            ];
+            return [duration + ((maxEffectiveDuration - effectiveDuration) / effectiveQuantum) * quantum, maxEffectiveDuration];
         }
 
-        return [
-            duration + quantum,
-            newEffectiveDuration
-        ];
+        return [duration + quantum, newEffectiveDuration];
     }
-
 }

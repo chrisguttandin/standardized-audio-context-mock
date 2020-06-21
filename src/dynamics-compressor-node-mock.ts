@@ -5,7 +5,6 @@ import { AudioParamMock } from './audio-param-mock';
 import { registrar } from './registrar';
 
 export class DynamicsCompressorNodeMock<T extends TContext> extends AudioNodeMock<T> implements IDynamicsCompressorNode<T> {
-
     private _attack: AudioParamMock;
 
     private _knee: AudioParamMock;
@@ -18,7 +17,7 @@ export class DynamicsCompressorNodeMock<T extends TContext> extends AudioNodeMoc
 
     private _threshold: AudioParamMock;
 
-    constructor (context: T) {
+    constructor(context: T) {
         const deLorean = registrar.getDeLorean(context);
 
         super({
@@ -63,52 +62,51 @@ export class DynamicsCompressorNodeMock<T extends TContext> extends AudioNodeMoc
         });
     }
 
-    get attack (): AudioParamMock {
+    get attack(): AudioParamMock {
         return this._attack;
     }
 
-    set attack (value) {
+    set attack(value) {
         value; // tslint:disable-line:no-unused-expression
     }
 
-    get knee (): AudioParamMock {
+    get knee(): AudioParamMock {
         return this._knee;
     }
 
-    set knee (value) {
+    set knee(value) {
         value; // tslint:disable-line:no-unused-expression
     }
 
-    get ratio (): AudioParamMock {
+    get ratio(): AudioParamMock {
         return this._ratio;
     }
 
-    set ratio (value) {
+    set ratio(value) {
         value; // tslint:disable-line:no-unused-expression
     }
 
-    get reduction (): number {
+    get reduction(): number {
         return this._reduction;
     }
 
-    set reduction (value) {
+    set reduction(value) {
         value; // tslint:disable-line:no-unused-expression
     }
 
-    get release (): AudioParamMock {
+    get release(): AudioParamMock {
         return this._release;
     }
 
-    set release (value) {
+    set release(value) {
         value; // tslint:disable-line:no-unused-expression
     }
 
-    get threshold (): AudioParamMock {
+    get threshold(): AudioParamMock {
         return this._threshold;
     }
 
-    set threshold (value) {
+    set threshold(value) {
         value; // tslint:disable-line:no-unused-expression
     }
-
 }

@@ -6,7 +6,6 @@ import { registrar } from '../../src/registrar';
 import { spy } from 'sinon';
 
 describe('AudioBufferSourceNodeMock', () => {
-
     let audioBufferSourceNodeMock;
     let vehicle;
 
@@ -24,7 +23,6 @@ describe('AudioBufferSourceNodeMock', () => {
     });
 
     describe('detune', () => {
-
         it('should be readonly', () => {
             audioBufferSourceNodeMock.detune = 'new value';
 
@@ -42,25 +40,23 @@ describe('AudioBufferSourceNodeMock', () => {
         it('should have a value of 0', () => {
             expect(audioBufferSourceNodeMock.detune.value).to.equal(0);
         });
-
     });
 
     describe('onended', () => {
-
         it('should be null', () => {
             expect(audioBufferSourceNodeMock.onended).to.be.null;
         });
 
         it('should be assignable to a function', () => {
             const fn = () => {};
-            const onended = audioBufferSourceNodeMock.onended = fn; // eslint-disable-line no-multi-assign
+            const onended = (audioBufferSourceNodeMock.onended = fn); // eslint-disable-line no-multi-assign
 
             expect(onended).to.equal(fn);
             expect(audioBufferSourceNodeMock.onended).to.equal(fn);
         });
 
         it('should be assignable to null', () => {
-            const onended = audioBufferSourceNodeMock.onended = null; // eslint-disable-line no-multi-assign
+            const onended = (audioBufferSourceNodeMock.onended = null); // eslint-disable-line no-multi-assign
 
             expect(onended).to.be.null;
             expect(audioBufferSourceNodeMock.onended).to.be.null;
@@ -71,13 +67,13 @@ describe('AudioBufferSourceNodeMock', () => {
 
             audioBufferSourceNodeMock.onended = () => {};
 
-            const onended = audioBufferSourceNodeMock.onended = string; // eslint-disable-line no-multi-assign
+            const onended = (audioBufferSourceNodeMock.onended = string); // eslint-disable-line no-multi-assign
 
             expect(onended).to.equal(string);
             expect(audioBufferSourceNodeMock.onended).to.be.null;
         });
 
-        it('should reschedule the onended event when setting playbackRate\'s value property before playing', () => {
+        it("should reschedule the onended event when setting playbackRate's value property before playing", () => {
             const onended = spy();
 
             audioBufferSourceNodeMock.onended = onended;
@@ -93,7 +89,7 @@ describe('AudioBufferSourceNodeMock', () => {
             expect(onended).to.have.been.calledOnce;
         });
 
-        it('should reschedule the onended event when setting playbackRate\'s value property while playing', () => {
+        it("should reschedule the onended event when setting playbackRate's value property while playing", () => {
             const onended = spy();
 
             audioBufferSourceNodeMock.onended = onended;
@@ -110,7 +106,7 @@ describe('AudioBufferSourceNodeMock', () => {
             expect(onended).to.have.been.calledOnce;
         });
 
-        it('should reschedule the onended event when calling playbackRate\'s setValueAtTime() method before playing', () => {
+        it("should reschedule the onended event when calling playbackRate's setValueAtTime() method before playing", () => {
             const onended = spy();
 
             audioBufferSourceNodeMock.onended = onended;
@@ -126,7 +122,7 @@ describe('AudioBufferSourceNodeMock', () => {
             expect(onended).to.have.been.calledOnce;
         });
 
-        it('should reschedule the onended event when calling playbackRate\'s setValueAtTime() method multiple times before playing', () => {
+        it("should reschedule the onended event when calling playbackRate's setValueAtTime() method multiple times before playing", () => {
             const onended = spy();
 
             audioBufferSourceNodeMock.onended = onended;
@@ -143,7 +139,7 @@ describe('AudioBufferSourceNodeMock', () => {
             expect(onended).to.have.been.calledOnce;
         });
 
-        it('should reschedule the onended event when calling playbackRate\'s linearRampToValueAtTime() method before playing', () => {
+        it("should reschedule the onended event when calling playbackRate's linearRampToValueAtTime() method before playing", () => {
             const onended = spy();
 
             audioBufferSourceNodeMock.onended = onended;
@@ -159,11 +155,9 @@ describe('AudioBufferSourceNodeMock', () => {
 
             expect(onended).to.have.been.calledOnce;
         });
-
     });
 
     describe('playbackRate', () => {
-
         it('should be readonly', () => {
             audioBufferSourceNodeMock.playbackRate = 'new value';
 
@@ -181,11 +175,9 @@ describe('AudioBufferSourceNodeMock', () => {
         it('should have a value of 1', () => {
             expect(audioBufferSourceNodeMock.playbackRate.value).to.equal(1);
         });
-
     });
 
     describe('start()', () => {
-
         let onended;
 
         beforeEach(() => {
@@ -217,11 +209,9 @@ describe('AudioBufferSourceNodeMock', () => {
 
             expect(onended).to.have.been.calledOnce;
         });
-
     });
 
     describe('stop()', () => {
-
         let onended;
 
         beforeEach(() => {
@@ -241,7 +231,5 @@ describe('AudioBufferSourceNodeMock', () => {
 
             expect(onended).to.have.been.calledOnce;
         });
-
     });
-
 });

@@ -1,12 +1,11 @@
 export class EventTarget {
-
     private _eventListeners: Map<string, Set<EventListener>>;
 
-    constructor () {
+    constructor() {
         this._eventListeners = new Map();
     }
 
-    public addEventListener (
+    public addEventListener(
         type: string,
         listener: any, // @todo EventListenerOrEventListenerObject | null = null,
         options?: boolean | AddEventListenerOptions
@@ -27,7 +26,7 @@ export class EventTarget {
         options; // tslint:disable-line:no-unused-expression
     }
 
-    public dispatchEvent (evt: Event): boolean {
+    public dispatchEvent(evt: Event): boolean {
         const eventListenersOfType = this._eventListeners.get(evt.type);
 
         if (eventListenersOfType !== undefined) {
@@ -41,7 +40,7 @@ export class EventTarget {
         return false;
     }
 
-    public removeEventListener (
+    public removeEventListener(
         type: string,
         listener: any, // @todo EventListenerOrEventListenerObject | null = null,
         options?: EventListenerOptions | boolean
@@ -55,5 +54,4 @@ export class EventTarget {
         // @todo Fully implement the removeEventListener() method.
         options; // tslint:disable-line:no-unused-expression
     }
-
 }

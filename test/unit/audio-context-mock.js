@@ -2,7 +2,6 @@ import { AudioContextMock } from '../../src/audio-context-mock';
 import { registrar } from '../../src/registrar';
 
 describe('AudioContextMock', () => {
-
     let audioContextMock;
 
     beforeEach(() => {
@@ -10,21 +9,20 @@ describe('AudioContextMock', () => {
     });
 
     describe('onstatechange', () => {
-
         it('should be null', () => {
             expect(audioContextMock.onstatechange).to.be.null;
         });
 
         it('should be assignable to a function', () => {
             const fn = () => {};
-            const onstatechange = audioContextMock.onstatechange = fn; // eslint-disable-line no-multi-assign
+            const onstatechange = (audioContextMock.onstatechange = fn); // eslint-disable-line no-multi-assign
 
             expect(onstatechange).to.equal(fn);
             expect(audioContextMock.onstatechange).to.equal(fn);
         });
 
         it('should be assignable to null', () => {
-            const onstatechange = audioContextMock.onstatechange = null; // eslint-disable-line no-multi-assign
+            const onstatechange = (audioContextMock.onstatechange = null); // eslint-disable-line no-multi-assign
 
             expect(onstatechange).to.be.null;
             expect(audioContextMock.onstatechange).to.be.null;
@@ -35,16 +33,14 @@ describe('AudioContextMock', () => {
 
             audioContextMock.onstatechange = () => {};
 
-            const onstatechange = audioContextMock.onstatechange = string; // eslint-disable-line no-multi-assign
+            const onstatechange = (audioContextMock.onstatechange = string); // eslint-disable-line no-multi-assign
 
             expect(onstatechange).to.equal(string);
             expect(audioContextMock.onstatechange).to.be.null;
         });
-
     });
 
     describe('createBuffer()', () => {
-
         it('should return an instance of the AudioBuffer interface', () => {
             const audioBufferMock = audioContextMock.createBuffer(2, 10, 44100);
 
@@ -56,11 +52,9 @@ describe('AudioContextMock', () => {
             expect(audioBufferMock.copyFromChannel).to.be.a('function');
             expect(audioBufferMock.copyToChannel).to.be.a('function');
         });
-
     });
 
     describe('createBufferSource()', () => {
-
         it('should return an instance of the AudioBufferSourceNode interface', () => {
             const audioBufferSourceNodeMock = audioContextMock.createBufferSource();
 
@@ -98,13 +92,11 @@ describe('AudioContextMock', () => {
         it('should register the returned instance', () => {
             const audioBufferSourceNodeMock = audioContextMock.createBufferSource();
 
-            expect(registrar.getAudioNodes(audioContextMock, 'AudioBufferSourceNode')).to.deep.equal([ audioBufferSourceNodeMock ]);
+            expect(registrar.getAudioNodes(audioContextMock, 'AudioBufferSourceNode')).to.deep.equal([audioBufferSourceNodeMock]);
         });
-
     });
 
     describe('createDynamicsCompressorNode()', function () {
-
         it('should return an instance of the DynamicsCompressorNode interface', function () {
             const dynamicsCompressorNode = audioContextMock.createDynamicsCompressor();
 
@@ -161,13 +153,11 @@ describe('AudioContextMock', () => {
         it('should register the returned instance', () => {
             const dynamicsCompressorNode = audioContextMock.createDynamicsCompressor();
 
-            expect(registrar.getAudioNodes(audioContextMock, 'DynamicsCompressorNode')).to.deep.equal([ dynamicsCompressorNode ]);
+            expect(registrar.getAudioNodes(audioContextMock, 'DynamicsCompressorNode')).to.deep.equal([dynamicsCompressorNode]);
         });
-
     });
 
     describe('createGain()', () => {
-
         it('should return an instance of the GainNode interface', () => {
             const gainNodeMock = audioContextMock.createGain();
 
@@ -189,13 +179,11 @@ describe('AudioContextMock', () => {
         it('should register the returned instance', () => {
             const gainNodeMock = audioContextMock.createGain();
 
-            expect(registrar.getAudioNodes(audioContextMock, 'GainNode')).to.deep.equal([ gainNodeMock ]);
+            expect(registrar.getAudioNodes(audioContextMock, 'GainNode')).to.deep.equal([gainNodeMock]);
         });
-
     });
 
     describe('createOscillator()', function () {
-
         it('should return an instance of the OscillatorNode interface', function () {
             const oscillatorNode = audioContextMock.createOscillator();
 
@@ -232,13 +220,11 @@ describe('AudioContextMock', () => {
         it('should register the returned instance', () => {
             const oscillatorNode = audioContextMock.createOscillator();
 
-            expect(registrar.getAudioNodes(audioContextMock, 'OscillatorNode')).to.deep.equal([ oscillatorNode ]);
+            expect(registrar.getAudioNodes(audioContextMock, 'OscillatorNode')).to.deep.equal([oscillatorNode]);
         });
-
     });
 
     describe('decodeAudioData()', () => {
-
         it('should return an instance of a Promise', () => {
             expect(audioContextMock.decodeAudioData()).to.be.an.instanceOf(Promise);
         });
@@ -254,7 +240,5 @@ describe('AudioContextMock', () => {
             expect(audioBufferMock.copyFromChannel).to.be.a('function');
             expect(audioBufferMock.copyToChannel).to.be.a('function');
         });
-
     });
-
 });

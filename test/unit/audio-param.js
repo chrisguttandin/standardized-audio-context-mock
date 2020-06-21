@@ -3,7 +3,6 @@ import { AutomationEventList } from 'automation-events';
 import { DeLorean } from 'vehicles';
 
 describe('AudioParamMock', () => {
-
     let audioParamMock;
     let deLorean;
 
@@ -19,7 +18,6 @@ describe('AudioParamMock', () => {
     });
 
     describe('defaultValue', () => {
-
         it('should have the value specified in the constructor', () => {
             expect(audioParamMock.defaultValue).to.equal(1);
         });
@@ -29,11 +27,9 @@ describe('AudioParamMock', () => {
 
             expect(audioParamMock.defaultValue).to.not.equal(2);
         });
-
     });
 
     describe('maxValue', () => {
-
         it('should have the maxValue specified in the constructor', () => {
             expect(audioParamMock.maxValue).to.equal(18);
         });
@@ -43,11 +39,9 @@ describe('AudioParamMock', () => {
 
             expect(audioParamMock.maxValue).to.not.equal(2);
         });
-
     });
 
     describe('minValue', () => {
-
         it('should have the minValue specified in the constructor', () => {
             expect(audioParamMock.minValue).to.equal(0);
         });
@@ -57,11 +51,9 @@ describe('AudioParamMock', () => {
 
             expect(audioParamMock.minValue).to.not.equal(2);
         });
-
     });
 
     describe('value', () => {
-
         it('should have the value specified in the constructor', () => {
             expect(audioParamMock.value).to.equal(1);
         });
@@ -71,29 +63,21 @@ describe('AudioParamMock', () => {
 
             expect(audioParamMock.value).to.equal(2);
         });
-
     });
 
     describe('cancelAndHoldAtTime()', () => {
-
         // @todo
-
     });
 
     describe('cancelScheduledValues()', () => {
-
         // @todo
-
     });
 
     describe('exponentialRampToValueAtTime()', () => {
-
         // @todo
-
     });
 
     describe('linearRampToValueAtTime()', () => {
-
         it('should compute the value correctly', () => {
             audioParamMock.setValueAtTime(1, 0);
             audioParamMock.linearRampToValueAtTime(2, 1);
@@ -123,17 +107,13 @@ describe('AudioParamMock', () => {
         });
 
         // @todo test strange behaviour without calling setValueAtTime() first
-
     });
 
     describe('setTargetAtTime()', () => {
-
         // @todo
-
     });
 
     describe('setValueAtTime()', () => {
-
         it('should compute the value correctly', () => {
             audioParamMock.setValueAtTime(2, 0);
             audioParamMock.setValueAtTime(3, 1);
@@ -148,13 +128,9 @@ describe('AudioParamMock', () => {
 
             expect(audioParamMock.value).to.equal(3);
         });
-
     });
 
     describe('setValueCurveAtTime()', () => {
-
         // @todo
-
     });
-
 });

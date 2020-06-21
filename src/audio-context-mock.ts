@@ -38,79 +38,78 @@ import { OscillatorNodeMock } from './oscillator-node-mock';
 import { registrar } from './registrar';
 
 export class AudioContextMock extends EventTarget implements IAudioContext {
-
     private _deLorean: DeLorean;
 
     private _onstatechange: null | TEventHandler<IAudioContext>;
 
     private _options: IAudioContextOptions;
 
-    constructor (options: IAudioContextOptions = { }) {
+    constructor(options: IAudioContextOptions = {}) {
         super();
 
         this._deLorean = new DeLorean();
         this._onstatechange = null;
         this._options = options;
 
-        registrar.setDeLorean(<TContext> this, this._deLorean);
+        registrar.setDeLorean(<TContext>this, this._deLorean);
     }
 
-    get audioWorklet (): IAudioWorklet {
-        return <IAudioWorklet> { };
+    get audioWorklet(): IAudioWorklet {
+        return <IAudioWorklet>{};
     }
 
-    get baseLatency (): number {
+    get baseLatency(): number {
         return 512 / this.sampleRate;
     }
 
-    get currentTime (): number {
+    get currentTime(): number {
         return this._deLorean.position;
     }
 
-    get destination (): IAudioDestinationNode<IAudioContext> {
-        return <IAudioDestinationNode<IAudioContext>> { };
+    get destination(): IAudioDestinationNode<IAudioContext> {
+        return <IAudioDestinationNode<IAudioContext>>{};
     }
 
-    get listener (): IAudioListener {
-        return <IAudioListener> { };
+    get listener(): IAudioListener {
+        return <IAudioListener>{};
     }
 
-    get onstatechange (): null | TEventHandler<IAudioContext> {
+    get onstatechange(): null | TEventHandler<IAudioContext> {
         return this._onstatechange;
     }
 
-    set onstatechange (value) {
-        this._onstatechange = (typeof value === 'function') ? value : null;
+    set onstatechange(value) {
+        this._onstatechange = typeof value === 'function' ? value : null;
     }
 
-    get sampleRate (): number {
-        return (this._options.sampleRate === undefined) ? 44100 : this._options.sampleRate;
+    get sampleRate(): number {
+        return this._options.sampleRate === undefined ? 44100 : this._options.sampleRate;
     }
 
-    get state (): TAudioContextState {
-        return <TAudioContextState> 'running';
+    get state(): TAudioContextState {
+        return <TAudioContextState>'running';
     }
 
-    public close (): Promise<void> {
+    public close(): Promise<void> {
         return Promise.resolve();
     }
 
     // @todo This is a lazy hack.
-    public createAnalyser (): IAnalyserNode<IAudioContext> {
+    public createAnalyser(): IAnalyserNode<IAudioContext> {
         const analyserNode = new GainNodeMock(this);
 
-        (<any> analyserNode).fftSize = 2048;
+        (<any>analyserNode).fftSize = 2048;
 
-        return <IAnalyserNode<IAudioContext>> (<any> analyserNode);
+        return <IAnalyserNode<IAudioContext>>(<any>analyserNode);
     }
 
-    public createBiquadFilter (): IBiquadFilterNode<IAudioContext> {
+    public createBiquadFilter(): IBiquadFilterNode<IAudioContext> {
         // @todo
-        return <IBiquadFilterNode<IAudioContext>> (<any> {
+        return <IBiquadFilterNode<IAudioContext>>(<any>{
             Q: {
                 value: 0
             },
-            connect (): void { }, // tslint:disable-line:no-empty
+            connect(): void {}, // tslint:disable-line:no-empty
             frequency: {
                 value: 0
             },
@@ -120,7 +119,7 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
         });
     }
 
-    public createBuffer (numberOfChannels: number, length: number, sampleRate: number): IAudioBuffer {
+    public createBuffer(numberOfChannels: number, length: number, sampleRate: number): IAudioBuffer {
         return new AudioBufferMock({
             length,
             numberOfChannels,
@@ -128,40 +127,40 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
         });
     }
 
-    public createBufferSource (): IAudioBufferSourceNode<IAudioContext> {
+    public createBufferSource(): IAudioBufferSourceNode<IAudioContext> {
         const audioBufferSourceNode = new AudioBufferSourceNodeMock(this);
 
         registrar.addAudioNode(this, 'AudioBufferSourceNode', audioBufferSourceNode);
 
-        return <IAudioBufferSourceNode<IAudioContext>> audioBufferSourceNode;
+        return <IAudioBufferSourceNode<IAudioContext>>audioBufferSourceNode;
     }
 
-    public createChannelMerger (): IAudioNode<IAudioContext> {
+    public createChannelMerger(): IAudioNode<IAudioContext> {
         // @todo
-        return <IAudioNode<IAudioContext>> { };
+        return <IAudioNode<IAudioContext>>{};
     }
 
-    public createChannelSplitter (): IAudioNode<IAudioContext> {
+    public createChannelSplitter(): IAudioNode<IAudioContext> {
         // @todo
-        return <IAudioNode<IAudioContext>> { };
+        return <IAudioNode<IAudioContext>>{};
     }
 
-    public createConstantSource (): IConstantSourceNode<IAudioContext> {
+    public createConstantSource(): IConstantSourceNode<IAudioContext> {
         // @todo
-        return <IConstantSourceNode<IAudioContext>> { };
+        return <IConstantSourceNode<IAudioContext>>{};
     }
 
-    public createConvolver (): IConvolverNode<IAudioContext> {
+    public createConvolver(): IConvolverNode<IAudioContext> {
         // @todo
-        return <IConvolverNode<IAudioContext>> { };
+        return <IConvolverNode<IAudioContext>>{};
     }
 
-    public createDelay (): IDelayNode<IAudioContext> {
+    public createDelay(): IDelayNode<IAudioContext> {
         // @todo
-        return <IDelayNode<IAudioContext>> { };
+        return <IDelayNode<IAudioContext>>{};
     }
 
-    public createDynamicsCompressor (): IDynamicsCompressorNode<IAudioContext> {
+    public createDynamicsCompressor(): IDynamicsCompressorNode<IAudioContext> {
         const dynamicsCompressorNode = new DynamicsCompressorNodeMock(this);
 
         registrar.addAudioNode(this, 'DynamicsCompressorNode', dynamicsCompressorNode);
@@ -169,7 +168,7 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
         return dynamicsCompressorNode;
     }
 
-    public createGain (): IGainNode<IAudioContext> {
+    public createGain(): IGainNode<IAudioContext> {
         const gainNode = new GainNodeMock(this);
 
         registrar.addAudioNode(this, 'GainNode', gainNode);
@@ -177,69 +176,68 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
         return gainNode;
     }
 
-    public createIIRFilter (): IIIRFilterNode<IAudioContext> {
+    public createIIRFilter(): IIIRFilterNode<IAudioContext> {
         // @todo
-        return <IIIRFilterNode<IAudioContext>> { };
+        return <IIIRFilterNode<IAudioContext>>{};
     }
 
-    public createMediaElementSource (): IMediaElementAudioSourceNode<this> {
+    public createMediaElementSource(): IMediaElementAudioSourceNode<this> {
         // @todo
-        return <IMediaElementAudioSourceNode<this>> { };
+        return <IMediaElementAudioSourceNode<this>>{};
     }
 
-    public createMediaStreamDestination (): IMediaStreamAudioDestinationNode<this> {
+    public createMediaStreamDestination(): IMediaStreamAudioDestinationNode<this> {
         // @todo
-        return <IMediaStreamAudioDestinationNode<this>> { };
+        return <IMediaStreamAudioDestinationNode<this>>{};
     }
 
-    public createMediaStreamSource (): IMediaStreamAudioSourceNode<this> {
+    public createMediaStreamSource(): IMediaStreamAudioSourceNode<this> {
         // @todo
-        return <IMediaStreamAudioSourceNode<this>> { };
+        return <IMediaStreamAudioSourceNode<this>>{};
     }
 
-    public createMediaStreamTrackSource (): IMediaStreamTrackAudioSourceNode<this> {
+    public createMediaStreamTrackSource(): IMediaStreamTrackAudioSourceNode<this> {
         // @todo
-        return <IMediaStreamTrackAudioSourceNode<this>> { };
+        return <IMediaStreamTrackAudioSourceNode<this>>{};
     }
 
-    public createOscillator (): IOscillatorNode<IAudioContext> {
+    public createOscillator(): IOscillatorNode<IAudioContext> {
         const oscillatorNode = new OscillatorNodeMock(this);
 
         registrar.addAudioNode(this, 'OscillatorNode', oscillatorNode);
 
-        return <IOscillatorNode<IAudioContext>> oscillatorNode;
+        return <IOscillatorNode<IAudioContext>>oscillatorNode;
     }
 
-    public createPanner (): IPannerNode<IAudioContext> {
+    public createPanner(): IPannerNode<IAudioContext> {
         // @todo
-        return <IPannerNode<IAudioContext>> { };
+        return <IPannerNode<IAudioContext>>{};
     }
 
-    public createPeriodicWave (): IPeriodicWave {
+    public createPeriodicWave(): IPeriodicWave {
         // @todo
-        return <IPeriodicWave> { };
+        return <IPeriodicWave>{};
     }
 
-    public createStereoPanner (): IStereoPannerNode<IAudioContext> {
+    public createStereoPanner(): IStereoPannerNode<IAudioContext> {
         // @todo
-        return <IStereoPannerNode<IAudioContext>> { };
+        return <IStereoPannerNode<IAudioContext>>{};
     }
 
-    public createWaveShaper (): IWaveShaperNode<IAudioContext> {
+    public createWaveShaper(): IWaveShaperNode<IAudioContext> {
         // @todo
-        return <IWaveShaperNode<IAudioContext>> { };
+        return <IWaveShaperNode<IAudioContext>>{};
     }
 
-    public decodeAudioData (): Promise<IAudioBuffer> {
+    public decodeAudioData(): Promise<IAudioBuffer> {
         return Promise.resolve(new AudioBufferMock({ length: 10, sampleRate: this.sampleRate }));
     }
 
-    public resume (): Promise<void> {
+    public resume(): Promise<void> {
         return Promise.resolve();
     }
 
-    public suspend (): Promise<void> {
+    public suspend(): Promise<void> {
         return Promise.resolve();
     }
-
 }

@@ -13,7 +13,6 @@ import { IAudioParam } from 'standardized-audio-context';
 import { DeLorean } from 'vehicles';
 
 export class AudioParamMock implements IAudioParam {
-
     private _automationEventList: AutomationEventList;
 
     private _defaultValue: number;
@@ -24,54 +23,47 @@ export class AudioParamMock implements IAudioParam {
 
     private _minValue: number;
 
-    constructor (options: { automationEventList: AutomationEventList; deLorean?: DeLorean; maxValue: number; minValue: number }) {
+    constructor(options: { automationEventList: AutomationEventList; deLorean?: DeLorean; maxValue: number; minValue: number }) {
         this._automationEventList = options.automationEventList;
         this._deLorean = options.deLorean;
         this._defaultValue = options.automationEventList.getValue(0);
         this._maxValue = options.maxValue;
         this._minValue = options.minValue;
 
-        stub(this, 'cancelAndHoldAtTime')
-            .callThrough();
-        stub(this, 'cancelScheduledValues')
-            .callThrough();
-        stub(this, 'exponentialRampToValueAtTime')
-            .callThrough();
-        stub(this, 'linearRampToValueAtTime')
-            .callThrough();
-        stub(this, 'setTargetAtTime')
-            .callThrough();
-        stub(this, 'setValueAtTime')
-            .callThrough();
-        stub(this, 'setValueCurveAtTime')
-            .callThrough();
+        stub(this, 'cancelAndHoldAtTime').callThrough();
+        stub(this, 'cancelScheduledValues').callThrough();
+        stub(this, 'exponentialRampToValueAtTime').callThrough();
+        stub(this, 'linearRampToValueAtTime').callThrough();
+        stub(this, 'setTargetAtTime').callThrough();
+        stub(this, 'setValueAtTime').callThrough();
+        stub(this, 'setValueCurveAtTime').callThrough();
     }
 
-    get defaultValue (): number {
+    get defaultValue(): number {
         return this._defaultValue;
     }
 
-    set defaultValue (value) {
+    set defaultValue(value) {
         value; // tslint:disable-line:no-unused-expression
     }
 
-    get maxValue (): number {
+    get maxValue(): number {
         return this._maxValue;
     }
 
-    set maxValue (value) {
+    set maxValue(value) {
         value; // tslint:disable-line:no-unused-expression
     }
 
-    get minValue (): number {
+    get minValue(): number {
         return this._minValue;
     }
 
-    set minValue (value) {
+    set minValue(value) {
         value; // tslint:disable-line:no-unused-expression
     }
 
-    get value (): number {
+    get value(): number {
         if (this._deLorean === undefined) {
             return this._defaultValue;
         }
@@ -79,50 +71,49 @@ export class AudioParamMock implements IAudioParam {
         return this._automationEventList.getValue(this._deLorean.position);
     }
 
-    set value (value) {
-        this._automationEventList.add(createSetValueAutomationEvent(value, (this._deLorean === undefined) ? 0 : this._deLorean.position));
+    set value(value) {
+        this._automationEventList.add(createSetValueAutomationEvent(value, this._deLorean === undefined ? 0 : this._deLorean.position));
     }
 
-    public cancelAndHoldAtTime (cancelTime: number): IAudioParam {
+    public cancelAndHoldAtTime(cancelTime: number): IAudioParam {
         this._automationEventList.add(createCancelAndHoldAutomationEvent(cancelTime));
 
         return this;
     }
 
-    public cancelScheduledValues (cancelTime: number): IAudioParam {
+    public cancelScheduledValues(cancelTime: number): IAudioParam {
         this._automationEventList.add(createCancelScheduledValuesAutomationEvent(cancelTime));
 
         return this;
     }
 
-    public exponentialRampToValueAtTime (value: number, endTime: number): IAudioParam {
+    public exponentialRampToValueAtTime(value: number, endTime: number): IAudioParam {
         this._automationEventList.add(createExponentialRampToValueAutomationEvent(value, endTime));
 
         return this;
     }
 
-    public linearRampToValueAtTime (value: number, endTime: number): IAudioParam {
+    public linearRampToValueAtTime(value: number, endTime: number): IAudioParam {
         this._automationEventList.add(createLinearRampToValueAutomationEvent(value, endTime));
 
         return this;
     }
 
-    public setTargetAtTime (target: number, startTime: number, timeConstant: number): IAudioParam {
+    public setTargetAtTime(target: number, startTime: number, timeConstant: number): IAudioParam {
         this._automationEventList.add(createSetTargetAutomationEvent(target, startTime, timeConstant));
 
         return this;
     }
 
-    public setValueAtTime (value: number, startTime: number): IAudioParam {
+    public setValueAtTime(value: number, startTime: number): IAudioParam {
         this._automationEventList.add(createSetValueAutomationEvent(value, startTime));
 
         return this;
     }
 
-    public setValueCurveAtTime (values: Float32Array, startTime: number, duration: number): IAudioParam {
+    public setValueCurveAtTime(values: Float32Array, startTime: number, duration: number): IAudioParam {
         this._automationEventList.add(createSetValueCurveAutomationEvent(values, startTime, duration));
 
         return this;
     }
-
 }

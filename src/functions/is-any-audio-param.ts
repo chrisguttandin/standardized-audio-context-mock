@@ -1,4 +1,3 @@
 import { stub } from 'sinon';
 
-export const isAnyAudioParam = stub()
-    .returns(true);
+export const isAnyAudioParam = stub().returns(true);

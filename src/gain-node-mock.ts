@@ -5,10 +5,9 @@ import { AudioParamMock } from './audio-param-mock';
 import { registrar } from './registrar';
 
 export class GainNodeMock<T extends TContext> extends AudioNodeMock<T> implements IGainNode<T> {
-
     private _gain: AudioParamMock;
 
-    constructor (context: T) {
+    constructor(context: T) {
         const deLorean = registrar.getDeLorean(context);
 
         super({
@@ -28,12 +27,11 @@ export class GainNodeMock<T extends TContext> extends AudioNodeMock<T> implement
         });
     }
 
-    get gain (): AudioParamMock {
+    get gain(): AudioParamMock {
         return this._gain;
     }
 
-    set gain (value) {
+    set gain(value) {
         value; // tslint:disable-line:no-unused-expression
     }
-
 }

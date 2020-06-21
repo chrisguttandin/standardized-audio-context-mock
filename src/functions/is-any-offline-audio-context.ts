@@ -1,4 +1,3 @@
 import { stub } from 'sinon';
 
-export const isAnyOfflineAudioContext = stub()
-    .returns(true);
+export const isAnyOfflineAudioContext = stub().returns(true);

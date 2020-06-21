@@ -3,7 +3,6 @@ import { AudioParamMock } from '../../src/audio-param-mock';
 import { OscillatorNodeMock } from '../../src/oscillator-node-mock';
 
 describe('OscillatorNodeMock', () => {
-
     let oscillatorNodeMock;
 
     beforeEach(() => {
@@ -13,7 +12,6 @@ describe('OscillatorNodeMock', () => {
     });
 
     describe('detune', () => {
-
         it('should be readonly', () => {
             oscillatorNodeMock.detune = 'new value';
 
@@ -31,11 +29,9 @@ describe('OscillatorNodeMock', () => {
         it('should have a value of 0', () => {
             expect(oscillatorNodeMock.detune.value).to.equal(0);
         });
-
     });
 
     describe('frequency', () => {
-
         it('should be readonly', () => {
             oscillatorNodeMock.frequency = 'new value';
 
@@ -53,25 +49,23 @@ describe('OscillatorNodeMock', () => {
         it('should have a value of 440', () => {
             expect(oscillatorNodeMock.frequency.value).to.equal(440);
         });
-
     });
 
     describe('onended', () => {
-
         it('should be null', () => {
             expect(oscillatorNodeMock.onended).to.be.null;
         });
 
         it('should be assignable to a function', () => {
             const fn = () => {};
-            const onended = oscillatorNodeMock.onended = fn; // eslint-disable-line no-multi-assign
+            const onended = (oscillatorNodeMock.onended = fn); // eslint-disable-line no-multi-assign
 
             expect(onended).to.equal(fn);
             expect(oscillatorNodeMock.onended).to.equal(fn);
         });
 
         it('should be assignable to null', () => {
-            const onended = oscillatorNodeMock.onended = null; // eslint-disable-line no-multi-assign
+            const onended = (oscillatorNodeMock.onended = null); // eslint-disable-line no-multi-assign
 
             expect(onended).to.be.null;
             expect(oscillatorNodeMock.onended).to.be.null;
@@ -82,12 +76,10 @@ describe('OscillatorNodeMock', () => {
 
             oscillatorNodeMock.onended = () => {};
 
-            const onended = oscillatorNodeMock.onended = string; // eslint-disable-line no-multi-assign
+            const onended = (oscillatorNodeMock.onended = string); // eslint-disable-line no-multi-assign
 
             expect(onended).to.equal(string);
             expect(oscillatorNodeMock.onended).to.be.null;
         });
-
     });
-
 });

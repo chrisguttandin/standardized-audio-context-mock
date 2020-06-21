@@ -6,7 +6,6 @@ import { AudioParamMock } from './audio-param-mock';
 import { registrar } from './registrar';
 
 export class OscillatorNodeMock<T extends TContext> extends AudioNodeMock<T> implements IOscillatorNode<T> {
-
     public setPeriodicWave: SinonSpy;
 
     public start: SinonSpy;
@@ -21,7 +20,7 @@ export class OscillatorNodeMock<T extends TContext> extends AudioNodeMock<T> imp
 
     private _onended: null | TEventHandler<this>;
 
-    constructor (context: T) {
+    constructor(context: T) {
         const deLorean = registrar.getDeLorean(context);
 
         super({
@@ -53,28 +52,27 @@ export class OscillatorNodeMock<T extends TContext> extends AudioNodeMock<T> imp
         this.type = 'sine';
     }
 
-    get detune (): AudioParamMock {
+    get detune(): AudioParamMock {
         return this._detune;
     }
 
-    set detune (value) {
+    set detune(value) {
         value; // tslint:disable-line:no-unused-expression
     }
 
-    get frequency (): AudioParamMock {
+    get frequency(): AudioParamMock {
         return this._frequency;
     }
 
-    set frequency (value) {
+    set frequency(value) {
         value; // tslint:disable-line:no-unused-expression
     }
 
-    get onended (): null | TEventHandler<this> {
+    get onended(): null | TEventHandler<this> {
         return this._onended;
     }
 
-    set onended (value) {
-        this._onended = (typeof value === 'function') ? value : null;
+    set onended(value) {
+        this._onended = typeof value === 'function' ? value : null;
     }
-
 }
