@@ -111,8 +111,10 @@ export class AudioParamMock implements IAudioParam {
         return this;
     }
 
-    public setValueCurveAtTime(values: Float32Array, startTime: number, duration: number): IAudioParam {
-        this._automationEventList.add(createSetValueCurveAutomationEvent(values, startTime, duration));
+    public setValueCurveAtTime(values: Iterable<number>, startTime: number, duration: number): IAudioParam {
+        this._automationEventList.add(
+            createSetValueCurveAutomationEvent(values instanceof Float32Array ? values : new Float32Array(values), startTime, duration)
+        );
 
         return this;
     }
