@@ -20,7 +20,7 @@
     ],
     "dependencies": {
         "@babel/runtime": "^7.11.2",
-        "automation-events": "^3.0.0",
+        "automation-events": "^3.0.1",
         "sinon": "^9.2.0",
         "standardized-audio-context": "^25.1.2",
         "tslib": "^2.0.2",
