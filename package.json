@@ -59,7 +59,7 @@
         "mocha": "^8.2.1",
         "prettier": "^2.2.0",
         "pretty-quick": "^3.1.0",
-        "rollup": "^2.33.1",
+        "rollup": "^2.33.3",
         "sinon-chai": "^3.5.0",
         "ts-loader": "^8.0.7",
         "tsconfig-holy-grail": "^11.0.33",
