@@ -95,6 +95,7 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
 
     public close(): Promise<void> {
         this._state = <TAudioContextState>'closed';
+
         return Promise.resolve();
     }
 
@@ -239,11 +240,13 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
 
     public resume(): Promise<void> {
         this._state = <TAudioContextState>'running';
+        
         return Promise.resolve();
     }
 
     public suspend(): Promise<void> {
         this._state = <TAudioContextState>'suspended';
+
         return Promise.resolve();
     }
 }
