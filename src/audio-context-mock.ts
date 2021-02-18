@@ -52,7 +52,7 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
         this._deLorean = new DeLorean();
         this._onstatechange = null;
         this._options = options;
-        this._state = <TAudioContextState>'running';
+        this._state = <TAudioContextState>'suspended';
 
         registrar.setDeLorean(<TContext>this, this._deLorean);
     }

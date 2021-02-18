@@ -7,16 +7,13 @@ export class AudioBufferMock implements IAudioBuffer {
 
     public sampleRate: number;
 
-    private channelData: Float32Array[];
+    private channelData: Map<number, Float32Array>;
 
     constructor({ length, numberOfChannels = 1, sampleRate }: IAudioBufferOptions) {
         this.length = length;
         this.numberOfChannels = numberOfChannels;
         this.sampleRate = sampleRate;
-        this.channelData = [];
-        for (let i = 0; i < this.numberOfChannels; i++) {
-            this.channelData.push(new Float32Array(this.length));
-        }
+        this.channelData = new Map();
     }
 
     get duration(): number {
@@ -27,7 +24,15 @@ export class AudioBufferMock implements IAudioBuffer {
 
     public copyToChannel(): void {} // tslint:disable-line:no-empty
 
-    public getChannelData(channelNo): Float32Array {
-        return this.channelData[channelNo];
+    public getChannelData(channel: number): Float32Array {
+        let channelData = this.channelData.get(channel);
+
+        if (channelData === undefined) {
+            channelData = new Float32Array(this.length);
+
+            this.channelData.set(channel, channelData);
+        }
+
+        return channelData;
     }
 }
