@@ -240,7 +240,7 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
 
     public resume(): Promise<void> {
         this._state = <TAudioContextState>'running';
-        
+
         return Promise.resolve();
     }
 
