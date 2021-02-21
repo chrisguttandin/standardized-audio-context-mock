@@ -44,12 +44,15 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
 
     private _options: IAudioContextOptions;
 
+    private _state: TAudioContextState;
+
     constructor(options: IAudioContextOptions = {}) {
         super();
 
         this._deLorean = new DeLorean();
         this._onstatechange = null;
         this._options = options;
+        this._state = <TAudioContextState>'suspended';
 
         registrar.setDeLorean(<TContext>this, this._deLorean);
     }
@@ -87,10 +90,12 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
     }
 
     get state(): TAudioContextState {
-        return <TAudioContextState>'running';
+        return this._state;
     }
 
     public close(): Promise<void> {
+        this._state = <TAudioContextState>'closed';
+
         return Promise.resolve();
     }
 
@@ -234,10 +239,14 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
     }
 
     public resume(): Promise<void> {
+        this._state = <TAudioContextState>'running';
+
         return Promise.resolve();
     }
 
     public suspend(): Promise<void> {
+        this._state = <TAudioContextState>'suspended';
+
         return Promise.resolve();
     }
 }
