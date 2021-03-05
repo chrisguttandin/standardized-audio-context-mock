@@ -16,6 +16,10 @@
         {
             "email": "yang@quip.com",
             "name": "Yang Su"
+        },
+        {
+            "email": "xucheng@gaoding.com",
+            "name": "xucheng"
         }
     ],
     "dependencies": {
