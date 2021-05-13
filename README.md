@@ -2,7 +2,6 @@
 
 **A mocked version of the standardized-audio-context module.**
 
-[![tests](https://img.shields.io/travis/chrisguttandin/standardized-audio-context-mock/master.svg?style=flat-square)](https://travis-ci.org/chrisguttandin/standardized-audio-context-mock)
 [![dependencies](https://img.shields.io/david/chrisguttandin/standardized-audio-context-mock.svg?style=flat-square)](https://www.npmjs.com/package/standardized-audio-context-mock)
 [![version](https://img.shields.io/npm/v/standardized-audio-context-mock.svg?style=flat-square)](https://www.npmjs.com/package/standardized-audio-context-mock)
 
@@ -42,10 +41,9 @@ A test suite for the `play()` function which will run with [Mocha](https://mocha
 ```js
 // File `./play.test.js`
 import { AudioBuffer, AudioContext, registrar } from 'standardized-audio-context-mock';
-import { play } from './play'
+import { play } from './play';
 
 describe('play()', () => {
-
     let audioBufferMock;
     let audioContextMock;
 
@@ -65,7 +63,7 @@ describe('play()', () => {
     it('should set the buffer property of the AudioBufferSourceNode', () => {
         play(audioBufferMock, audioContextMock);
 
-        const [ audioBufferSourceNodeMock ] = registrar.getAudioNodes(audioContextMock, 'AudioBufferSourceNode');
+        const [audioBufferSourceNodeMock] = registrar.getAudioNodes(audioContextMock, 'AudioBufferSourceNode');
 
         expect(audioBufferSourceNodeMock.buffer).to.equal(audioBufferMock);
     });
@@ -73,7 +71,7 @@ describe('play()', () => {
     it('should connect the AudioBufferSourceNode with to destination', () => {
         play(audioBufferMock, audioContextMock);
 
-        const [ audioBufferSourceNodeMock ] = registrar.getAudioNodes(audioContextMock, 'AudioBufferSourceNode');
+        const [audioBufferSourceNodeMock] = registrar.getAudioNodes(audioContextMock, 'AudioBufferSourceNode');
 
         expect(audioBufferSourceNodeMock.connect).to.have.been.calledOnce;
         expect(audioBufferSourceNodeMock.connect).to.have.been.calledWithExactly(audioContextMock.destination);
@@ -82,10 +80,9 @@ describe('play()', () => {
     it('should start the AudioBufferSourceNode', () => {
         play(audioBufferMock, audioContextMock);
 
-        const [ audioBufferSourceNodeMock ] = registrar.getAudioNodes(audioContextMock, 'AudioBufferSourceNode');
+        const [audioBufferSourceNodeMock] = registrar.getAudioNodes(audioContextMock, 'AudioBufferSourceNode');
 
         expect(audioBufferSourceNodeMock.start).to.have.been.calledOnce;
     });
-
 });
 ```
