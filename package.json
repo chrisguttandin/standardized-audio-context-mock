@@ -77,12 +77,6 @@
         "src/"
     ],
     "homepage": "https://github.com/chrisguttandin/standardized-audio-context-mock",
-    "husky": {
-        "hooks": {
-            "commit-msg": "commitlint --edit --extends @commitlint/config-angular",
-            "pre-commit": "pretty-quick --config config/prettier/config.json --staged && grunt lint"
-        }
-    },
     "keywords": [
         "Web Audio API",
         "testing"
@@ -96,6 +90,7 @@
         "url": "https://github.com/chrisguttandin/standardized-audio-context-mock.git"
     },
     "scripts": {
+        "prepare": "husky install",
         "prepublishOnly": "grunt build",
         "test": "grunt lint && grunt test"
     },
