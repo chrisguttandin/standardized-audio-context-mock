@@ -23,7 +23,7 @@
         }
     ],
     "dependencies": {
-        "@babel/runtime": "^7.14.8",
+        "@babel/runtime": "^7.15.3",
         "automation-events": "^4.0.5",
         "sinon": "^11.1.2",
         "standardized-audio-context": "^25.3.3",
