@@ -25,6 +25,8 @@ export class GainNodeMock<T extends TContext> extends AudioNodeMock<T> implement
             maxValue: 3.4028234663852886e38,
             minValue: -3.4028234663852886e38
         });
+
+        registrar.addAudioNode(context, 'GainNode', this);
     }
 
     get gain(): AudioParamMock {

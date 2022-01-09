@@ -133,11 +133,7 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
     }
 
     public createBufferSource(): IAudioBufferSourceNode<IAudioContext> {
-        const audioBufferSourceNode = new AudioBufferSourceNodeMock(this);
-
-        registrar.addAudioNode(this, 'AudioBufferSourceNode', audioBufferSourceNode);
-
-        return <IAudioBufferSourceNode<IAudioContext>>audioBufferSourceNode;
+        return new AudioBufferSourceNodeMock(this);
     }
 
     public createChannelMerger(): IAudioNode<IAudioContext> {
@@ -166,19 +162,11 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
     }
 
     public createDynamicsCompressor(): IDynamicsCompressorNode<IAudioContext> {
-        const dynamicsCompressorNode = new DynamicsCompressorNodeMock(this);
-
-        registrar.addAudioNode(this, 'DynamicsCompressorNode', dynamicsCompressorNode);
-
-        return dynamicsCompressorNode;
+        return new DynamicsCompressorNodeMock(this);
     }
 
     public createGain(): IGainNode<IAudioContext> {
-        const gainNode = new GainNodeMock(this);
-
-        registrar.addAudioNode(this, 'GainNode', gainNode);
-
-        return gainNode;
+        return new GainNodeMock(this);
     }
 
     public createIIRFilter(): IIIRFilterNode<IAudioContext> {
@@ -207,11 +195,7 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
     }
 
     public createOscillator(): IOscillatorNode<IAudioContext> {
-        const oscillatorNode = new OscillatorNodeMock(this);
-
-        registrar.addAudioNode(this, 'OscillatorNode', oscillatorNode);
-
-        return <IOscillatorNode<IAudioContext>>oscillatorNode;
+        return new OscillatorNodeMock(this);
     }
 
     public createPanner(): IPannerNode<IAudioContext> {

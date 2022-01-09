@@ -22,6 +22,12 @@ describe('AudioBufferSourceNodeMock', () => {
         vehicle = registrar.getVehicle(context);
     });
 
+    it('should register the created instance', () => {
+        expect(registrar.getAudioNodes(audioBufferSourceNodeMock.context, 'AudioBufferSourceNode')).to.deep.equal([
+            audioBufferSourceNodeMock
+        ]);
+    });
+
     describe('detune', () => {
         it('should be readonly', () => {
             audioBufferSourceNodeMock.detune = 'new value';

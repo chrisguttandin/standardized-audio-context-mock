@@ -1,6 +1,7 @@
 import { AudioContextMock } from '../../src/audio-context-mock';
 import { AudioParamMock } from '../../src/audio-param-mock';
 import { OscillatorNodeMock } from '../../src/oscillator-node-mock';
+import { registrar } from '../../src/registrar';
 
 describe('OscillatorNodeMock', () => {
     let oscillatorNodeMock;
@@ -9,6 +10,10 @@ describe('OscillatorNodeMock', () => {
         const context = new AudioContextMock();
 
         oscillatorNodeMock = new OscillatorNodeMock(context);
+    });
+
+    it('should register the created instance', () => {
+        expect(registrar.getAudioNodes(oscillatorNodeMock.context, 'OscillatorNode')).to.deep.equal([oscillatorNodeMock]);
     });
 
     describe('detune', () => {

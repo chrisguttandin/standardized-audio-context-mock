@@ -81,6 +81,8 @@ export class AudioBufferSourceNodeMock<T extends TContext> extends AudioNodeMock
         });
         this._playbackRateAutomationEventList = playbackRateAutomationEventList;
 
+        registrar.addAudioNode(context, 'AudioBufferSourceNode', this);
+
         stub(this, 'start').callThrough();
         stub(this, 'stop').callThrough();
     }

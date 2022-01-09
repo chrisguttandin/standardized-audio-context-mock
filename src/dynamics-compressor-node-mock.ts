@@ -60,6 +60,8 @@ export class DynamicsCompressorNodeMock<T extends TContext> extends AudioNodeMoc
             maxValue: -100,
             minValue: 0
         });
+
+        registrar.addAudioNode(context, 'DynamicsCompressorNode', this);
     }
 
     get attack(): AudioParamMock {

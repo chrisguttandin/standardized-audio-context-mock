@@ -1,6 +1,7 @@
 import { AudioContextMock } from '../../src/audio-context-mock';
 import { AudioParamMock } from '../../src/audio-param-mock';
 import { DynamicsCompressorNodeMock } from '../../src/dynamics-compressor-node-mock';
+import { registrar } from '../../src/registrar';
 
 describe('DynamicsCompressorNodeMock', () => {
     let dynamicsCompressorNodeMock;
@@ -9,6 +10,12 @@ describe('DynamicsCompressorNodeMock', () => {
         const context = new AudioContextMock();
 
         dynamicsCompressorNodeMock = new DynamicsCompressorNodeMock(context);
+    });
+
+    it('should register the created instance', () => {
+        expect(registrar.getAudioNodes(dynamicsCompressorNodeMock.context, 'DynamicsCompressorNode')).to.deep.equal([
+            dynamicsCompressorNodeMock
+        ]);
     });
 
     describe('attack', () => {

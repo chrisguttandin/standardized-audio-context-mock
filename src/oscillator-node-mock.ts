@@ -50,6 +50,8 @@ export class OscillatorNodeMock<T extends TContext> extends AudioNodeMock<T> imp
         this.start = spy();
         this.stop = spy();
         this.type = 'sine';
+
+        registrar.addAudioNode(context, 'OscillatorNode', this);
     }
 
     get detune(): AudioParamMock {
