@@ -25,6 +25,10 @@ export class MediaElementAudioSourceNodeMock<T extends IAudioContext | IMinimalA
 
         this.mediaElement = mediaElement;
 
-        registrar.addAudioNode(context, 'MediaElementAudioSourceNode', this);
+        registrar.addAudioNode(
+            context,
+            'MediaElementAudioSourceNode',
+            <T extends IAudioContext | IMinimalAudioContext ? IMediaElementAudioSourceNode<T> : never>(<unknown>this)
+        );
     }
 }

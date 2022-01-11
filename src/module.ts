@@ -34,6 +34,13 @@ import { registrar } from './registrar';
 import { StereoPannerNodeMock } from './stereo-panner-node-mock';
 import { WaveShaperNodeMock } from './wave-shaper-node-mock';
 
+/*
+ * @todo Explicitly referencing the barrel file seems to be necessary when enabling the
+ * isolatedModules compiler option.
+ */
+export * from './interfaces/index';
+export * from './types/index';
+
 export { AnalyserNodeMock as AnalyserNode };
 
 export { AudioBufferMock as AudioBuffer };

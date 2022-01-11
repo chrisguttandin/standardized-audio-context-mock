@@ -1,9 +1,10 @@
 import { TContext } from 'standardized-audio-context';
 import { DeLorean, IVehicle } from 'vehicles';
-import { AudioNodeMock } from './audio-node-mock';
+import { IAudioNodeMap } from './interfaces';
+import { TAudioNodes } from './types';
 
 export class Registrar {
-    private _audioNodes: WeakMap<TContext, Map<string, Set<AudioNodeMock<TContext>>>>;
+    private _audioNodes: WeakMap<TContext, Map<keyof IAudioNodeMap<TContext>, Set<TAudioNodes<TContext>>>>;
 
     private _deLoreans: WeakMap<TContext, DeLorean>;
 
@@ -12,34 +13,31 @@ export class Registrar {
         this._deLoreans = new WeakMap();
     }
 
-    public addAudioNode<T extends TContext>(context: T, type: string, node: AudioNodeMock<T>): void {
-        let audioNodesOfContext: Map<string, Set<AudioNodeMock<T>>>;
-        let audioNodesOfType: Set<AudioNodeMock<T>>;
+    public addAudioNode<T extends TContext, U extends keyof IAudioNodeMap<T>>(context: T, type: U, node: IAudioNodeMap<T>[U]): void {
+        let audioNodesOfContext = this._audioNodes.get(context);
 
-        if (this._audioNodes.has(context)) {
-            audioNodesOfContext = <Map<string, Set<AudioNodeMock<T>>>>this._audioNodes.get(context);
-        } else {
+        if (audioNodesOfContext === undefined) {
             audioNodesOfContext = new Map();
+
             this._audioNodes.set(context, audioNodesOfContext);
         }
 
-        if (audioNodesOfContext.has(type)) {
-            audioNodesOfType = <Set<AudioNodeMock<T>>>audioNodesOfContext.get(type);
-        } else {
+        let audioNodesOfType = audioNodesOfContext.get(type);
+
+        if (audioNodesOfType === undefined) {
             audioNodesOfType = new Set();
+
             audioNodesOfContext.set(type, audioNodesOfType);
         }
 
         audioNodesOfType.add(node);
     }
 
-    public getAudioNodes<T extends TContext>(context: T, type: string): AudioNodeMock<T>[] {
-        if (this._audioNodes.has(context)) {
-            const audioNodesOfContext = <Map<string, Set<AudioNodeMock<T>>>>this._audioNodes.get(context);
+    public getAudioNodes<T extends TContext, U extends keyof IAudioNodeMap<T>>(context: T, type: U): IAudioNodeMap<T>[U][] {
+        const audioNodesOfContext = this._audioNodes.get(context);
 
-            if (audioNodesOfContext.has(type)) {
-                return Array.from(<Set<AudioNodeMock<T>>>audioNodesOfContext.get(type));
-            }
+        if (audioNodesOfContext !== undefined && audioNodesOfContext.has(type)) {
+            return Array.from(<Set<IAudioNodeMap<T>[U]>>audioNodesOfContext.get(type));
         }
 
         return [];
