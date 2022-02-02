@@ -6,6 +6,7 @@ import {
     IMediaElementAudioSourceNode,
     IMinimalAudioContext,
     IOscillatorNode,
+    IStereoPannerNode,
     TContext
 } from 'standardized-audio-context';
 
@@ -19,4 +20,6 @@ export interface IAudioNodeMap<T extends TContext> {
     MediaElementAudioSourceNode: T extends IAudioContext | IMinimalAudioContext ? IMediaElementAudioSourceNode<T> : never;
 
     OscillatorNode: IOscillatorNode<T>;
+
+    StereoPannerNode: IStereoPannerNode<T>;
 }
