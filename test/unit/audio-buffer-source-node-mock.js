@@ -1,31 +1,61 @@
+import { AudioBuffer, AudioBufferSourceNode, AudioContext, isAnyAudioParam } from 'standardized-audio-context';
 import { AudioBufferMock } from '../../src/audio-buffer-mock';
 import { AudioBufferSourceNodeMock } from '../../src/audio-buffer-source-node-mock';
 import { AudioContextMock } from '../../src/audio-context-mock';
 import { AudioParamMock } from '../../src/audio-param-mock';
+import { getAllKeys } from '../helpers/get-all-keys';
 import { registrar } from '../../src/registrar';
 import { spy } from 'sinon';
 
 describe('AudioBufferSourceNodeMock', () => {
     let audioBufferSourceNodeMock;
+    let audioContextMock;
     let vehicle;
 
     beforeEach(() => {
-        const context = new AudioContextMock({ sampleRate: 1280 });
-
-        audioBufferSourceNodeMock = new AudioBufferSourceNodeMock(context);
-        audioBufferSourceNodeMock.buffer = new AudioBufferMock({
-            length: 12800,
-            numberOfChannels: 2,
-            sampleRate: 1280
+        audioContextMock = new AudioContextMock({ sampleRate: 22050 });
+        audioBufferSourceNodeMock = new AudioBufferSourceNodeMock(audioContextMock, {
+            buffer: new AudioBufferMock({
+                length: 220500,
+                numberOfChannels: 2,
+                sampleRate: 22050
+            })
         });
 
-        vehicle = registrar.getVehicle(context);
+        vehicle = registrar.getVehicle(audioContextMock);
+    });
+
+    it('should have all methods and properties of the AudioBufferSourceNode interface', () => {
+        const audioContext = new AudioContext();
+        const audioBufferSourceNode = new AudioBufferSourceNode(audioContext, {
+            buffer: new AudioBuffer({
+                length: 441000,
+                numberOfChannels: 2,
+                sampleRate: 44100
+            })
+        });
+
+        for (const key of getAllKeys(audioBufferSourceNode)) {
+            const property = audioBufferSourceNode[key];
+
+            if (property instanceof AudioBuffer) {
+                expect(audioBufferSourceNodeMock[key]).to.be.an.instanceOf(AudioBufferMock);
+            } else if (property === audioContext) {
+                expect(audioBufferSourceNodeMock[key]).to.equal(audioContextMock);
+            } else if (isAnyAudioParam(property)) {
+                expect(audioBufferSourceNodeMock[key]).to.be.an.instanceOf(AudioParamMock);
+            } else if (typeof property === 'function') {
+                expect(audioBufferSourceNodeMock[key]).to.be.a('function');
+            } else {
+                expect(audioBufferSourceNodeMock[key]).to.equal(property);
+            }
+        }
+
+        audioContext.close();
     });
 
     it('should register the created instance', () => {
-        expect(registrar.getAudioNodes(audioBufferSourceNodeMock.context, 'AudioBufferSourceNode')).to.deep.equal([
-            audioBufferSourceNodeMock
-        ]);
+        expect(registrar.getAudioNodes(audioContextMock, 'AudioBufferSourceNode')).to.deep.equal([audioBufferSourceNodeMock]);
     });
 
     describe('detune', () => {
@@ -35,16 +65,27 @@ describe('AudioBufferSourceNodeMock', () => {
             expect(audioBufferSourceNodeMock.detune).to.not.equal('new value');
         });
 
-        it('should be a instance of AudioParamMock', () => {
-            expect(audioBufferSourceNodeMock.detune).to.be.an.instanceOf(AudioParamMock);
-        });
+        it('should have all methods and properties of the AudioParam interface', () => {
+            const audioContext = new AudioContext();
+            const audioBufferSourceNode = new AudioBufferSourceNode(audioContext, {
+                buffer: new AudioBuffer({
+                    length: 441000,
+                    numberOfChannels: 2,
+                    sampleRate: 44100
+                })
+            });
 
-        it('should have a default value of 0', () => {
-            expect(audioBufferSourceNodeMock.detune.defaultValue).to.equal(0);
-        });
+            for (const key of getAllKeys(audioBufferSourceNode.detune)) {
+                const property = audioBufferSourceNode.detune[key];
 
-        it('should have a value of 0', () => {
-            expect(audioBufferSourceNodeMock.detune.value).to.equal(0);
+                if (typeof property === 'function') {
+                    expect(audioBufferSourceNodeMock.detune[key]).to.be.a('function');
+                } else {
+                    expect(audioBufferSourceNodeMock.detune[key]).to.equal(property);
+                }
+            }
+
+            audioContext.close();
         });
     });
 
@@ -107,7 +148,7 @@ describe('AudioBufferSourceNodeMock', () => {
 
             expect(onended).to.have.not.been.called;
 
-            vehicle.travel(0.5);
+            vehicle.travel(0.51);
 
             expect(onended).to.have.been.calledOnce;
         });
@@ -123,7 +164,7 @@ describe('AudioBufferSourceNodeMock', () => {
 
             expect(onended).to.have.not.been.called;
 
-            vehicle.travel(0.5);
+            vehicle.travel(0.51);
 
             expect(onended).to.have.been.calledOnce;
         });
@@ -140,7 +181,7 @@ describe('AudioBufferSourceNodeMock', () => {
 
             expect(onended).to.have.not.been.called;
 
-            vehicle.travel(0.5);
+            vehicle.travel(0.51);
 
             expect(onended).to.have.been.calledOnce;
         });
@@ -157,7 +198,7 @@ describe('AudioBufferSourceNodeMock', () => {
 
             expect(onended).to.have.not.been.called;
 
-            vehicle.travel(0.05);
+            vehicle.travel(0.06);
 
             expect(onended).to.have.been.calledOnce;
         });
@@ -170,16 +211,27 @@ describe('AudioBufferSourceNodeMock', () => {
             expect(audioBufferSourceNodeMock.playbackRate).to.not.equal('new value');
         });
 
-        it('should be a instance of AudioParamMock', () => {
-            expect(audioBufferSourceNodeMock.playbackRate).to.be.an.instanceOf(AudioParamMock);
-        });
+        it('should have all methods and properties of the AudioParam interface', () => {
+            const audioContext = new AudioContext();
+            const audioBufferSourceNode = new AudioBufferSourceNode(audioContext, {
+                buffer: new AudioBuffer({
+                    length: 441000,
+                    numberOfChannels: 2,
+                    sampleRate: 44100
+                })
+            });
 
-        it('should have a default value of 1', () => {
-            expect(audioBufferSourceNodeMock.playbackRate.defaultValue).to.equal(1);
-        });
+            for (const key of getAllKeys(audioBufferSourceNode.playbackRate)) {
+                const property = audioBufferSourceNode.playbackRate[key];
 
-        it('should have a value of 1', () => {
-            expect(audioBufferSourceNodeMock.playbackRate.value).to.equal(1);
+                if (typeof property === 'function') {
+                    expect(audioBufferSourceNodeMock.playbackRate[key]).to.be.a('function');
+                } else {
+                    expect(audioBufferSourceNodeMock.playbackRate[key]).to.equal(property);
+                }
+            }
+
+            audioContext.close();
         });
     });
 

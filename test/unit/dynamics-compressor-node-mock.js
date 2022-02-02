@@ -1,21 +1,42 @@
+import { AudioContext, DynamicsCompressorNode, isAnyAudioParam } from 'standardized-audio-context';
 import { AudioContextMock } from '../../src/audio-context-mock';
 import { AudioParamMock } from '../../src/audio-param-mock';
 import { DynamicsCompressorNodeMock } from '../../src/dynamics-compressor-node-mock';
+import { getAllKeys } from '../helpers/get-all-keys';
 import { registrar } from '../../src/registrar';
 
 describe('DynamicsCompressorNodeMock', () => {
+    let audioContextMock;
     let dynamicsCompressorNodeMock;
 
     beforeEach(() => {
-        const context = new AudioContextMock();
+        audioContextMock = new AudioContextMock();
+        dynamicsCompressorNodeMock = new DynamicsCompressorNodeMock(audioContextMock);
+    });
 
-        dynamicsCompressorNodeMock = new DynamicsCompressorNodeMock(context);
+    it('should have all methods and properties of the DynamicsCompressorNode interface', () => {
+        const audioContext = new AudioContext();
+        const dynamicsCompressorNode = new DynamicsCompressorNode(audioContext);
+
+        for (const key of getAllKeys(dynamicsCompressorNode)) {
+            const property = dynamicsCompressorNode[key];
+
+            if (property === audioContext) {
+                expect(dynamicsCompressorNodeMock[key]).to.equal(audioContextMock);
+            } else if (isAnyAudioParam(property)) {
+                expect(dynamicsCompressorNodeMock[key]).to.be.an.instanceOf(AudioParamMock);
+            } else if (typeof property === 'function') {
+                expect(dynamicsCompressorNodeMock[key]).to.be.a('function');
+            } else {
+                expect(dynamicsCompressorNodeMock[key]).to.equal(property);
+            }
+        }
+
+        audioContext.close();
     });
 
     it('should register the created instance', () => {
-        expect(registrar.getAudioNodes(dynamicsCompressorNodeMock.context, 'DynamicsCompressorNode')).to.deep.equal([
-            dynamicsCompressorNodeMock
-        ]);
+        expect(registrar.getAudioNodes(audioContextMock, 'DynamicsCompressorNode')).to.deep.equal([dynamicsCompressorNodeMock]);
     });
 
     describe('attack', () => {
@@ -25,16 +46,21 @@ describe('DynamicsCompressorNodeMock', () => {
             expect(dynamicsCompressorNodeMock.attack).to.not.equal('new value');
         });
 
-        it('should be a instance of AudioParamMock', () => {
-            expect(dynamicsCompressorNodeMock.attack).to.be.an.instanceOf(AudioParamMock);
-        });
+        it('should have all methods and properties of the AudioParam interface', () => {
+            const audioContext = new AudioContext();
+            const dynamicsCompressorNode = new DynamicsCompressorNode(audioContext);
 
-        it('should have a default value of 0.003', () => {
-            expect(dynamicsCompressorNodeMock.attack.defaultValue).to.equal(0.003);
-        });
+            for (const key of getAllKeys(dynamicsCompressorNode.attack)) {
+                const property = dynamicsCompressorNode.attack[key];
 
-        it('should have a value of 0.003', () => {
-            expect(dynamicsCompressorNodeMock.attack.value).to.equal(0.003);
+                if (typeof property === 'function') {
+                    expect(dynamicsCompressorNodeMock.attack[key]).to.be.a('function');
+                } else {
+                    expect(dynamicsCompressorNodeMock.attack[key]).to.equal(property);
+                }
+            }
+
+            audioContext.close();
         });
     });
 
@@ -45,16 +71,21 @@ describe('DynamicsCompressorNodeMock', () => {
             expect(dynamicsCompressorNodeMock.knee).to.not.equal('new value');
         });
 
-        it('should be a instance of AudioParamMock', () => {
-            expect(dynamicsCompressorNodeMock.knee).to.be.an.instanceOf(AudioParamMock);
-        });
+        it('should have all methods and properties of the AudioParam interface', () => {
+            const audioContext = new AudioContext();
+            const dynamicsCompressorNode = new DynamicsCompressorNode(audioContext);
 
-        it('should have a default value of 30', () => {
-            expect(dynamicsCompressorNodeMock.knee.defaultValue).to.equal(30);
-        });
+            for (const key of getAllKeys(dynamicsCompressorNode.knee)) {
+                const property = dynamicsCompressorNode.knee[key];
 
-        it('should have a value of 30', () => {
-            expect(dynamicsCompressorNodeMock.knee.value).to.equal(30);
+                if (typeof property === 'function') {
+                    expect(dynamicsCompressorNodeMock.knee[key]).to.be.a('function');
+                } else {
+                    expect(dynamicsCompressorNodeMock.knee[key]).to.equal(property);
+                }
+            }
+
+            audioContext.close();
         });
     });
 
@@ -65,16 +96,21 @@ describe('DynamicsCompressorNodeMock', () => {
             expect(dynamicsCompressorNodeMock.ratio).to.not.equal('new value');
         });
 
-        it('should be a instance of AudioParamMock', () => {
-            expect(dynamicsCompressorNodeMock.ratio).to.be.an.instanceOf(AudioParamMock);
-        });
+        it('should have all methods and properties of the AudioParam interface', () => {
+            const audioContext = new AudioContext();
+            const dynamicsCompressorNode = new DynamicsCompressorNode(audioContext);
 
-        it('should have a default value of 12', () => {
-            expect(dynamicsCompressorNodeMock.ratio.defaultValue).to.equal(12);
-        });
+            for (const key of getAllKeys(dynamicsCompressorNode.ratio)) {
+                const property = dynamicsCompressorNode.ratio[key];
 
-        it('should have a value of 12', () => {
-            expect(dynamicsCompressorNodeMock.ratio.value).to.equal(12);
+                if (typeof property === 'function') {
+                    expect(dynamicsCompressorNodeMock.ratio[key]).to.be.a('function');
+                } else {
+                    expect(dynamicsCompressorNodeMock.ratio[key]).to.equal(property);
+                }
+            }
+
+            audioContext.close();
         });
     });
 
@@ -97,16 +133,21 @@ describe('DynamicsCompressorNodeMock', () => {
             expect(dynamicsCompressorNodeMock.release).to.not.equal('new value');
         });
 
-        it('should be a instance of AudioParamMock', () => {
-            expect(dynamicsCompressorNodeMock.release).to.be.an.instanceOf(AudioParamMock);
-        });
+        it('should have all methods and properties of the AudioParam interface', () => {
+            const audioContext = new AudioContext();
+            const dynamicsCompressorNode = new DynamicsCompressorNode(audioContext);
 
-        it('should have a default value of 0.25', () => {
-            expect(dynamicsCompressorNodeMock.release.defaultValue).to.equal(0.25);
-        });
+            for (const key of getAllKeys(dynamicsCompressorNode.release)) {
+                const property = dynamicsCompressorNode.release[key];
 
-        it('should have a value of 0.25', () => {
-            expect(dynamicsCompressorNodeMock.release.value).to.equal(0.25);
+                if (typeof property === 'function') {
+                    expect(dynamicsCompressorNodeMock.release[key]).to.be.a('function');
+                } else {
+                    expect(dynamicsCompressorNodeMock.release[key]).to.equal(property);
+                }
+            }
+
+            audioContext.close();
         });
     });
 
@@ -117,16 +158,21 @@ describe('DynamicsCompressorNodeMock', () => {
             expect(dynamicsCompressorNodeMock.threshold).to.not.equal('new value');
         });
 
-        it('should be a instance of AudioParamMock', () => {
-            expect(dynamicsCompressorNodeMock.threshold).to.be.an.instanceOf(AudioParamMock);
-        });
+        it('should have all methods and properties of the AudioParam interface', () => {
+            const audioContext = new AudioContext();
+            const dynamicsCompressorNode = new DynamicsCompressorNode(audioContext);
 
-        it('should have a default value of -24', () => {
-            expect(dynamicsCompressorNodeMock.threshold.defaultValue).to.equal(-24);
-        });
+            for (const key of getAllKeys(dynamicsCompressorNode.threshold)) {
+                const property = dynamicsCompressorNode.threshold[key];
 
-        it('should have a value of -24', () => {
-            expect(dynamicsCompressorNodeMock.threshold.value).to.equal(-24);
+                if (typeof property === 'function') {
+                    expect(dynamicsCompressorNodeMock.threshold[key]).to.be.a('function');
+                } else {
+                    expect(dynamicsCompressorNodeMock.threshold[key]).to.equal(property);
+                }
+            }
+
+            audioContext.close();
         });
     });
 });

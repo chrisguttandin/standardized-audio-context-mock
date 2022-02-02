@@ -1,19 +1,42 @@
+import { AudioContext, OscillatorNode, isAnyAudioParam } from 'standardized-audio-context';
 import { AudioContextMock } from '../../src/audio-context-mock';
 import { AudioParamMock } from '../../src/audio-param-mock';
 import { OscillatorNodeMock } from '../../src/oscillator-node-mock';
+import { getAllKeys } from '../helpers/get-all-keys';
 import { registrar } from '../../src/registrar';
 
 describe('OscillatorNodeMock', () => {
+    let audioContextMock;
     let oscillatorNodeMock;
 
     beforeEach(() => {
-        const context = new AudioContextMock();
+        audioContextMock = new AudioContextMock();
+        oscillatorNodeMock = new OscillatorNodeMock(audioContextMock);
+    });
 
-        oscillatorNodeMock = new OscillatorNodeMock(context);
+    it('should have all methods and properties of the OscillatorNode interface', () => {
+        const audioContext = new AudioContext();
+        const oscillatorNode = new OscillatorNode(audioContext);
+
+        for (const key of getAllKeys(oscillatorNode)) {
+            const property = oscillatorNode[key];
+
+            if (property === audioContext) {
+                expect(oscillatorNodeMock[key]).to.equal(audioContextMock);
+            } else if (isAnyAudioParam(property)) {
+                expect(oscillatorNodeMock[key]).to.be.an.instanceOf(AudioParamMock);
+            } else if (typeof property === 'function') {
+                expect(oscillatorNodeMock[key]).to.be.a('function');
+            } else {
+                expect(oscillatorNodeMock[key]).to.equal(property);
+            }
+        }
+
+        audioContext.close();
     });
 
     it('should register the created instance', () => {
-        expect(registrar.getAudioNodes(oscillatorNodeMock.context, 'OscillatorNode')).to.deep.equal([oscillatorNodeMock]);
+        expect(registrar.getAudioNodes(audioContextMock, 'OscillatorNode')).to.deep.equal([oscillatorNodeMock]);
     });
 
     describe('detune', () => {
@@ -23,16 +46,21 @@ describe('OscillatorNodeMock', () => {
             expect(oscillatorNodeMock.detune).to.not.equal('new value');
         });
 
-        it('should be a instance of AudioParamMock', () => {
-            expect(oscillatorNodeMock.detune).to.be.an.instanceOf(AudioParamMock);
-        });
+        it('should have all methods and properties of the AudioParam interface', () => {
+            const audioContext = new AudioContext();
+            const oscillatorNode = new OscillatorNode(audioContext);
 
-        it('should have a default value of 0', () => {
-            expect(oscillatorNodeMock.detune.defaultValue).to.equal(0);
-        });
+            for (const key of getAllKeys(oscillatorNode.detune)) {
+                const property = oscillatorNode.detune[key];
 
-        it('should have a value of 0', () => {
-            expect(oscillatorNodeMock.detune.value).to.equal(0);
+                if (typeof property === 'function') {
+                    expect(oscillatorNodeMock.detune[key]).to.be.a('function');
+                } else {
+                    expect(oscillatorNodeMock.detune[key]).to.equal(property);
+                }
+            }
+
+            audioContext.close();
         });
     });
 
@@ -43,16 +71,21 @@ describe('OscillatorNodeMock', () => {
             expect(oscillatorNodeMock.frequency).to.not.equal('new value');
         });
 
-        it('should be a instance of AudioParamMock', () => {
-            expect(oscillatorNodeMock.frequency).to.be.an.instanceOf(AudioParamMock);
-        });
+        it('should have all methods and properties of the AudioParam interface', () => {
+            const audioContext = new AudioContext();
+            const oscillatorNode = new OscillatorNode(audioContext);
 
-        it('should have a default value of 440', () => {
-            expect(oscillatorNodeMock.frequency.defaultValue).to.equal(440);
-        });
+            for (const key of getAllKeys(oscillatorNode.frequency)) {
+                const property = oscillatorNode.frequency[key];
 
-        it('should have a value of 440', () => {
-            expect(oscillatorNodeMock.frequency.value).to.equal(440);
+                if (typeof property === 'function') {
+                    expect(oscillatorNodeMock.frequency[key]).to.be.a('function');
+                } else {
+                    expect(oscillatorNodeMock.frequency[key]).to.equal(property);
+                }
+            }
+
+            audioContext.close();
         });
     });
 

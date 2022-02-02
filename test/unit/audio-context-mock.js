@@ -1,4 +1,16 @@
+import {
+    AudioBufferSourceNode,
+    AudioContext,
+    DynamicsCompressorNode,
+    GainNode,
+    MediaElementAudioSourceNode,
+    OscillatorNode,
+    StereoPannerNode,
+    isAnyAudioParam
+} from 'standardized-audio-context';
 import { AudioContextMock } from '../../src/audio-context-mock';
+import { AudioParamMock } from '../../src/audio-param-mock';
+import { getAllKeys } from '../helpers/get-all-keys';
 import { registrar } from '../../src/registrar';
 
 describe('AudioContextMock', () => {
@@ -55,172 +67,192 @@ describe('AudioContextMock', () => {
     });
 
     describe('createBufferSource()', () => {
+        let audioBufferSourceNodeMock;
+
+        beforeEach(() => (audioBufferSourceNodeMock = audioContextMock.createBufferSource()));
+
         it('should return an instance of the AudioBufferSourceNode interface', () => {
-            const audioBufferSourceNodeMock = audioContextMock.createBufferSource();
+            const audioContext = new AudioContext();
+            const audioBufferSourceNode = new AudioBufferSourceNode(audioContext);
 
-            expect(audioBufferSourceNodeMock.buffer).to.be.null;
+            for (const key of getAllKeys(audioBufferSourceNode)) {
+                const property = audioBufferSourceNode[key];
 
-            /*
-             * expect(audioBufferSourceNodeMock.detune.cancelScheduledValues).to.be.a('function');
-             * expect(audioBufferSourceNodeMock.detune.defaultValue).to.equal(0);
-             * expect(audioBufferSourceNodeMock.detune.exponentialRampToValueAtTime).to.be.a('function');
-             * expect(audioBufferSourceNodeMock.detune.linearRampToValueAtTime).to.be.a('function');
-             * expect(audioBufferSourceNodeMock.detune.setTargetAtTime).to.be.a('function');
-             * expect(audioBufferSourceNodeMock.detune.setValueCurveAtTime).to.be.a('function');
-             * expect(audioBufferSourceNodeMock.detune.value).to.equal(0);
-             */
+                if (property === audioContext) {
+                    expect(audioBufferSourceNodeMock[key]).to.equal(audioContextMock);
+                } else if (isAnyAudioParam(property)) {
+                    expect(audioBufferSourceNodeMock[key]).to.be.an.instanceOf(AudioParamMock);
+                } else if (typeof property === 'function') {
+                    expect(audioBufferSourceNodeMock[key]).to.be.a('function');
+                } else {
+                    expect(audioBufferSourceNodeMock[key]).to.equal(property);
+                }
+            }
 
-            expect(audioBufferSourceNodeMock.loop).to.be.false;
-            expect(audioBufferSourceNodeMock.loopEnd).to.equal(0);
-            expect(audioBufferSourceNodeMock.loopStart).to.equal(0);
-            expect(audioBufferSourceNodeMock.numberOfInputs).to.equal(0);
-            expect(audioBufferSourceNodeMock.numberOfOutputs).to.equal(1);
-            expect(audioBufferSourceNodeMock.onended).to.be.null;
-
-            expect(audioBufferSourceNodeMock.playbackRate.cancelScheduledValues).to.be.a('function');
-            expect(audioBufferSourceNodeMock.playbackRate.defaultValue).to.equal(1);
-            expect(audioBufferSourceNodeMock.playbackRate.exponentialRampToValueAtTime).to.be.a('function');
-            expect(audioBufferSourceNodeMock.playbackRate.linearRampToValueAtTime).to.be.a('function');
-            expect(audioBufferSourceNodeMock.playbackRate.setTargetAtTime).to.be.a('function');
-            expect(audioBufferSourceNodeMock.playbackRate.setValueCurveAtTime).to.be.a('function');
-            expect(audioBufferSourceNodeMock.playbackRate.value).to.equal(1);
-
-            expect(audioBufferSourceNodeMock.start).to.be.a('function');
-            expect(audioBufferSourceNodeMock.stop).to.be.a('function');
+            audioContext.close();
         });
 
         it('should register the returned instance', () => {
-            const audioBufferSourceNodeMock = audioContextMock.createBufferSource();
-
             expect(registrar.getAudioNodes(audioContextMock, 'AudioBufferSourceNode')).to.deep.equal([audioBufferSourceNodeMock]);
         });
     });
 
-    describe('createDynamicsCompressorNode()', function () {
-        it('should return an instance of the DynamicsCompressorNode interface', function () {
-            const dynamicsCompressorNode = audioContextMock.createDynamicsCompressor();
+    describe('createDynamicsCompressorNode()', () => {
+        let dynamicsCompressorNodeMock;
 
-            expect(dynamicsCompressorNode.channelCount).to.equal(2);
-            expect(dynamicsCompressorNode.channelCountMode).to.equal('explicit');
-            expect(dynamicsCompressorNode.channelInterpretation).to.equal('speakers');
+        beforeEach(() => (dynamicsCompressorNodeMock = audioContextMock.createDynamicsCompressor()));
 
-            expect(dynamicsCompressorNode.attack.cancelScheduledValues).to.be.a('function');
-            expect(dynamicsCompressorNode.attack.defaultValue).to.equal(0.003);
-            expect(dynamicsCompressorNode.attack.exponentialRampToValueAtTime).to.be.a('function');
-            expect(dynamicsCompressorNode.attack.linearRampToValueAtTime).to.be.a('function');
-            expect(dynamicsCompressorNode.attack.setTargetAtTime).to.be.a('function');
-            expect(dynamicsCompressorNode.attack.setValueCurveAtTime).to.be.a('function');
-            expect(dynamicsCompressorNode.attack.value).to.equal(0.003);
+        it('should return an instance of the DynamicsCompressorNode interface', () => {
+            const audioContext = new AudioContext();
+            const dynamicsCompressorNode = new DynamicsCompressorNode(audioContext);
 
-            expect(dynamicsCompressorNode.knee.cancelScheduledValues).to.be.a('function');
-            expect(dynamicsCompressorNode.knee.defaultValue).to.equal(30);
-            expect(dynamicsCompressorNode.knee.exponentialRampToValueAtTime).to.be.a('function');
-            expect(dynamicsCompressorNode.knee.linearRampToValueAtTime).to.be.a('function');
-            expect(dynamicsCompressorNode.knee.setTargetAtTime).to.be.a('function');
-            expect(dynamicsCompressorNode.knee.setValueCurveAtTime).to.be.a('function');
-            expect(dynamicsCompressorNode.knee.value).to.equal(30);
+            for (const key of getAllKeys(dynamicsCompressorNode)) {
+                const property = dynamicsCompressorNode[key];
 
-            expect(dynamicsCompressorNode.numberOfInputs).to.equal(1);
-            expect(dynamicsCompressorNode.numberOfOutputs).to.equal(1);
+                if (property === audioContext) {
+                    expect(dynamicsCompressorNodeMock[key]).to.equal(audioContextMock);
+                } else if (isAnyAudioParam(property)) {
+                    expect(dynamicsCompressorNodeMock[key]).to.be.an.instanceOf(AudioParamMock);
+                } else if (typeof property === 'function') {
+                    expect(dynamicsCompressorNodeMock[key]).to.be.a('function');
+                } else {
+                    expect(dynamicsCompressorNodeMock[key]).to.equal(property);
+                }
+            }
 
-            expect(dynamicsCompressorNode.ratio.cancelScheduledValues).to.be.a('function');
-            expect(dynamicsCompressorNode.ratio.defaultValue).to.equal(12);
-            expect(dynamicsCompressorNode.ratio.exponentialRampToValueAtTime).to.be.a('function');
-            expect(dynamicsCompressorNode.ratio.linearRampToValueAtTime).to.be.a('function');
-            expect(dynamicsCompressorNode.ratio.setTargetAtTime).to.be.a('function');
-            expect(dynamicsCompressorNode.ratio.setValueCurveAtTime).to.be.a('function');
-            expect(dynamicsCompressorNode.ratio.value).to.equal(12);
-
-            expect(dynamicsCompressorNode.reduction).to.equal(0);
-
-            expect(dynamicsCompressorNode.release.cancelScheduledValues).to.be.a('function');
-            expect(dynamicsCompressorNode.release.defaultValue).to.equal(0.25);
-            expect(dynamicsCompressorNode.release.exponentialRampToValueAtTime).to.be.a('function');
-            expect(dynamicsCompressorNode.release.linearRampToValueAtTime).to.be.a('function');
-            expect(dynamicsCompressorNode.release.setTargetAtTime).to.be.a('function');
-            expect(dynamicsCompressorNode.release.setValueCurveAtTime).to.be.a('function');
-            expect(dynamicsCompressorNode.release.value).to.equal(0.25);
-
-            expect(dynamicsCompressorNode.threshold.cancelScheduledValues).to.be.a('function');
-            expect(dynamicsCompressorNode.threshold.defaultValue).to.equal(-24);
-            expect(dynamicsCompressorNode.threshold.exponentialRampToValueAtTime).to.be.a('function');
-            expect(dynamicsCompressorNode.threshold.linearRampToValueAtTime).to.be.a('function');
-            expect(dynamicsCompressorNode.threshold.setTargetAtTime).to.be.a('function');
-            expect(dynamicsCompressorNode.threshold.setValueCurveAtTime).to.be.a('function');
-            expect(dynamicsCompressorNode.threshold.value).to.equal(-24);
+            audioContext.close();
         });
 
         it('should register the returned instance', () => {
-            const dynamicsCompressorNode = audioContextMock.createDynamicsCompressor();
-
-            expect(registrar.getAudioNodes(audioContextMock, 'DynamicsCompressorNode')).to.deep.equal([dynamicsCompressorNode]);
+            expect(registrar.getAudioNodes(audioContextMock, 'DynamicsCompressorNode')).to.deep.equal([dynamicsCompressorNodeMock]);
         });
     });
 
     describe('createGain()', () => {
+        let gainNodeMock;
+
+        beforeEach(() => (gainNodeMock = audioContextMock.createGain()));
+
         it('should return an instance of the GainNode interface', () => {
-            const gainNodeMock = audioContextMock.createGain();
+            const audioContext = new AudioContext();
+            const gainNode = new GainNode(audioContext);
 
-            expect(gainNodeMock.channelCountMode).to.equal('max');
-            expect(gainNodeMock.channelInterpretation).to.equal('speakers');
+            for (const key of getAllKeys(gainNode)) {
+                const property = gainNode[key];
 
-            expect(gainNodeMock.gain.cancelScheduledValues).to.be.a('function');
-            expect(gainNodeMock.gain.defaultValue).to.equal(1);
-            expect(gainNodeMock.gain.exponentialRampToValueAtTime).to.be.a('function');
-            expect(gainNodeMock.gain.linearRampToValueAtTime).to.be.a('function');
-            expect(gainNodeMock.gain.setTargetAtTime).to.be.a('function');
-            expect(gainNodeMock.gain.setValueCurveAtTime).to.be.a('function');
-            expect(gainNodeMock.gain.value).to.equal(1);
+                if (property === audioContext) {
+                    expect(gainNodeMock[key]).to.equal(audioContextMock);
+                } else if (isAnyAudioParam(property)) {
+                    expect(gainNodeMock[key]).to.be.an.instanceOf(AudioParamMock);
+                } else if (typeof property === 'function') {
+                    expect(gainNodeMock[key]).to.be.a('function');
+                } else {
+                    expect(gainNodeMock[key]).to.equal(property);
+                }
+            }
 
-            expect(gainNodeMock.numberOfInputs).to.equal(1);
-            expect(gainNodeMock.numberOfOutputs).to.equal(1);
+            audioContext.close();
         });
 
         it('should register the returned instance', () => {
-            const gainNodeMock = audioContextMock.createGain();
-
             expect(registrar.getAudioNodes(audioContextMock, 'GainNode')).to.deep.equal([gainNodeMock]);
         });
     });
 
-    describe('createOscillator()', function () {
-        it('should return an instance of the OscillatorNode interface', function () {
-            const oscillatorNode = audioContextMock.createOscillator();
+    describe('createMediaElementSource()', () => {
+        let mediaElement;
+        let mediaElementAudioSourceNodeMock;
 
-            /*
-             * channelCount is not specified
-             * channelCountMode is not specified
-             * channelInterpretation is not specified
-             */
+        beforeEach(() => {
+            mediaElement = new Audio();
+            mediaElementAudioSourceNodeMock = audioContextMock.createMediaElementSource(mediaElement);
+        });
 
-            expect(oscillatorNode.detune.cancelScheduledValues).to.be.a('function');
-            expect(oscillatorNode.detune.defaultValue).to.equal(0);
-            expect(oscillatorNode.detune.exponentialRampToValueAtTime).to.be.a('function');
-            expect(oscillatorNode.detune.linearRampToValueAtTime).to.be.a('function');
-            expect(oscillatorNode.detune.setTargetAtTime).to.be.a('function');
-            expect(oscillatorNode.detune.setValueCurveAtTime).to.be.a('function');
-            expect(oscillatorNode.detune.value).to.equal(0);
+        it('should return an instance of the MediaElementAudioSourceNode interface', () => {
+            const audioContext = new AudioContext();
+            const mediaElementAudioSourceNode = new MediaElementAudioSourceNode(audioContext, { mediaElement });
 
-            expect(oscillatorNode.frequency.cancelScheduledValues).to.be.a('function');
-            expect(oscillatorNode.frequency.defaultValue).to.equal(440);
-            expect(oscillatorNode.frequency.exponentialRampToValueAtTime).to.be.a('function');
-            expect(oscillatorNode.frequency.linearRampToValueAtTime).to.be.a('function');
-            expect(oscillatorNode.frequency.setTargetAtTime).to.be.a('function');
-            expect(oscillatorNode.frequency.setValueCurveAtTime).to.be.a('function');
-            expect(oscillatorNode.frequency.value).to.equal(440);
+            for (const key of getAllKeys(mediaElementAudioSourceNode)) {
+                const property = mediaElementAudioSourceNode[key];
 
-            expect(oscillatorNode.numberOfInputs).to.equal(0);
-            expect(oscillatorNode.numberOfOutputs).to.equal(1);
-            expect(oscillatorNode.type).to.equal('sine');
-            expect(oscillatorNode.setPeriodicWave).to.be.a('function');
-            expect(oscillatorNode.start).to.be.a('function');
-            expect(oscillatorNode.stop).to.be.a('function');
+                if (property === audioContext) {
+                    expect(mediaElementAudioSourceNodeMock[key]).to.equal(audioContextMock);
+                } else if (typeof property === 'function') {
+                    expect(mediaElementAudioSourceNodeMock[key]).to.be.a('function');
+                } else {
+                    expect(mediaElementAudioSourceNodeMock[key]).to.equal(property);
+                }
+            }
+
+            audioContext.close();
         });
 
         it('should register the returned instance', () => {
-            const oscillatorNode = audioContextMock.createOscillator();
+            expect(registrar.getAudioNodes(audioContextMock, 'MediaElementAudioSourceNode')).to.deep.equal([
+                mediaElementAudioSourceNodeMock
+            ]);
+        });
+    });
 
-            expect(registrar.getAudioNodes(audioContextMock, 'OscillatorNode')).to.deep.equal([oscillatorNode]);
+    describe('createOscillator()', () => {
+        let oscillatorNodeMock;
+
+        beforeEach(() => (oscillatorNodeMock = audioContextMock.createOscillator()));
+
+        it('should return an instance of the OscillatorNode interface', () => {
+            const audioContext = new AudioContext();
+            const oscillatorNode = new OscillatorNode(audioContext);
+
+            for (const key of getAllKeys(oscillatorNode)) {
+                const property = oscillatorNode[key];
+
+                if (property === audioContext) {
+                    expect(oscillatorNodeMock[key]).to.equal(audioContextMock);
+                } else if (isAnyAudioParam(property)) {
+                    expect(oscillatorNodeMock[key]).to.be.an.instanceOf(AudioParamMock);
+                } else if (typeof property === 'function') {
+                    expect(oscillatorNodeMock[key]).to.be.a('function');
+                } else {
+                    expect(oscillatorNodeMock[key]).to.equal(property);
+                }
+            }
+
+            audioContext.close();
+        });
+
+        it('should register the returned instance', () => {
+            expect(registrar.getAudioNodes(audioContextMock, 'OscillatorNode')).to.deep.equal([oscillatorNodeMock]);
+        });
+    });
+
+    describe('createStereoPanner()', () => {
+        let stereoPannerNodeMock;
+
+        beforeEach(() => (stereoPannerNodeMock = audioContextMock.createStereoPanner()));
+
+        it('should return an instance of the StereoPannerNode interface', () => {
+            const audioContext = new AudioContext();
+            const stereoPannerNode = new StereoPannerNode(audioContext);
+
+            for (const key of getAllKeys(stereoPannerNode)) {
+                const property = stereoPannerNode[key];
+
+                if (property === audioContext) {
+                    expect(stereoPannerNodeMock[key]).to.equal(audioContextMock);
+                } else if (isAnyAudioParam(property)) {
+                    expect(stereoPannerNodeMock[key]).to.be.an.instanceOf(AudioParamMock);
+                } else if (typeof property === 'function') {
+                    expect(stereoPannerNodeMock[key]).to.be.a('function');
+                } else {
+                    expect(stereoPannerNodeMock[key]).to.equal(property);
+                }
+            }
+
+            audioContext.close();
+        });
+
+        it('should register the returned instance', () => {
+            expect(registrar.getAudioNodes(audioContextMock, 'StereoPannerNode')).to.deep.equal([stereoPannerNodeMock]);
         });
     });
 

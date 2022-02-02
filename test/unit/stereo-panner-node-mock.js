@@ -1,19 +1,42 @@
+import { AudioContext, StereoPannerNode, isAnyAudioParam } from 'standardized-audio-context';
 import { AudioContextMock } from '../../src/audio-context-mock';
 import { AudioParamMock } from '../../src/audio-param-mock';
 import { StereoPannerNodeMock } from '../../src/stereo-panner-node-mock';
+import { getAllKeys } from '../helpers/get-all-keys';
 import { registrar } from '../../src/registrar';
 
 describe('StereoPannerNodeMock', () => {
+    let audioContextMock;
     let stereoPannerNodeMock;
 
     beforeEach(() => {
-        const context = new AudioContextMock();
+        audioContextMock = new AudioContextMock();
+        stereoPannerNodeMock = new StereoPannerNodeMock(audioContextMock);
+    });
 
-        stereoPannerNodeMock = new StereoPannerNodeMock(context);
+    it('should have all methods and properties of the StereoPannerNode interface', () => {
+        const audioContext = new AudioContext();
+        const stereoPannerNode = new StereoPannerNode(audioContext);
+
+        for (const key of getAllKeys(stereoPannerNode)) {
+            const property = stereoPannerNode[key];
+
+            if (property === audioContext) {
+                expect(stereoPannerNodeMock[key]).to.equal(audioContextMock);
+            } else if (isAnyAudioParam(property)) {
+                expect(stereoPannerNodeMock[key]).to.be.an.instanceOf(AudioParamMock);
+            } else if (typeof property === 'function') {
+                expect(stereoPannerNodeMock[key]).to.be.a('function');
+            } else {
+                expect(stereoPannerNodeMock[key]).to.equal(property);
+            }
+        }
+
+        audioContext.close();
     });
 
     it('should register the created instance', () => {
-        expect(registrar.getAudioNodes(stereoPannerNodeMock.context, 'StereoPannerNode')).to.deep.equal([stereoPannerNodeMock]);
+        expect(registrar.getAudioNodes(audioContextMock, 'StereoPannerNode')).to.deep.equal([stereoPannerNodeMock]);
     });
 
     describe('pan', () => {
@@ -23,16 +46,21 @@ describe('StereoPannerNodeMock', () => {
             expect(stereoPannerNodeMock.pan).to.not.equal('new value');
         });
 
-        it('should be a instance of AudioParamMock', () => {
-            expect(stereoPannerNodeMock.pan).to.be.an.instanceOf(AudioParamMock);
-        });
+        it('should have all methods and properties of the AudioParam interface', () => {
+            const audioContext = new AudioContext();
+            const stereoPannerNode = new StereoPannerNode(audioContext);
 
-        it('should have a default value of 0', () => {
-            expect(stereoPannerNodeMock.pan.defaultValue).to.equal(0);
-        });
+            for (const key of getAllKeys(stereoPannerNode.pan)) {
+                const property = stereoPannerNode.pan[key];
 
-        it('should have a value of 0', () => {
-            expect(stereoPannerNodeMock.pan.value).to.equal(0);
+                if (typeof property === 'function') {
+                    expect(stereoPannerNodeMock.pan[key]).to.be.a('function');
+                } else {
+                    expect(stereoPannerNodeMock.pan[key]).to.equal(property);
+                }
+            }
+
+            audioContext.close();
         });
     });
 });

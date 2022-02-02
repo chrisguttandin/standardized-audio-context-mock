@@ -22,7 +22,7 @@ export class DynamicsCompressorNodeMock<T extends TContext> extends AudioNodeMoc
 
         super({
             channelCount: 2,
-            channelCountMode: 'explicit',
+            channelCountMode: 'clamped-max',
             channelInterpretation: 'speakers',
             context,
             numberOfInputs: 1,
@@ -30,7 +30,7 @@ export class DynamicsCompressorNodeMock<T extends TContext> extends AudioNodeMoc
         });
 
         this._attack = new AudioParamMock({
-            automationEventList: new AutomationEventList(0.003),
+            automationEventList: new AutomationEventList(Math.fround(0.003)),
             deLorean,
             maxValue: 1,
             minValue: 0
@@ -57,8 +57,8 @@ export class DynamicsCompressorNodeMock<T extends TContext> extends AudioNodeMoc
         this._threshold = new AudioParamMock({
             automationEventList: new AutomationEventList(-24),
             deLorean,
-            maxValue: -100,
-            minValue: 0
+            maxValue: 0,
+            minValue: -100
         });
 
         registrar.addAudioNode(context, 'DynamicsCompressorNode', this);

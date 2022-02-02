@@ -32,7 +32,7 @@ export class AudioBufferSourceNodeMock<T extends TContext> extends AudioNodeMock
 
     private _stopped: null | { when: number };
 
-    constructor(context: T) {
+    constructor(context: T, { buffer = null } = {}) {
         super({
             channelCount: 2,
             channelCountMode: 'max',
@@ -58,7 +58,7 @@ export class AudioBufferSourceNodeMock<T extends TContext> extends AudioNodeMock
             }
         });
 
-        this._buffer = null;
+        this._buffer = buffer;
         this._deLorean = <DeLorean>registrar.getVehicle(context);
         this._detune = new AudioParamMock({
             automationEventList: new AutomationEventList(0),
@@ -116,15 +116,21 @@ export class AudioBufferSourceNodeMock<T extends TContext> extends AudioNodeMock
     }
 
     set onended(value) {
+        const previousValue = this._onended;
+
         // @todo It is theoretically possible that the ended handler gets removed by using the public API.
-        if (typeof this._onended === 'function') {
-            this.removeEventListener('ended', this._onended);
+        if (typeof previousValue === 'function') {
+            this.removeEventListener('ended', previousValue);
         }
 
         this._onended = typeof value === 'function' ? value : null;
 
         if (typeof value === 'function') {
             this.addEventListener('ended', value);
+
+            if (previousValue === null) {
+                this._scheduleOnendedHandler();
+            }
         }
     }
 

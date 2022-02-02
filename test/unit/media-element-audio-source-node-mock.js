@@ -1,20 +1,40 @@
+import { AudioContext, MediaElementAudioSourceNode } from 'standardized-audio-context';
 import { AudioContextMock } from '../../src/audio-context-mock';
 import { MediaElementAudioSourceNodeMock } from '../../src/media-element-audio-source-node-mock';
+import { getAllKeys } from '../helpers/get-all-keys';
 import { registrar } from '../../src/registrar';
 
 describe('MediaElementAudioSourceNodeMock', () => {
+    let audioContextMock;
+    let mediaElement;
     let mediaElementAudioSourceNodeMock;
 
     beforeEach(() => {
-        const context = new AudioContextMock();
-        const mediaElement = 'a fake media element';
+        audioContextMock = new AudioContextMock();
+        mediaElement = new Audio();
+        mediaElementAudioSourceNodeMock = new MediaElementAudioSourceNodeMock(audioContextMock, { mediaElement });
+    });
 
-        mediaElementAudioSourceNodeMock = new MediaElementAudioSourceNodeMock(context, { mediaElement });
+    it('should have all methods and properties of the MediaElementAudioSourceNode interface', () => {
+        const audioContext = new AudioContext();
+        const mediaElementAudioSourceNode = new MediaElementAudioSourceNode(audioContext, { mediaElement });
+
+        for (const key of getAllKeys(mediaElementAudioSourceNode)) {
+            const property = mediaElementAudioSourceNode[key];
+
+            if (property === audioContext) {
+                expect(mediaElementAudioSourceNodeMock[key]).to.equal(audioContextMock);
+            } else if (typeof property === 'function') {
+                expect(mediaElementAudioSourceNodeMock[key]).to.be.a('function');
+            } else {
+                expect(mediaElementAudioSourceNodeMock[key]).to.equal(property);
+            }
+        }
+
+        audioContext.close();
     });
 
     it('should register the created instance', () => {
-        expect(registrar.getAudioNodes(mediaElementAudioSourceNodeMock.context, 'MediaElementAudioSourceNode')).to.deep.equal([
-            mediaElementAudioSourceNodeMock
-        ]);
+        expect(registrar.getAudioNodes(audioContextMock, 'MediaElementAudioSourceNode')).to.deep.equal([mediaElementAudioSourceNodeMock]);
     });
 });

@@ -12,7 +12,7 @@ export class StereoPannerNodeMock<T extends TContext> extends AudioNodeMock<T> i
 
         super({
             channelCount: 2,
-            channelCountMode: 'clamped-max',
+            channelCountMode: 'explicit',
             channelInterpretation: 'speakers',
             context,
             numberOfInputs: 1,

@@ -37,6 +37,7 @@ import { GainNodeMock } from './gain-node-mock';
 import { MediaElementAudioSourceNodeMock } from './media-element-audio-source-node-mock';
 import { OscillatorNodeMock } from './oscillator-node-mock';
 import { registrar } from './registrar';
+import { StereoPannerNodeMock } from './stereo-panner-node-mock';
 
 export class AudioContextMock extends EventTarget implements IAudioContext {
     private _deLorean: DeLorean;
@@ -209,8 +210,7 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
     }
 
     public createStereoPanner(): IStereoPannerNode<IAudioContext> {
-        // @todo
-        return <IStereoPannerNode<IAudioContext>>{};
+        return new StereoPannerNodeMock(this);
     }
 
     public createWaveShaper(): IWaveShaperNode<IAudioContext> {

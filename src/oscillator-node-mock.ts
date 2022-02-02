@@ -35,8 +35,8 @@ export class OscillatorNodeMock<T extends TContext> extends AudioNodeMock<T> imp
         this._detune = new AudioParamMock({
             automationEventList: new AutomationEventList(0),
             deLorean,
-            maxValue: 3.4028234663852886e38,
-            minValue: -3.4028234663852886e38
+            maxValue: 153600,
+            minValue: -153600
         });
         this._frequency = new AudioParamMock({
             automationEventList: new AutomationEventList(440),
