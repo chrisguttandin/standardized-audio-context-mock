@@ -37,4 +37,28 @@ describe('MediaElementAudioSourceNodeMock', () => {
     it('should register the created instance', () => {
         expect(registrar.getAudioNodes(audioContextMock, 'MediaElementAudioSourceNode')).to.deep.equal([mediaElementAudioSourceNodeMock]);
     });
+
+    describe('connect()', () => {
+        for (const type of ['AudioNode', 'AudioParam']) {
+            describe(`with an ${type}`, () => {
+                let audioNodeOrAudioParam;
+
+                beforeEach(() => {
+                    const gainNode = audioContextMock.createGain();
+
+                    audioNodeOrAudioParam = type === 'AudioNode' ? gainNode : gainNode.gain;
+                });
+
+                if (type === 'AudioNode') {
+                    it('should be chainable', () => {
+                        expect(mediaElementAudioSourceNodeMock.connect(audioNodeOrAudioParam)).to.equal(audioNodeOrAudioParam);
+                    });
+                } else {
+                    it('should not be chainable', () => {
+                        expect(mediaElementAudioSourceNodeMock.connect(audioNodeOrAudioParam)).to.be.undefined;
+                    });
+                }
+            });
+        }
+    });
 });

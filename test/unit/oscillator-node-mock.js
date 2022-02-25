@@ -120,4 +120,28 @@ describe('OscillatorNodeMock', () => {
             expect(oscillatorNodeMock.onended).to.be.null;
         });
     });
+
+    describe('connect()', () => {
+        for (const type of ['AudioNode', 'AudioParam']) {
+            describe(`with an ${type}`, () => {
+                let audioNodeOrAudioParam;
+
+                beforeEach(() => {
+                    const gainNode = audioContextMock.createGain();
+
+                    audioNodeOrAudioParam = type === 'AudioNode' ? gainNode : gainNode.gain;
+                });
+
+                if (type === 'AudioNode') {
+                    it('should be chainable', () => {
+                        expect(oscillatorNodeMock.connect(audioNodeOrAudioParam)).to.equal(audioNodeOrAudioParam);
+                    });
+                } else {
+                    it('should not be chainable', () => {
+                        expect(oscillatorNodeMock.connect(audioNodeOrAudioParam)).to.be.undefined;
+                    });
+                }
+            });
+        }
+    });
 });

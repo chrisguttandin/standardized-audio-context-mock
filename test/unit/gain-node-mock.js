@@ -63,4 +63,28 @@ describe('GainNodeMock', () => {
             audioContext.close();
         });
     });
+
+    describe('connect()', () => {
+        for (const type of ['AudioNode', 'AudioParam']) {
+            describe(`with an ${type}`, () => {
+                let audioNodeOrAudioParam;
+
+                beforeEach(() => {
+                    const anotherGainNode = audioContextMock.createGain();
+
+                    audioNodeOrAudioParam = type === 'AudioNode' ? anotherGainNode : anotherGainNode.gain;
+                });
+
+                if (type === 'AudioNode') {
+                    it('should be chainable', () => {
+                        expect(gainNodeMock.connect(audioNodeOrAudioParam)).to.equal(audioNodeOrAudioParam);
+                    });
+                } else {
+                    it('should not be chainable', () => {
+                        expect(gainNodeMock.connect(audioNodeOrAudioParam)).to.be.undefined;
+                    });
+                }
+            });
+        }
+    });
 });

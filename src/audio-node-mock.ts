@@ -1,4 +1,4 @@
-import { SinonSpy, spy } from 'sinon';
+import { SinonSpy, spy, stub } from 'sinon';
 import { IAudioNode, TChannelCountMode, TChannelInterpretation, TContext } from 'standardized-audio-context';
 import { EventTarget } from './event-target';
 
@@ -36,7 +36,7 @@ export class AudioNodeMock<T extends TContext> extends EventTarget implements IA
         this.channelCountMode = options.channelCountMode;
         this.channelInterpretation = options.channelInterpretation;
         this._context = options.context;
-        this.connect = spy();
+        this.connect = stub().callsFake((destination) => (destination instanceof AudioNodeMock ? destination : undefined));
         this.disconnect = spy();
         this.numberOfInputs = options.numberOfInputs;
         this.numberOfOutputs = options.numberOfOutputs;

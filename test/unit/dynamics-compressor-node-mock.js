@@ -175,4 +175,28 @@ describe('DynamicsCompressorNodeMock', () => {
             audioContext.close();
         });
     });
+
+    describe('connect()', () => {
+        for (const type of ['AudioNode', 'AudioParam']) {
+            describe(`with an ${type}`, () => {
+                let audioNodeOrAudioParam;
+
+                beforeEach(() => {
+                    const gainNode = audioContextMock.createGain();
+
+                    audioNodeOrAudioParam = type === 'AudioNode' ? gainNode : gainNode.gain;
+                });
+
+                if (type === 'AudioNode') {
+                    it('should be chainable', () => {
+                        expect(dynamicsCompressorNodeMock.connect(audioNodeOrAudioParam)).to.equal(audioNodeOrAudioParam);
+                    });
+                } else {
+                    it('should not be chainable', () => {
+                        expect(dynamicsCompressorNodeMock.connect(audioNodeOrAudioParam)).to.be.undefined;
+                    });
+                }
+            });
+        }
+    });
 });
