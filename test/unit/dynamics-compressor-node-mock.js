@@ -15,7 +15,7 @@ describe('DynamicsCompressorNodeMock', () => {
     });
 
     it('should have all methods and properties of the DynamicsCompressorNode interface', () => {
-        const audioContext = new AudioContext();
+        const audioContext = new AudioContext({ sampleRate: 44100 });
         const dynamicsCompressorNode = new DynamicsCompressorNode(audioContext);
 
         for (const key of getAllKeys(dynamicsCompressorNode)) {
@@ -47,7 +47,7 @@ describe('DynamicsCompressorNodeMock', () => {
         });
 
         it('should have all methods and properties of the AudioParam interface', () => {
-            const audioContext = new AudioContext();
+            const audioContext = new AudioContext({ sampleRate: 44100 });
             const dynamicsCompressorNode = new DynamicsCompressorNode(audioContext);
 
             for (const key of getAllKeys(dynamicsCompressorNode.attack)) {
@@ -72,7 +72,7 @@ describe('DynamicsCompressorNodeMock', () => {
         });
 
         it('should have all methods and properties of the AudioParam interface', () => {
-            const audioContext = new AudioContext();
+            const audioContext = new AudioContext({ sampleRate: 44100 });
             const dynamicsCompressorNode = new DynamicsCompressorNode(audioContext);
 
             for (const key of getAllKeys(dynamicsCompressorNode.knee)) {
@@ -97,7 +97,7 @@ describe('DynamicsCompressorNodeMock', () => {
         });
 
         it('should have all methods and properties of the AudioParam interface', () => {
-            const audioContext = new AudioContext();
+            const audioContext = new AudioContext({ sampleRate: 44100 });
             const dynamicsCompressorNode = new DynamicsCompressorNode(audioContext);
 
             for (const key of getAllKeys(dynamicsCompressorNode.ratio)) {
@@ -134,7 +134,7 @@ describe('DynamicsCompressorNodeMock', () => {
         });
 
         it('should have all methods and properties of the AudioParam interface', () => {
-            const audioContext = new AudioContext();
+            const audioContext = new AudioContext({ sampleRate: 44100 });
             const dynamicsCompressorNode = new DynamicsCompressorNode(audioContext);
 
             for (const key of getAllKeys(dynamicsCompressorNode.release)) {
@@ -159,7 +159,7 @@ describe('DynamicsCompressorNodeMock', () => {
         });
 
         it('should have all methods and properties of the AudioParam interface', () => {
-            const audioContext = new AudioContext();
+            const audioContext = new AudioContext({ sampleRate: 44100 });
             const dynamicsCompressorNode = new DynamicsCompressorNode(audioContext);
 
             for (const key of getAllKeys(dynamicsCompressorNode.threshold)) {

@@ -15,7 +15,7 @@ describe('GainNodeMock', () => {
     });
 
     it('should have all methods and properties of the GainNode interface', () => {
-        const audioContext = new AudioContext();
+        const audioContext = new AudioContext({ sampleRate: 44100 });
         const gainNode = new GainNode(audioContext);
 
         for (const key of getAllKeys(gainNode)) {
@@ -47,7 +47,7 @@ describe('GainNodeMock', () => {
         });
 
         it('should have all methods and properties of the AudioParam interface', () => {
-            const audioContext = new AudioContext();
+            const audioContext = new AudioContext({ sampleRate: 44100 });
             const gainNode = new GainNode(audioContext);
 
             for (const key of getAllKeys(gainNode.gain)) {

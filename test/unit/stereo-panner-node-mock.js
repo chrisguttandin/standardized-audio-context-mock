@@ -15,7 +15,7 @@ describe('StereoPannerNodeMock', () => {
     });
 
     it('should have all methods and properties of the StereoPannerNode interface', () => {
-        const audioContext = new AudioContext();
+        const audioContext = new AudioContext({ sampleRate: 44100 });
         const stereoPannerNode = new StereoPannerNode(audioContext);
 
         for (const key of getAllKeys(stereoPannerNode)) {
@@ -47,7 +47,7 @@ describe('StereoPannerNodeMock', () => {
         });
 
         it('should have all methods and properties of the AudioParam interface', () => {
-            const audioContext = new AudioContext();
+            const audioContext = new AudioContext({ sampleRate: 44100 });
             const stereoPannerNode = new StereoPannerNode(audioContext);
 
             for (const key of getAllKeys(stereoPannerNode.pan)) {

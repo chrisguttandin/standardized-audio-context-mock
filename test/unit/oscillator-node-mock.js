@@ -15,7 +15,7 @@ describe('OscillatorNodeMock', () => {
     });
 
     it('should have all methods and properties of the OscillatorNode interface', () => {
-        const audioContext = new AudioContext();
+        const audioContext = new AudioContext({ sampleRate: 44100 });
         const oscillatorNode = new OscillatorNode(audioContext);
 
         for (const key of getAllKeys(oscillatorNode)) {
@@ -47,7 +47,7 @@ describe('OscillatorNodeMock', () => {
         });
 
         it('should have all methods and properties of the AudioParam interface', () => {
-            const audioContext = new AudioContext();
+            const audioContext = new AudioContext({ sampleRate: 44100 });
             const oscillatorNode = new OscillatorNode(audioContext);
 
             for (const key of getAllKeys(oscillatorNode.detune)) {
@@ -72,7 +72,7 @@ describe('OscillatorNodeMock', () => {
         });
 
         it('should have all methods and properties of the AudioParam interface', () => {
-            const audioContext = new AudioContext();
+            const audioContext = new AudioContext({ sampleRate: 44100 });
             const oscillatorNode = new OscillatorNode(audioContext);
 
             for (const key of getAllKeys(oscillatorNode.frequency)) {

@@ -16,7 +16,7 @@ describe('MediaElementAudioSourceNodeMock', () => {
     });
 
     it('should have all methods and properties of the MediaElementAudioSourceNode interface', () => {
-        const audioContext = new AudioContext();
+        const audioContext = new AudioContext({ sampleRate: 44100 });
         const mediaElementAudioSourceNode = new MediaElementAudioSourceNode(audioContext, { mediaElement });
 
         for (const key of getAllKeys(mediaElementAudioSourceNode)) {

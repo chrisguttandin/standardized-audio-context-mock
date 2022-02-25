@@ -26,7 +26,7 @@ describe('AudioBufferSourceNodeMock', () => {
     });
 
     it('should have all methods and properties of the AudioBufferSourceNode interface', () => {
-        const audioContext = new AudioContext();
+        const audioContext = new AudioContext({ sampleRate: 44100 });
         const audioBufferSourceNode = new AudioBufferSourceNode(audioContext, {
             buffer: new AudioBuffer({
                 length: 441000,
@@ -66,7 +66,7 @@ describe('AudioBufferSourceNodeMock', () => {
         });
 
         it('should have all methods and properties of the AudioParam interface', () => {
-            const audioContext = new AudioContext();
+            const audioContext = new AudioContext({ sampleRate: 44100 });
             const audioBufferSourceNode = new AudioBufferSourceNode(audioContext, {
                 buffer: new AudioBuffer({
                     length: 441000,
@@ -212,7 +212,7 @@ describe('AudioBufferSourceNodeMock', () => {
         });
 
         it('should have all methods and properties of the AudioParam interface', () => {
-            const audioContext = new AudioContext();
+            const audioContext = new AudioContext({ sampleRate: 44100 });
             const audioBufferSourceNode = new AudioBufferSourceNode(audioContext, {
                 buffer: new AudioBuffer({
                     length: 441000,

@@ -72,7 +72,7 @@ describe('AudioContextMock', () => {
         beforeEach(() => (audioBufferSourceNodeMock = audioContextMock.createBufferSource()));
 
         it('should return an instance of the AudioBufferSourceNode interface', () => {
-            const audioContext = new AudioContext();
+            const audioContext = new AudioContext({ sampleRate: 44100 });
             const audioBufferSourceNode = new AudioBufferSourceNode(audioContext);
 
             for (const key of getAllKeys(audioBufferSourceNode)) {
@@ -103,7 +103,7 @@ describe('AudioContextMock', () => {
         beforeEach(() => (dynamicsCompressorNodeMock = audioContextMock.createDynamicsCompressor()));
 
         it('should return an instance of the DynamicsCompressorNode interface', () => {
-            const audioContext = new AudioContext();
+            const audioContext = new AudioContext({ sampleRate: 44100 });
             const dynamicsCompressorNode = new DynamicsCompressorNode(audioContext);
 
             for (const key of getAllKeys(dynamicsCompressorNode)) {
@@ -134,7 +134,7 @@ describe('AudioContextMock', () => {
         beforeEach(() => (gainNodeMock = audioContextMock.createGain()));
 
         it('should return an instance of the GainNode interface', () => {
-            const audioContext = new AudioContext();
+            const audioContext = new AudioContext({ sampleRate: 44100 });
             const gainNode = new GainNode(audioContext);
 
             for (const key of getAllKeys(gainNode)) {
@@ -169,7 +169,7 @@ describe('AudioContextMock', () => {
         });
 
         it('should return an instance of the MediaElementAudioSourceNode interface', () => {
-            const audioContext = new AudioContext();
+            const audioContext = new AudioContext({ sampleRate: 44100 });
             const mediaElementAudioSourceNode = new MediaElementAudioSourceNode(audioContext, { mediaElement });
 
             for (const key of getAllKeys(mediaElementAudioSourceNode)) {
@@ -200,7 +200,7 @@ describe('AudioContextMock', () => {
         beforeEach(() => (oscillatorNodeMock = audioContextMock.createOscillator()));
 
         it('should return an instance of the OscillatorNode interface', () => {
-            const audioContext = new AudioContext();
+            const audioContext = new AudioContext({ sampleRate: 44100 });
             const oscillatorNode = new OscillatorNode(audioContext);
 
             for (const key of getAllKeys(oscillatorNode)) {
@@ -231,7 +231,7 @@ describe('AudioContextMock', () => {
         beforeEach(() => (stereoPannerNodeMock = audioContextMock.createStereoPanner()));
 
         it('should return an instance of the StereoPannerNode interface', () => {
-            const audioContext = new AudioContext();
+            const audioContext = new AudioContext({ sampleRate: 44100 });
             const stereoPannerNode = new StereoPannerNode(audioContext);
 
             for (const key of getAllKeys(stereoPannerNode)) {
