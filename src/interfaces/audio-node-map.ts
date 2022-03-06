@@ -4,6 +4,7 @@ import {
     IDynamicsCompressorNode,
     IGainNode,
     IMediaElementAudioSourceNode,
+    IMediaStreamAudioDestinationNode,
     IMinimalAudioContext,
     IOscillatorNode,
     IStereoPannerNode,
@@ -18,6 +19,8 @@ export interface IAudioNodeMap<T extends TContext> {
     GainNode: IGainNode<T>;
 
     MediaElementAudioSourceNode: T extends IAudioContext | IMinimalAudioContext ? IMediaElementAudioSourceNode<T> : never;
+
+    MediaStreamAudioDestinationNode: T extends IAudioContext | IMinimalAudioContext ? IMediaStreamAudioDestinationNode<T> : never;
 
     OscillatorNode: IOscillatorNode<T>;
 
