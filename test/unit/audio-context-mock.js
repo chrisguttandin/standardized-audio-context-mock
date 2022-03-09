@@ -4,6 +4,7 @@ import {
     DynamicsCompressorNode,
     GainNode,
     MediaElementAudioSourceNode,
+    MediaStreamAudioDestinationNode,
     OscillatorNode,
     StereoPannerNode,
     isAnyAudioParam
@@ -190,6 +191,41 @@ describe('AudioContextMock', () => {
         it('should register the returned instance', () => {
             expect(registrar.getAudioNodes(audioContextMock, 'MediaElementAudioSourceNode')).to.deep.equal([
                 mediaElementAudioSourceNodeMock
+            ]);
+        });
+    });
+
+    describe('createMediaStreamDestination()', () => {
+        let mediaStreamAudioDestinationNodeMock;
+
+        beforeEach(() => {
+            mediaStreamAudioDestinationNodeMock = audioContextMock.createMediaStreamDestination();
+        });
+
+        it('should return an instance of the MediaStreamAudioDestinationNode interface', () => {
+            const audioContext = new AudioContext({ sampleRate: 44100 });
+            const mediaStreamAudioDestinationNode = new MediaStreamAudioDestinationNode(audioContext);
+
+            for (const key of getAllKeys(mediaStreamAudioDestinationNode)) {
+                const property = mediaStreamAudioDestinationNode[key];
+
+                if (property === audioContext) {
+                    expect(mediaStreamAudioDestinationNodeMock[key]).to.equal(audioContextMock);
+                } else if (key === 'stream' && property instanceof MediaStream) {
+                    expect(mediaStreamAudioDestinationNodeMock[key]).to.be.an.instanceOf(MediaStream);
+                } else if (typeof property === 'function') {
+                    expect(mediaStreamAudioDestinationNodeMock[key]).to.be.a('function');
+                } else {
+                    expect(mediaStreamAudioDestinationNodeMock[key]).to.equal(property);
+                }
+            }
+
+            audioContext.close();
+        });
+
+        it('should register the returned instance', () => {
+            expect(registrar.getAudioNodes(audioContextMock, 'MediaStreamAudioDestinationNode')).to.deep.equal([
+                mediaStreamAudioDestinationNodeMock
             ]);
         });
     });
