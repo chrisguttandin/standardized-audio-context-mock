@@ -1,6 +1,7 @@
 import {
     AudioBufferSourceNode,
     AudioContext,
+    BiquadFilterNode,
     DynamicsCompressorNode,
     GainNode,
     MediaElementAudioSourceNode,
@@ -50,6 +51,37 @@ describe('AudioContextMock', () => {
 
             expect(onstatechange).to.equal(string);
             expect(audioContextMock.onstatechange).to.be.null;
+        });
+    });
+
+    describe('createBiquadFilter()', () => {
+        let biquadFilterNodeMock;
+
+        beforeEach(() => (biquadFilterNodeMock = audioContextMock.createBiquadFilter()));
+
+        it('should return an instance of the BiquadFilterNode interface', () => {
+            const audioContext = new AudioContext({ sampleRate: 44100 });
+            const biquadFilterNode = new BiquadFilterNode(audioContext);
+
+            for (const key of getAllKeys(biquadFilterNode)) {
+                const property = biquadFilterNode[key];
+
+                if (property === audioContext) {
+                    expect(biquadFilterNodeMock[key]).to.equal(audioContextMock);
+                } else if (isAnyAudioParam(property)) {
+                    expect(biquadFilterNodeMock[key]).to.be.an.instanceOf(AudioParamMock);
+                } else if (typeof property === 'function') {
+                    expect(biquadFilterNodeMock[key]).to.be.a('function');
+                } else {
+                    expect(biquadFilterNodeMock[key]).to.equal(property);
+                }
+            }
+
+            audioContext.close();
+        });
+
+        it('should register the returned instance', () => {
+            expect(registrar.getAudioNodes(audioContextMock, 'BiquadFilterNode')).to.deep.equal([biquadFilterNodeMock]);
         });
     });
 

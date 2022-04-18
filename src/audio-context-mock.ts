@@ -31,6 +31,7 @@ import {
 import { DeLorean } from 'vehicles';
 import { AudioBufferMock } from './audio-buffer-mock';
 import { AudioBufferSourceNodeMock } from './audio-buffer-source-node-mock';
+import { BiquadFilterNodeMock } from './biquad-filter-node-mock';
 import { DynamicsCompressorNodeMock } from './dynamics-compressor-node-mock';
 import { EventTarget } from './event-target';
 import { GainNodeMock } from './gain-node-mock';
@@ -112,19 +113,7 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
     }
 
     public createBiquadFilter(): IBiquadFilterNode<IAudioContext> {
-        // @todo
-        return <IBiquadFilterNode<IAudioContext>>(<any>{
-            Q: {
-                value: 0
-            },
-            connect(): void {}, // tslint:disable-line:no-empty
-            frequency: {
-                value: 0
-            },
-            gain: {
-                value: 0
-            }
-        });
+        return new BiquadFilterNodeMock(this);
     }
 
     public createBuffer(numberOfChannels: number, length: number, sampleRate: number): IAudioBuffer {

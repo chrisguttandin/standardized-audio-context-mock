@@ -1,6 +1,7 @@
 import {
     IAudioBufferSourceNode,
     IAudioContext,
+    IBiquadFilterNode,
     IDynamicsCompressorNode,
     IGainNode,
     IMediaElementAudioSourceNode,
@@ -13,6 +14,8 @@ import {
 
 export interface IAudioNodeMap<T extends TContext> {
     AudioBufferSourceNode: IAudioBufferSourceNode<T>;
+
+    BiquadFilterNode: IBiquadFilterNode<T>;
 
     DynamicsCompressorNode: IDynamicsCompressorNode<T>;
 
