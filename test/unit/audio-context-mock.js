@@ -6,6 +6,7 @@ import {
     GainNode,
     MediaElementAudioSourceNode,
     MediaStreamAudioDestinationNode,
+    MediaStreamAudioSourceNode,
     OscillatorNode,
     StereoPannerNode,
     isAnyAudioParam
@@ -259,6 +260,40 @@ describe('AudioContextMock', () => {
             expect(registrar.getAudioNodes(audioContextMock, 'MediaStreamAudioDestinationNode')).to.deep.equal([
                 mediaStreamAudioDestinationNodeMock
             ]);
+        });
+    });
+
+    describe('createMediaStreamSource()', () => {
+        let audioContext;
+        let mediaStream;
+        let mediaStreamAudioSourceNodeMock;
+
+        afterEach(() => audioContext.close());
+
+        beforeEach(() => {
+            audioContext = new AudioContext({ sampleRate: 44100 });
+            mediaStream = audioContext.createMediaStreamDestination().stream;
+            mediaStreamAudioSourceNodeMock = audioContextMock.createMediaStreamSource(mediaStream);
+        });
+
+        it('should return an instance of the MediaStreamAudioSourceNode interface', () => {
+            const mediaStreamAudioSourceNode = new MediaStreamAudioSourceNode(audioContext, { mediaStream });
+
+            for (const key of getAllKeys(mediaStreamAudioSourceNode)) {
+                const property = mediaStreamAudioSourceNode[key];
+
+                if (property === audioContext) {
+                    expect(mediaStreamAudioSourceNodeMock[key]).to.equal(audioContextMock);
+                } else if (typeof property === 'function') {
+                    expect(mediaStreamAudioSourceNodeMock[key]).to.be.a('function');
+                } else {
+                    expect(mediaStreamAudioSourceNodeMock[key]).to.equal(property);
+                }
+            }
+        });
+
+        it('should register the returned instance', () => {
+            expect(registrar.getAudioNodes(audioContextMock, 'MediaStreamAudioSourceNode')).to.deep.equal([mediaStreamAudioSourceNodeMock]);
         });
     });
 

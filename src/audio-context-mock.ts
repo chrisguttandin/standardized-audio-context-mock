@@ -37,6 +37,7 @@ import { EventTarget } from './event-target';
 import { GainNodeMock } from './gain-node-mock';
 import { MediaElementAudioSourceNodeMock } from './media-element-audio-source-node-mock';
 import { MediaStreamAudioDestinationNodeMock } from './media-stream-audio-destination-node-mock';
+import { MediaStreamAudioSourceNodeMock } from './media-stream-audio-source-node-mock';
 import { OscillatorNodeMock } from './oscillator-node-mock';
 import { registrar } from './registrar';
 import { StereoPannerNodeMock } from './stereo-panner-node-mock';
@@ -174,9 +175,8 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
         return new MediaStreamAudioDestinationNodeMock(this);
     }
 
-    public createMediaStreamSource(): IMediaStreamAudioSourceNode<this> {
-        // @todo
-        return <IMediaStreamAudioSourceNode<this>>{};
+    public createMediaStreamSource(mediaStream: MediaStream): IMediaStreamAudioSourceNode<this> {
+        return new MediaStreamAudioSourceNodeMock(this, { mediaStream });
     }
 
     public createMediaStreamTrackSource(): IMediaStreamTrackAudioSourceNode<this> {
