@@ -2,7 +2,6 @@
 
 **A mocked version of the standardized-audio-context module.**
 
-[![dependencies](https://img.shields.io/david/chrisguttandin/standardized-audio-context-mock.svg?style=flat-square)](https://github.com/chrisguttandin/standardized-audio-context-mock/network/dependencies)
 [![version](https://img.shields.io/npm/v/standardized-audio-context-mock.svg?style=flat-square)](https://www.npmjs.com/package/standardized-audio-context-mock)
 
 This library is meant to test code which is using [`standardized-audio-context`](https://github.com/chrisguttandin/standardized-audio-context) without acutally rendering any audio.
