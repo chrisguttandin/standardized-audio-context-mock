@@ -39,7 +39,7 @@
         "@commitlint/cli": "^17.6.1",
         "@commitlint/config-angular": "^17.6.1",
         "@rollup/plugin-babel": "^6.0.3",
-        "@types/sinon": "^10.0.13",
+        "@types/sinon": "^10.0.14",
         "chai": "^4.3.7",
         "commitizen": "^4.3.0",
         "cz-conventional-changelog": "^3.3.0",
