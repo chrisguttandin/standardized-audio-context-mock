@@ -27,7 +27,7 @@
         "automation-events": "^6.0.10",
         "sinon": "^16.0.0",
         "standardized-audio-context": "^25.3.57",
-        "tslib": "^2.6.1",
+        "tslib": "^2.6.2",
         "vehicles": "^9.0.8"
     },
     "description": "A mocked version of the standardized-audio-context module.",
