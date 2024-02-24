@@ -39,6 +39,7 @@ import { MediaElementAudioSourceNodeMock } from './media-element-audio-source-no
 import { MediaStreamAudioDestinationNodeMock } from './media-stream-audio-destination-node-mock';
 import { MediaStreamAudioSourceNodeMock } from './media-stream-audio-source-node-mock';
 import { OscillatorNodeMock } from './oscillator-node-mock';
+import { PannerNodeMock } from './panner-node-mock';
 import { registrar } from './registrar';
 import { StereoPannerNodeMock } from './stereo-panner-node-mock';
 
@@ -189,8 +190,7 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
     }
 
     public createPanner(): IPannerNode<IAudioContext> {
-        // @todo
-        return <IPannerNode<IAudioContext>>{};
+        return new PannerNodeMock(this);
     }
 
     public createPeriodicWave(): IPeriodicWave {
