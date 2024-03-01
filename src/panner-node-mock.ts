@@ -1,5 +1,5 @@
 import { AutomationEventList } from 'automation-events';
-import { IPannerNode, TContext, TPanningModelType } from 'standardized-audio-context';
+import { IPannerNode, TContext, TDistanceModelType, TPanningModelType } from 'standardized-audio-context';
 import { AudioNodeMock } from './audio-node-mock';
 import { AudioParamMock } from './audio-param-mock';
 import { registrar } from './registrar';
@@ -8,7 +8,7 @@ export class PannerNodeMock<T extends TContext> extends AudioNodeMock<T> impleme
     private _coneInnerAngle: number;
     private _coneOuterAngle: number;
     private _coneOuterGain: number;
-    private _distanceModel: 'linear' | 'inverse' | 'exponential';
+    private _distanceModel: TDistanceModelType;
     private _maxDistance: number;
     private _orientationX: AudioParamMock;
     private _orientationY: AudioParamMock;
@@ -101,7 +101,7 @@ export class PannerNodeMock<T extends TContext> extends AudioNodeMock<T> impleme
         value; // tslint:disable-line:no-unused-expression
     }
 
-    get distanceModel(): 'linear' | 'inverse' | 'exponential' {
+    get distanceModel(): TDistanceModelType {
         return this._distanceModel;
     }
 
