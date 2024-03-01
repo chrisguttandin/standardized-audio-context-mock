@@ -144,4 +144,24 @@ describe('OscillatorNodeMock', () => {
             });
         }
     });
+
+    describe('disconnect()', () => {
+        for (const type of ['AudioNode', 'AudioParam']) {
+            describe(`with an ${type}`, () => {
+                let audioNodeOrAudioParam;
+
+                beforeEach(() => {
+                    const gainNode = audioContextMock.createGain();
+
+                    audioNodeOrAudioParam = type === 'AudioNode' ? gainNode : gainNode.gain;
+
+                    oscillatorNodeMock.connect(audioNodeOrAudioParam);
+                });
+
+                it('should be disconnectable', () => {
+                    expect(oscillatorNodeMock.disconnect(audioNodeOrAudioParam)).to.be.undefined;
+                });
+            });
+        }
+    });
 });

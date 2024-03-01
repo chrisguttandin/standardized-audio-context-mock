@@ -68,27 +68,47 @@ describe('PannerNodeMock', () => {
         });
     });
 
-    describe('connect() and disconnect() methods', () => {
-        let gainNodeMock;
+    describe('connect()', () => {
+        for (const type of ['AudioNode', 'AudioParam']) {
+            describe(`with an ${type}`, () => {
+                let audioNodeOrAudioParam;
 
-        beforeEach(() => {
-            gainNodeMock = audioContextMock.createGain();
-        });
+                beforeEach(() => {
+                    const gainNode = audioContextMock.createGain();
 
-        it('should be chainable when connecting to an AudioNode', () => {
-            expect(pannerNodeMock.connect(gainNodeMock)).to.equal(gainNodeMock);
-        });
+                    audioNodeOrAudioParam = type === 'AudioNode' ? gainNode : gainNode.gain;
+                });
 
-        it('should not be chainable when connecting to an AudioParam', () => {
-            const gainParam = gainNodeMock.gain;
-            const connectionResult = pannerNodeMock.connect(gainParam);
+                if (type === 'AudioNode') {
+                    it('should be chainable', () => {
+                        expect(pannerNodeMock.connect(audioNodeOrAudioParam)).to.equal(audioNodeOrAudioParam);
+                    });
+                } else {
+                    it('should not be chainable', () => {
+                        expect(pannerNodeMock.connect(audioNodeOrAudioParam)).to.be.undefined;
+                    });
+                }
+            });
+        }
+    });
 
-            expect(connectionResult).to.be.undefined;
-        });
+    describe('disconnect()', () => {
+        for (const type of ['AudioNode', 'AudioParam']) {
+            describe(`with an ${type}`, () => {
+                let audioNodeOrAudioParam;
 
-        it('should disconnect from connected AudioNode without errors', () => {
-            pannerNodeMock.connect(gainNodeMock);
-            expect(() => pannerNodeMock.disconnect(gainNodeMock)).not.to.throw();
-        });
+                beforeEach(() => {
+                    const gainNode = audioContextMock.createGain();
+
+                    audioNodeOrAudioParam = type === 'AudioNode' ? gainNode : gainNode.gain;
+
+                    pannerNodeMock.connect(audioNodeOrAudioParam);
+                });
+
+                it('should be disconnectable', () => {
+                    expect(pannerNodeMock.disconnect(audioNodeOrAudioParam)).to.be.undefined;
+                });
+            });
+        }
     });
 });
