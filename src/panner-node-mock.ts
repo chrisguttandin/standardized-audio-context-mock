@@ -24,7 +24,7 @@ export class PannerNodeMock<T extends TContext> extends AudioNodeMock<T> impleme
         const deLorean = registrar.getDeLorean(context);
         super({
             channelCount: 2,
-            channelCountMode: 'explicit',
+            channelCountMode: 'clamped-max',
             channelInterpretation: 'speakers',
             context,
             numberOfInputs: 1,
