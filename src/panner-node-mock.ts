@@ -51,7 +51,7 @@ export class PannerNodeMock<T extends TContext> extends AudioNodeMock<T> impleme
         this._distanceModel = 'inverse';
         this._maxDistance = 10000;
         this._orientationX = new AudioParamMock({
-            automationEventList: new AutomationEventList(0),
+            automationEventList: new AutomationEventList(1),
             deLorean,
             maxValue: 3.4028234663852886e38,
             minValue: -3.4028234663852886e38
