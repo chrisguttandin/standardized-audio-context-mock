@@ -6,22 +6,36 @@ import { registrar } from './registrar';
 
 export class PannerNodeMock<T extends TContext> extends AudioNodeMock<T> implements IPannerNode<T> {
     private _coneInnerAngle: number;
+
     private _coneOuterAngle: number;
+
     private _coneOuterGain: number;
+
     private _distanceModel: TDistanceModelType;
+
     private _maxDistance: number;
+
     private _orientationX: AudioParamMock;
+
     private _orientationY: AudioParamMock;
+
     private _orientationZ: AudioParamMock;
+
     private _panningModel: TPanningModelType;
+
     private _positionX: AudioParamMock;
+
     private _positionY: AudioParamMock;
+
     private _positionZ: AudioParamMock;
+
     private _refDistance: number;
+
     private _rolloffFactor: number;
 
     constructor(context: T) {
         const deLorean = registrar.getDeLorean(context);
+
         super({
             channelCount: 2,
             channelCountMode: 'clamped-max',
@@ -30,6 +44,12 @@ export class PannerNodeMock<T extends TContext> extends AudioNodeMock<T> impleme
             numberOfInputs: 1,
             numberOfOutputs: 1
         });
+
+        this._coneInnerAngle = 360;
+        this._coneOuterAngle = 360;
+        this._coneOuterGain = 0;
+        this._distanceModel = 'inverse';
+        this._maxDistance = 10000;
         this._orientationX = new AudioParamMock({
             automationEventList: new AutomationEventList(0),
             deLorean,
@@ -48,6 +68,7 @@ export class PannerNodeMock<T extends TContext> extends AudioNodeMock<T> impleme
             maxValue: 3.4028234663852886e38,
             minValue: -3.4028234663852886e38
         });
+        this._panningModel = 'equalpower';
         this._positionX = new AudioParamMock({
             automationEventList: new AutomationEventList(0),
             deLorean,
@@ -66,14 +87,9 @@ export class PannerNodeMock<T extends TContext> extends AudioNodeMock<T> impleme
             maxValue: 3.4028234663852886e38,
             minValue: -3.4028234663852886e38
         });
-        this._coneInnerAngle = 360;
-        this._coneOuterAngle = 360;
-        this._coneOuterGain = 0;
-        this._distanceModel = 'inverse';
-        this._maxDistance = 10000;
-        this._panningModel = 'equalpower';
         this._refDistance = 1;
         this._rolloffFactor = 1;
+
         registrar.addAudioNode(context, 'PannerNode', this);
     }
 
