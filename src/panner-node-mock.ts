@@ -161,8 +161,10 @@ export class PannerNodeMock<T extends TContext> extends AudioNodeMock<T> impleme
         return this._panningModel;
     }
 
-    set panningModel(value) {
-        value; // tslint:disable-line:no-unused-expression
+    set panningModel(value: TPanningModelType) {
+        if (['equalpower', 'HRTF'].includes(value)) {
+            this._panningModel = value;
+        }
     }
 
     get positionX(): AudioParamMock {
