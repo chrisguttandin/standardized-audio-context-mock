@@ -161,7 +161,7 @@ export class PannerNodeMock<T extends TContext> extends AudioNodeMock<T> impleme
         return this._panningModel;
     }
 
-    set panningModel(value: TPanningModelType) {
+    set panningModel(value) {
         if (['equalpower', 'HRTF'].includes(value)) {
             this._panningModel = value;
         }
