@@ -114,6 +114,23 @@ describe('PannerNodeMock', () => {
         });
     });
 
+    describe('panningModel', () => {
+        it('should be assignable to another panningModel', () => {
+            const panningModel = (pannerNodeMock.panningModel = 'HRTF'); // eslint-disable-line no-multi-assign
+
+            expect(panningModel).to.equal('HRTF');
+            expect(pannerNodeMock.panningModel).to.equal('HRTF');
+        });
+
+        it('should not be assignable to something else', () => {
+            const string = 'none of the accepted panningModels';
+            const panningModel = (pannerNodeMock.panningModel = string); // eslint-disable-line no-multi-assign
+
+            expect(panningModel).to.equal(string);
+            expect(pannerNodeMock.panningModel).to.equal('equalpower');
+        });
+    });
+
     describe('positionX', () => {
         it('should be readonly', () => {
             pannerNodeMock.positionX = 'new value';
