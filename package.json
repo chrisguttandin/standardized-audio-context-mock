@@ -62,7 +62,7 @@
         "mocha": "^10.8.2",
         "prettier": "^3.5.2",
         "rimraf": "^6.0.1",
-        "rollup": "^4.30.0",
+        "rollup": "^4.34.8",
         "sinon-chai": "^3.7.0",
         "ts-loader": "^9.5.1",
         "tsconfig-holy-grail": "^15.0.2",
