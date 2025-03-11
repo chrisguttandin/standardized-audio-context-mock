@@ -100,5 +100,5 @@
         "test": "npm run lint && grunt test"
     },
     "types": "build/es2019/module.d.ts",
-    "version": "9.7.17"
+    "version": "9.7.18"
 }
