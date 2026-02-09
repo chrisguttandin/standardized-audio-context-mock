@@ -10,12 +10,12 @@ on:
 
 jobs:
     build:
-        runs-on: ubuntu-latest
+        runs-on: ${{ (matrix.target == 'safari') && 'macos-latest' || 'ubuntu-latest' }}
 
         strategy:
             matrix:
                 node-version: [20.x]
-                target: [chrome, safari]
+                target: [chrome, firefox, safari]
                 type: [integration, unit]
             max-parallel: 3
 

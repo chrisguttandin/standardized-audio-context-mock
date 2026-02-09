@@ -1,4 +1,5 @@
 import { AudioContext, MediaStreamAudioDestinationNode } from 'standardized-audio-context';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { AudioContextMock } from '../../src/audio-context-mock';
 import { MediaStreamAudioDestinationNodeMock } from '../../src/media-stream-audio-destination-node-mock';
 import { getAllKeys } from '../helpers/get-all-keys';

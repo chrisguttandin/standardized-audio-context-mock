@@ -1,4 +1,5 @@
 import { AudioContext, PannerNode, isAnyAudioParam } from 'standardized-audio-context';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { AudioContextMock } from '../../src/audio-context-mock';
 import { AudioParamMock } from '../../src/audio-param-mock';
 import { PannerNodeMock } from '../../src/panner-node-mock';

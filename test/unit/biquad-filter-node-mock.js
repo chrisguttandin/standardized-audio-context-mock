@@ -1,4 +1,5 @@
 import { AudioContext, BiquadFilterNode, isAnyAudioParam } from 'standardized-audio-context';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { AudioContextMock } from '../../src/audio-context-mock';
 import { AudioParamMock } from '../../src/audio-param-mock';
 import { BiquadFilterNodeMock } from '../../src/biquad-filter-node-mock';

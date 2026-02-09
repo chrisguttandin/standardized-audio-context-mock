@@ -1,4 +1,5 @@
 import { AudioBuffer, AudioBufferSourceNode, AudioContext, isAnyAudioParam } from 'standardized-audio-context';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { AudioBufferMock } from '../../src/audio-buffer-mock';
 import { AudioBufferSourceNodeMock } from '../../src/audio-buffer-source-node-mock';
 import { AudioContextMock } from '../../src/audio-context-mock';

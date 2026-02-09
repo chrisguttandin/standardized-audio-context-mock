@@ -1,4 +1,5 @@
 import { AudioContext, MediaElementAudioSourceNode } from 'standardized-audio-context';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { AudioContextMock } from '../../src/audio-context-mock';
 import { MediaElementAudioSourceNodeMock } from '../../src/media-element-audio-source-node-mock';
 import { getAllKeys } from '../helpers/get-all-keys';

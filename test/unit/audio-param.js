@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, it } from 'vitest';
 import { AudioParamMock } from '../../src/audio-param-mock';
 import { AutomationEventList } from 'automation-events';
 import { DeLorean } from 'vehicles';
@@ -65,16 +66,19 @@ describe('AudioParamMock', () => {
         });
     });
 
-    describe('cancelAndHoldAtTime()', () => {
+    describe('cancelAndHoldAtTime()', ({ skip }) => {
         // @todo
+        skip();
     });
 
-    describe('cancelScheduledValues()', () => {
+    describe('cancelScheduledValues()', ({ skip }) => {
         // @todo
+        skip();
     });
 
-    describe('exponentialRampToValueAtTime()', () => {
+    describe('exponentialRampToValueAtTime()', ({ skip }) => {
         // @todo
+        skip();
     });
 
     describe('linearRampToValueAtTime()', () => {
@@ -109,8 +113,9 @@ describe('AudioParamMock', () => {
         // @todo test strange behaviour without calling setValueAtTime() first
     });
 
-    describe('setTargetAtTime()', () => {
+    describe('setTargetAtTime()', ({ skip }) => {
         // @todo
+        skip();
     });
 
     describe('setValueAtTime()', () => {
@@ -130,7 +135,8 @@ describe('AudioParamMock', () => {
         });
     });
 
-    describe('setValueCurveAtTime()', () => {
+    describe('setValueCurveAtTime()', ({ skip }) => {
         // @todo
+        skip();
     });
 });

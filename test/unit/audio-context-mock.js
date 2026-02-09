@@ -11,6 +11,7 @@ import {
     StereoPannerNode,
     isAnyAudioParam
 } from 'standardized-audio-context';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { AudioContextMock } from '../../src/audio-context-mock';
 import { AudioParamMock } from '../../src/audio-param-mock';
 import { getAllKeys } from '../helpers/get-all-keys';
