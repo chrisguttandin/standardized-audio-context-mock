@@ -32,5 +32,6 @@ export interface IAudioNodeMap<T extends TContext> {
     OscillatorNode: IOscillatorNode<T>;
 
     PannerNode: IPannerNode<T>;
+
     StereoPannerNode: IStereoPannerNode<T>;
 }
