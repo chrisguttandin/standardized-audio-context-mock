@@ -1,13 +1,13 @@
-import { IAudioBuffer, IAudioBufferOptions } from 'standardized-audio-context';
+import { IAudioBufferOptions } from 'standardized-audio-context';
 
-export class AudioBufferMock implements IAudioBuffer {
+export class AudioBufferMock implements AudioBuffer {
     public length: number;
 
     public numberOfChannels: number;
 
     public sampleRate: number;
 
-    private channelData: Map<number, Float32Array>;
+    private channelData: Map<number, Float32Array<ArrayBuffer>>;
 
     constructor({ length, numberOfChannels = 1, sampleRate }: IAudioBufferOptions) {
         this.channelData = new Map();
@@ -24,7 +24,7 @@ export class AudioBufferMock implements IAudioBuffer {
 
     public copyToChannel(): void {} // tslint:disable-line:no-empty
 
-    public getChannelData(channel: number): Float32Array {
+    public getChannelData(channel: number): Float32Array<ArrayBuffer> {
         let channelData = this.channelData.get(channel);
 
         if (channelData === undefined) {

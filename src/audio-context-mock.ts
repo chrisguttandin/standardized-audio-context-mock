@@ -207,7 +207,7 @@ export class AudioContextMock extends EventTarget implements IAudioContext {
         return <IWaveShaperNode<IAudioContext>>{};
     }
 
-    public decodeAudioData(): Promise<IAudioBuffer> {
+    public decodeAudioData(): Promise<AudioBuffer> {
         return Promise.resolve(new AudioBufferMock({ length: 10, sampleRate: this.sampleRate }));
     }
 
