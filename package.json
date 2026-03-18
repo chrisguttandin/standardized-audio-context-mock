@@ -36,7 +36,7 @@
         "@babel/plugin-external-helpers": "^7.27.1",
         "@babel/plugin-transform-runtime": "^7.29.0",
         "@babel/preset-env": "^7.29.2",
-        "@commitlint/cli": "^20.4.3",
+        "@commitlint/cli": "^20.5.0",
         "@commitlint/config-angular": "^20.4.3",
         "@rollup/plugin-babel": "^7.0.0",
         "@types/sinon": "^10.0.20",
