@@ -1,12 +1,11 @@
 import { AudioBuffer, AudioBufferSourceNode, AudioContext, isAnyAudioParam } from 'standardized-audio-context';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { AudioBufferMock } from '../../src/audio-buffer-mock';
 import { AudioBufferSourceNodeMock } from '../../src/audio-buffer-source-node-mock';
 import { AudioContextMock } from '../../src/audio-context-mock';
 import { AudioParamMock } from '../../src/audio-param-mock';
 import { getAllKeys } from '../helpers/get-all-keys';
 import { registrar } from '../../src/registrar';
-import { spy } from 'sinon';
 
 describe('AudioBufferSourceNodeMock', () => {
     let audioBufferSourceNodeMock;
@@ -122,7 +121,7 @@ describe('AudioBufferSourceNodeMock', () => {
         });
 
         it("should reschedule the onended event when setting playbackRate's value property before playing", () => {
-            const onended = spy();
+            const onended = vi.fn();
 
             audioBufferSourceNodeMock.onended = onended;
             audioBufferSourceNodeMock.start(0, 0, 10);
@@ -138,7 +137,7 @@ describe('AudioBufferSourceNodeMock', () => {
         });
 
         it("should reschedule the onended event when setting playbackRate's value property while playing", () => {
-            const onended = spy();
+            const onended = vi.fn();
 
             audioBufferSourceNodeMock.onended = onended;
             audioBufferSourceNodeMock.start(0, 0, 10);
@@ -155,7 +154,7 @@ describe('AudioBufferSourceNodeMock', () => {
         });
 
         it("should reschedule the onended event when calling playbackRate's setValueAtTime() method before playing", () => {
-            const onended = spy();
+            const onended = vi.fn();
 
             audioBufferSourceNodeMock.onended = onended;
             audioBufferSourceNodeMock.start(0, 0, 10);
@@ -171,7 +170,7 @@ describe('AudioBufferSourceNodeMock', () => {
         });
 
         it("should reschedule the onended event when calling playbackRate's setValueAtTime() method multiple times before playing", () => {
-            const onended = spy();
+            const onended = vi.fn();
 
             audioBufferSourceNodeMock.onended = onended;
             audioBufferSourceNodeMock.start(0, 0, 10);
@@ -188,7 +187,7 @@ describe('AudioBufferSourceNodeMock', () => {
         });
 
         it("should reschedule the onended event when calling playbackRate's linearRampToValueAtTime() method before playing", () => {
-            const onended = spy();
+            const onended = vi.fn();
 
             audioBufferSourceNodeMock.onended = onended;
             audioBufferSourceNodeMock.start(0, 0, 10);
@@ -284,7 +283,7 @@ describe('AudioBufferSourceNodeMock', () => {
         let onended;
 
         beforeEach(() => {
-            onended = spy();
+            onended = vi.fn();
         });
 
         it('should schedule the onended event when started now', () => {
@@ -318,7 +317,7 @@ describe('AudioBufferSourceNodeMock', () => {
         let onended;
 
         beforeEach(() => {
-            onended = spy();
+            onended = vi.fn();
         });
 
         it('should reschedule the onended event', () => {
