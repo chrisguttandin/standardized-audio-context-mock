@@ -1,4 +1,3 @@
-import { env } from 'node:process';
 import { webdriverio } from '@vitest/browser-webdriverio';
 import { defineConfig } from 'vitest/config';
 
