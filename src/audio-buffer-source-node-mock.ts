@@ -1,10 +1,10 @@
 import { AutomationEventList, TAutomationEvent } from 'automation-events';
-import { stub } from 'sinon';
 import { IAudioBufferSourceNode, TContext, TEventHandler } from 'standardized-audio-context';
 import { DeLorean } from 'vehicles';
 import { AudioBufferMock } from './audio-buffer-mock';
 import { AudioNodeMock } from './audio-node-mock';
 import { AudioParamMock } from './audio-param-mock';
+import { createMockableFunction } from './mocking-implementation';
 import { registrar } from './registrar';
 
 export class AudioBufferSourceNodeMock<T extends TContext> extends AudioNodeMock<T> implements IAudioBufferSourceNode<T> {
@@ -13,6 +13,32 @@ export class AudioBufferSourceNodeMock<T extends TContext> extends AudioNodeMock
     public loopEnd: number;
 
     public loopStart: number;
+
+    public start = createMockableFunction((when?: number, offset?: number, duration?: number): void => {
+        if (this._deLorean === undefined) {
+            return;
+        }
+
+        this._started = {
+            duration: duration === undefined ? Number.POSITIVE_INFINITY : duration,
+            offset: offset === undefined ? 0 : offset,
+            when: when === undefined || when < this._deLorean.position ? this._deLorean.position : when
+        };
+
+        this._scheduleOnendedHandler();
+    });
+
+    public stop = createMockableFunction((when = 0): void => {
+        if (this._deLorean === undefined) {
+            return;
+        }
+
+        this._stopped = {
+            when: when < this._deLorean.position ? this._deLorean.position : when
+        };
+
+        this._scheduleOnendedHandler();
+    });
 
     private _buffer: null | AudioBufferMock;
 
@@ -82,9 +108,6 @@ export class AudioBufferSourceNodeMock<T extends TContext> extends AudioNodeMock
         this._playbackRateAutomationEventList = playbackRateAutomationEventList;
 
         registrar.addAudioNode(context, 'AudioBufferSourceNode', this);
-
-        stub(this, 'start').callThrough();
-        stub(this, 'stop').callThrough();
     }
 
     get buffer(): null | AudioBufferMock {
@@ -140,32 +163,6 @@ export class AudioBufferSourceNodeMock<T extends TContext> extends AudioNodeMock
 
     set playbackRate(value) {
         value; // tslint:disable-line:no-unused-expression
-    }
-
-    public start(when?: number, offset?: number, duration?: number): void {
-        if (this._deLorean === undefined) {
-            return;
-        }
-
-        this._started = {
-            duration: duration === undefined ? Number.POSITIVE_INFINITY : duration,
-            offset: offset === undefined ? 0 : offset,
-            when: when === undefined || when < this._deLorean.position ? this._deLorean.position : when
-        };
-
-        this._scheduleOnendedHandler();
-    }
-
-    public stop(when = 0): void {
-        if (this._deLorean === undefined) {
-            return;
-        }
-
-        this._stopped = {
-            when: when < this._deLorean.position ? this._deLorean.position : when
-        };
-
-        this._scheduleOnendedHandler();
     }
 
     private _callOnendedHandler(): void {

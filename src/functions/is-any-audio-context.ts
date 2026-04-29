@@ -1,3 +1,3 @@
-import { stub } from 'sinon';
+import { createMockableFunction } from '../mocking-implementation';
 
-export const isAnyAudioContext = stub().returns(true);
+export const isAnyAudioContext = createMockableFunction(() => true);

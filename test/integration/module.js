@@ -4,6 +4,12 @@ import { describe, expect, it } from 'vitest';
 
 describe('module', () => {
     it('should export all expected exports', () => {
-        expect(standardizedAudioContextMock).to.have.keys(...Object.keys(standardizedAudioContext), 'AudioNode', 'registrar');
+        expect(standardizedAudioContextMock).to.have.keys(
+            ...Object.keys(standardizedAudioContext),
+            'AudioNode',
+            'registrar',
+            'resetMockingImplementation',
+            'setMockingImplementation'
+        );
     });
 });

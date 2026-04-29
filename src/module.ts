@@ -26,6 +26,7 @@ import { MediaStreamAudioSourceNodeMock } from './media-stream-audio-source-node
 import { MediaStreamTrackAudioSourceNodeMock } from './media-stream-track-audio-source-node-mock';
 import { MinimalAudioContextMock } from './minimal-audio-context-mock';
 import { MinimalOfflineAudioContextMock } from './minimal-offline-audio-context-mock';
+import { resetMockingImplementation, setMockingImplementation } from './mocking-implementation';
 import { OfflineAudioContextMock } from './offline-audio-context-mock';
 import { OscillatorNodeMock } from './oscillator-node-mock';
 import { PannerNodeMock } from './panner-node-mock';
@@ -110,3 +111,7 @@ export { isAnyOfflineAudioContext };
 export { isSupported };
 
 export { registrar };
+
+export { resetMockingImplementation };
+
+export { setMockingImplementation };

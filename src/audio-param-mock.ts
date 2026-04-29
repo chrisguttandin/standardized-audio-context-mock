@@ -8,11 +8,55 @@ import {
     createSetValueAutomationEvent,
     createSetValueCurveAutomationEvent
 } from 'automation-events';
-import { stub } from 'sinon';
 import { IAudioParam } from 'standardized-audio-context';
 import { DeLorean } from 'vehicles';
+import { createMockableFunction } from './mocking-implementation';
 
 export class AudioParamMock implements IAudioParam {
+    public cancelAndHoldAtTime = createMockableFunction((cancelTime: number): IAudioParam => {
+        this._automationEventList.add(createCancelAndHoldAutomationEvent(cancelTime));
+
+        return this;
+    });
+
+    public cancelScheduledValues = createMockableFunction((cancelTime: number): IAudioParam => {
+        this._automationEventList.add(createCancelScheduledValuesAutomationEvent(cancelTime));
+
+        return this;
+    });
+
+    public exponentialRampToValueAtTime = createMockableFunction((value: number, endTime: number): IAudioParam => {
+        this._automationEventList.add(createExponentialRampToValueAutomationEvent(value, endTime));
+
+        return this;
+    });
+
+    public linearRampToValueAtTime = createMockableFunction((value: number, endTime: number): IAudioParam => {
+        this._automationEventList.add(createLinearRampToValueAutomationEvent(value, endTime));
+
+        return this;
+    });
+
+    public setTargetAtTime = createMockableFunction((target: number, startTime: number, timeConstant: number): IAudioParam => {
+        this._automationEventList.add(createSetTargetAutomationEvent(target, startTime, timeConstant));
+
+        return this;
+    });
+
+    public setValueAtTime = createMockableFunction((value: number, startTime: number): IAudioParam => {
+        this._automationEventList.add(createSetValueAutomationEvent(value, startTime));
+
+        return this;
+    });
+
+    public setValueCurveAtTime = createMockableFunction((values: Iterable<number>, startTime: number, duration: number): IAudioParam => {
+        this._automationEventList.add(
+            createSetValueCurveAutomationEvent(values instanceof Float32Array ? values : new Float32Array(values), startTime, duration)
+        );
+
+        return this;
+    });
+
     private _automationEventList: AutomationEventList;
 
     private _defaultValue: number;
@@ -29,14 +73,6 @@ export class AudioParamMock implements IAudioParam {
         this._defaultValue = options.automationEventList.getValue(0);
         this._maxValue = options.maxValue;
         this._minValue = options.minValue;
-
-        stub(this, 'cancelAndHoldAtTime').callThrough();
-        stub(this, 'cancelScheduledValues').callThrough();
-        stub(this, 'exponentialRampToValueAtTime').callThrough();
-        stub(this, 'linearRampToValueAtTime').callThrough();
-        stub(this, 'setTargetAtTime').callThrough();
-        stub(this, 'setValueAtTime').callThrough();
-        stub(this, 'setValueCurveAtTime').callThrough();
     }
 
     get defaultValue(): number {
@@ -73,49 +109,5 @@ export class AudioParamMock implements IAudioParam {
 
     set value(value) {
         this._automationEventList.add(createSetValueAutomationEvent(value, this._deLorean === undefined ? 0 : this._deLorean.position));
-    }
-
-    public cancelAndHoldAtTime(cancelTime: number): IAudioParam {
-        this._automationEventList.add(createCancelAndHoldAutomationEvent(cancelTime));
-
-        return this;
-    }
-
-    public cancelScheduledValues(cancelTime: number): IAudioParam {
-        this._automationEventList.add(createCancelScheduledValuesAutomationEvent(cancelTime));
-
-        return this;
-    }
-
-    public exponentialRampToValueAtTime(value: number, endTime: number): IAudioParam {
-        this._automationEventList.add(createExponentialRampToValueAutomationEvent(value, endTime));
-
-        return this;
-    }
-
-    public linearRampToValueAtTime(value: number, endTime: number): IAudioParam {
-        this._automationEventList.add(createLinearRampToValueAutomationEvent(value, endTime));
-
-        return this;
-    }
-
-    public setTargetAtTime(target: number, startTime: number, timeConstant: number): IAudioParam {
-        this._automationEventList.add(createSetTargetAutomationEvent(target, startTime, timeConstant));
-
-        return this;
-    }
-
-    public setValueAtTime(value: number, startTime: number): IAudioParam {
-        this._automationEventList.add(createSetValueAutomationEvent(value, startTime));
-
-        return this;
-    }
-
-    public setValueCurveAtTime(values: Iterable<number>, startTime: number, duration: number): IAudioParam {
-        this._automationEventList.add(
-            createSetValueCurveAutomationEvent(values instanceof Float32Array ? values : new Float32Array(values), startTime, duration)
-        );
-
-        return this;
     }
 }

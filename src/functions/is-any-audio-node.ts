@@ -1,3 +1,3 @@
-import { stub } from 'sinon';
+import { createMockableFunction } from '../mocking-implementation';
 
-export const isAnyAudioNode = stub().returns(true);
+export const isAnyAudioNode = createMockableFunction(() => true);

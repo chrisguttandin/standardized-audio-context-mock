@@ -1,3 +1,3 @@
-import { stub } from 'sinon';
+import { createMockableFunction } from '../mocking-implementation';
 
-export const isSupported = stub().returns(true);
+export const isSupported = createMockableFunction(() => true);

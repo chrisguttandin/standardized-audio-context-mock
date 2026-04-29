@@ -1,16 +1,19 @@
 import { AutomationEventList } from 'automation-events';
-import { SinonSpy, spy } from 'sinon';
 import { IOscillatorNode, TContext, TEventHandler, TOscillatorType } from 'standardized-audio-context';
 import { AudioNodeMock } from './audio-node-mock';
 import { AudioParamMock } from './audio-param-mock';
+import { createMockableFunction } from './mocking-implementation';
 import { registrar } from './registrar';
 
 export class OscillatorNodeMock<T extends TContext> extends AudioNodeMock<T> implements IOscillatorNode<T> {
-    public setPeriodicWave: SinonSpy;
+    // tslint:disable-next-line no-empty
+    public setPeriodicWave = createMockableFunction(() => {});
 
-    public start: SinonSpy;
+    // tslint:disable-next-line no-empty
+    public start = createMockableFunction(() => {});
 
-    public stop: SinonSpy;
+    // tslint:disable-next-line no-empty
+    public stop = createMockableFunction(() => {});
 
     public type: TOscillatorType;
 
@@ -46,9 +49,6 @@ export class OscillatorNodeMock<T extends TContext> extends AudioNodeMock<T> imp
         });
         // @todo Implement the ended event.
         this._onended = null;
-        this.setPeriodicWave = spy();
-        this.start = spy();
-        this.stop = spy();
         this.type = 'sine';
 
         registrar.addAudioNode(context, 'OscillatorNode', this);
