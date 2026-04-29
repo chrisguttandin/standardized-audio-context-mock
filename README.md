@@ -4,7 +4,7 @@
 
 [![version](https://img.shields.io/npm/v/standardized-audio-context-mock.svg?style=flat-square)](https://www.npmjs.com/package/standardized-audio-context-mock)
 
-This library is meant to test code which is using [`standardized-audio-context`](https://github.com/chrisguttandin/standardized-audio-context) without acutally rendering any audio.
+This library is meant to test code which is using [`standardized-audio-context`](https://github.com/chrisguttandin/standardized-audio-context) without actually rendering any audio.
 
 ## Usage
 
@@ -65,7 +65,7 @@ describe('play()', () => {
         expect(audioBufferSourceNodeMock.buffer).to.equal(audioBufferMock);
     });
 
-    it('should connect the AudioBufferSourceNode with to destination', () => {
+    it('should connect the AudioBufferSourceNode to destination', () => {
         play(audioBufferMock, audioContextMock);
 
         const [audioBufferSourceNodeMock] = registrar.getAudioNodes(audioContextMock, 'AudioBufferSourceNode');
