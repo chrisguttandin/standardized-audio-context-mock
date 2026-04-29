@@ -6,8 +6,6 @@
 
 This library is meant to test code which is using [`standardized-audio-context`](https://github.com/chrisguttandin/standardized-audio-context) without acutally rendering any audio.
 
-It does depend on [Sinon.JS](https://sinonjs.org) to do the mocking.
-
 ## Usage
 
 `standardized-audio-context-mock` is published on
@@ -84,4 +82,44 @@ describe('play()', () => {
         expect(audioBufferSourceNodeMock.start).to.have.been.calledOnce;
     });
 });
+```
+
+## Mocking
+
+By default this library is not using any specific mocking library anymore. (Earlier versions only worked with [Sinon.JS](https://sinonjs.org).)
+
+However it is possible to provide any third party mocking implementation. You can use `setMockingImplementation()` for doing that. `resetMockingImplementation()` is restoring the default behavior.
+
+### Example: using Sinon.JS
+
+If you want to use Sinon.JS (like older versions of this package provided automatically), you can configure it like this:
+
+```js
+import { setMockingImplementation, resetMockingImplementation } from 'standardized-audio-context-mock';
+import { stub } from 'sinon';
+
+// provide the mocking implementation
+setMockingImplementation((defaultImplementation) => stub().callsFake(defaultImplementation));
+
+// run your tests
+
+// reset the mocking implementation
+resetMockingImplementation();
+```
+
+### Example: using Vitest
+
+It is for example also possible to use Vitest’s `vi.fn()` instead:
+
+```js
+import { setMockingImplementation, resetMockingImplementation } from 'standardized-audio-context-mock';
+import { vi } from 'vitest';
+
+// provide the mocking implementation
+setMockingImplementation((defaultImplementation) => vi.fn().mockImplementation(defaultImplementation));
+
+// run your tests
+
+// reset the mocking implementation
+resetMockingImplementation();
 ```
